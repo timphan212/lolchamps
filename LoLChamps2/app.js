@@ -8,10 +8,10 @@ Ext.application({
         'ChampListController', 'NavigationBarController', 'TitleBarController'
     ],
     models: [
-        'ChampListModel'
+        'ChampListModel', 'ChampInfoModel'
     ],
     stores: [
-        'ChampListStore'
+        'ChampListStore', 'ChampInfoStore'
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
@@ -131,8 +131,10 @@ Ext.application({
         );
     },
     
-    // Global Variable Strings
+    // Global Application Variable Strings
     CHAMPIONS_TXT: "Champions",
-    CHAMPION_SEL_TXT: ""
+    CHAMPION_SEL_TXT: "",
+    CHAMPION_ID: "",
+    REGION: 'na'
     
 });

@@ -35,9 +35,16 @@ Ext.define('LoLChamps.controller.ChampListController', {
 			listeners: {
 				itemtap: function(list, index, target, record, e, eOpts) {
 					LoLChamps.app.CHAMPION_SEL_TXT = record.getData().name;
-//					Ext.getCmp('loltitlebar').setTitle(LoLChamps.app.CHAMPION_SEL_TXT);
+					LoLChamps.app.CHAMPION_ID = record.getData().id;
 					LoLChamps.app.setUrl('champinfoview');
-//					LoLChamps.app.showView('champinfoview');
+					Ext.getStore('champinfostore').load({
+						callback: function(records, operation, success) {
+							if (success) {
+								console.log('sss');
+								Ext.getCmp('champinfoview').setHtml(this.getData().getAt(0).getData().lore);
+							}
+						}
+					});
 				}
 			}
 		});

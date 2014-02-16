@@ -7,6 +7,7 @@ Ext.define('LoLChamps.view.TitleBar', {
 		title: LoLChamps.app.CHAMPIONS_TXT,
 		items: [{
 			id: 'champinfoback',
+			text: LoLChamps.app.CHAMPIONS_TXT,
 			align: 'left',
 			xtype: 'button',
 			ui: 'back',

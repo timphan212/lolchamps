@@ -24,8 +24,10 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 		if (LoLChamps.app.champRoute == 'champlistview') {
 			if (!Ext.getCmp('ChampList')) {
 				Ext.getStore('champliststore').load({
-					callback: function() {
-						LoLChamps.app.getController('LoLChamps.controller.ChampListController').createChampList();
+					callback: function(records, operation, success) {
+						if (success) {
+							LoLChamps.app.getController('LoLChamps.controller.ChampListController').createChampList();
+						}
 					}
 				})
 			}
