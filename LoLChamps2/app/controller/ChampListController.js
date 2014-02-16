@@ -12,17 +12,34 @@ Ext.define('LoLChamps.controller.ChampListController', {
 			ChampListView: '#champlistview',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar'
+		},
+		routes: {
+			'champlistview': 'redirectTo',
+			'champinfoview': 'redirectTo'
 		}
+	},
+	
+	redirectTo: function() {
+		LoLChamps.app.removeUrl();
 	},
 	
 	createChampList: function() {
 		if (Ext.getCmp('ChampList')) {
-			Ext.getCmp('ChampList').destroy();
+			return;
+//			Ext.getCmp('ChampList').destroy();
 		}
 		var champlist = Ext.create('Ext.dataview.List', {
 			id: 'ChampList',
 			store: Ext.getStore('champliststore'),
-			itemTpl: '{name}' 
+			itemTpl: '{name}',
+			listeners: {
+				itemtap: function(list, index, target, record, e, eOpts) {
+					LoLChamps.app.CHAMPION_SEL_TXT = record.getData().name;
+//					Ext.getCmp('loltitlebar').setTitle(LoLChamps.app.CHAMPION_SEL_TXT);
+					LoLChamps.app.setUrl('champinfoview');
+//					LoLChamps.app.showView('champinfoview');
+				}
+			}
 		});
 		this.getChampListView().add(champlist);
 	}
