@@ -40,7 +40,6 @@ Ext.define('LoLChamps.controller.ChampListController', {
 					Ext.getStore('champinfostore').load({
 						callback: function(records, operation, success) {
 							if (success) {
-								console.log('sss');
 								Ext.getCmp('champinfoview').setHtml(this.getData().getAt(0).getData().lore);
 							}
 						}
