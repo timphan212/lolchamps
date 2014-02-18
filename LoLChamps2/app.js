@@ -5,13 +5,13 @@ Ext.application({
         'Ext.MessageBox'
     ],
     controllers: [
-        'ChampListController', 'NavigationBarController'
+        'ChampListController', 'NavigationBarController', 'TitleBarController'
     ],
     models: [
-        'ChampListModel'
+        'ChampListModel', 'ChampInfoModel'
     ],
     stores: [
-        'ChampListStore'
+        'ChampListStore', 'ChampInfoStore'
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
@@ -36,19 +36,86 @@ Ext.application({
     },
     
     //for future url routing with hardware back
-    routes: {},
+    routes: new Array(),
+    champViewOrder: ['champlistview', 'champinfoview'],
+    champRoute: 'champlistview',
+    summonerRoute: 'summonerview',
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
         
         // Add Views
-        this.addViews(this.views);
+        this.addViews();
+        this.setUrl('champlistview');
     },
     
-    addViews: function(viewNames) {
+    setUrl: function(newUrl) {
+    	if (newUrl != this.getCurrentView()) {
+    		this.routes.push(newUrl);
+        	this.getApplication().getHistory().add(new Ext.app.Action({
+        		url: newUrl
+        	}), true);
+        	this.updateLastSpecificRoute(newUrl);
+    	}
+    	this.showView(newUrl);
+    },
+    
+    addViews: function() {
+    	var viewNames = this.views;
     	for (var index in viewNames) {
     		Ext.Viewport.add(Ext.create(viewNames[index]));
+    	}
+    },
+    
+    removeUrl: function() {
+    	if (this.routes.length > 1) {
+    		var viewObj = Ext.getCmp(this.getCurrentView());
+    		if (viewObj) {
+    			viewObj.hide();
+    		}
+    		this.routes.pop();
+    		this.updateLastSpecificRoute(this.getCurrentView());
+    	}
+    	this.showView(this.getCurrentView());
+    },
+    
+    showView: function(view) {
+    	//TODO: check menus when we put menus in
+    	if (view == this.getCurrentView) {
+    		return;
+    	}
+    	var curView = Ext.getCmp(this.getCurrentView());
+    	if (curView) {
+    		curView.hide();
+    	}
+    	var newView = Ext.getCmp(view);
+    	if (newView) {
+    		newView.show();
+    	}
+    },
+    
+    getCurrentView: function() {
+    	return this.routes[this.routes.length-1];
+    },
+    
+    resetRoute: function(view) {
+    	this.routes = new Array();
+    	if (view.search('champ') > -1) {
+    		for (var index in this.champViewOrder) {
+    			this.routes.push(this.champViewOrder[index]);
+    			if (view == this.champViewOrder[index]) {
+    				break;
+    			}
+    		}
+    	}
+    },
+    
+    updateLastSpecificRoute: function(view) {
+    	if (view.search('champ') > -1) {
+    		this.champRoute = view;
+    	} else if (view.search('summoner') > -1) {
+    		this.summonerRoute = view;
     	}
     },
 
@@ -62,5 +129,12 @@ Ext.application({
                 }
             }
         );
-    }
+    },
+    
+    // Global Application Variable Strings
+    CHAMPIONS_TXT: "Champions",
+    CHAMPION_SEL_TXT: "",
+    CHAMPION_ID: "",
+    REGION: 'na'
+    
 });

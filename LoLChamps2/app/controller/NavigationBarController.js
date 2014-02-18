@@ -7,39 +7,30 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',
-			ChampInfoBtn: '#champinfobtn',
 			ChampListView: '#champlistview',
 			TitleBar: '#loltitlebar'
 		},
 		control: {
 			ChampListBtn: {
 				tap: 'onChampListBtnTap'
-			},
-			ChampInfoBtn: {
-				tap: 'onChampInfoBtnTap'
 			}
 		},
 		routes: {}
 	},
 	
 	onChampListBtnTap: function(me, e, eOpts) {
-		this.getTitleBar().setTitle("Champions");
-		Ext.getStore('champliststore').load({
-			callback: function() {
-				LoLChamps.app.getController('LoLChamps.controller.ChampListController').createChampList();
-				Ext.Msg.alert('ChampListRequest', 'done');
+		LoLChamps.app.resetRoute(LoLChamps.app.champRoute);
+		LoLChamps.app.setUrl(LoLChamps.app.champRoute);
+		if (LoLChamps.app.champRoute == 'champlistview') {
+			if (!Ext.getCmp('ChampList')) {
+				Ext.getStore('champliststore').load({
+					callback: function(records, operation, success) {
+						if (success) {
+							LoLChamps.app.getController('LoLChamps.controller.ChampListController').createChampList();
+						}
+					}
+				})
 			}
-		})
-	},
-	
-	onChampInfoBtnTap: function(me, e, eOpts) {
-		
-	},
-	
-	showView: function(view) {
-//		var views = this.getViews();
-//		for(var index in views) {
-//			if (views[index] == )
-//		}
+		}
 	}
 });
