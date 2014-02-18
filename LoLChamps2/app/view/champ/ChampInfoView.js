@@ -3,6 +3,7 @@ Ext.define('LoLChamps.view.champ.ChampInfoView', {
 	xtype: 'champinfoview',
 	id: 'champinfoview',
 	config: {
+		layout: 'fit',
 		hidden: true
 	}
 });

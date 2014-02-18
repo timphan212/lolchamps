@@ -1,7 +1,6 @@
 Ext.define('LoLChamps.model.ChampListModel', {
 	extend: 'Ext.data.Model',
 	config: {
-		belongsTo: 'Champions',
 		fields: [
 			{
 				name: 'botMmEnabled',
