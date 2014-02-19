@@ -3,16 +3,21 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 	xtype: 'navbarcontroller',
 	config: {
 		views: [
-		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
+		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'champ.ItemListView'
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',
 			ChampListView: '#champlistview',
+			ItemInfoBtn: '#iteminfobtn',
+			ItemListView: '#itemlistview',
 			TitleBar: '#loltitlebar'
 		},
 		control: {
 			ChampListBtn: {
 				tap: 'onChampListBtnTap'
+			},
+			ItemInfoBtn: {
+				tap: 'onItemListBtnTap'
 			}
 		},
 		routes: {}
@@ -31,6 +36,20 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 					}
 				})
 			}
+		}
+	},
+	
+	onItemListBtnTap: function(me, e, eOpts) {
+		this.getTitleBar().setTitle("Item List");
+		if(!Ext.getCmp('ItemList')) {
+			Ext.getStore('itemliststore').load({
+				callback: function(records, operation, success) {
+					if(success) {
+						LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
+						Ext.Msg.alert('Request', 'done');
+					}
+				}
+			})
 		}
 	}
 });

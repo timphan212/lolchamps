@@ -5,16 +5,16 @@ Ext.application({
         'Ext.MessageBox'
     ],
     controllers: [
-        'ChampListController', 'NavigationBarController', 'TitleBarController'
+        'ChampListController', 'NavigationBarController', 'TitleBarController', 'ItemListController'
     ],
     models: [
-        'ChampListModel', 'ChampInfoModel'
+        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'ItemListModel'
     ],
     stores: [
-        'ChampListStore', 'ChampInfoStore'
+        'ChampListStore', 'ChampInfoStore', 'ItemIDStore', 'ItemListStore'
     ],
     views: [
-        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
+        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'champ.ItemListView'
     ],
 
     icon: {
@@ -135,6 +135,9 @@ Ext.application({
     CHAMPIONS_TXT: "Champions",
     CHAMPION_SEL_TXT: "",
     CHAMPION_ID: "",
-    REGION: 'na'
+    REGION: 'na',
+    ITEMS_TXT: "Items",
+    ITEM_SEL_TXT: "",
+    ITEM_ID: ""
     
 });

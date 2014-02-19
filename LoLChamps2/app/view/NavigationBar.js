@@ -12,6 +12,12 @@ Ext.define('LoLChamps.view.NavigationBar', {
 		        	xtype: 'button',
 		        	text: LoLChamps.app.CHAMPIONS_TXT,
 		        	id: 'champlistbtn'
+		        },
+		        {
+		        	iconCls: 'navButton',
+		        	xtype: 'button',
+		        	text: LoLChamps.app.ITEMS_TXT,
+		        	id: 'iteminfobtn'
 		        }
 		       ]
 	}
