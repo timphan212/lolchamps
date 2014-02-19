@@ -40,6 +40,8 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 	},
 	
 	onItemListBtnTap: function(me, e, eOpts) {
+		LoLChamps.app.resetRoute(LoLChamps.app.itemRoute);
+		LoLChamps.app.setUrl(LoLChamps.app.itemRoute);
 		this.getTitleBar().setTitle("Item List");
 		if(!Ext.getCmp('ItemList')) {
 			Ext.getStore('itemliststore').load({

@@ -37,8 +37,13 @@ Ext.application({
     
     //for future url routing with hardware back
     routes: new Array(),
-    champViewOrder: ['champlistview', 'champinfoview'],
+    
     champRoute: 'champlistview',
+    champViewOrder: ['champlistview', 'champinfoview'],
+    
+    itemRoute: 'itemlistview',
+    itemViewOrder: ['itemlistview'],
+    
     summonerRoute: 'summonerview',
 
     launch: function() {
@@ -100,11 +105,22 @@ Ext.application({
     },
     
     resetRoute: function(view) {
+    	if (Ext.getCmp(this.getCurrentView())) {
+    		Ext.getCmp(this.getCurrentView()).hide();
+    	}
     	this.routes = new Array();
     	if (view.search('champ') > -1) {
     		for (var index in this.champViewOrder) {
     			this.routes.push(this.champViewOrder[index]);
     			if (view == this.champViewOrder[index]) {
+    				this.showView(view);
+    				break;
+    			}
+    		}
+    	} else if (view.search('item') > -1) {
+    		for (var index in this.itemViewOrder) {
+    			this.routes.push(this.itemViewOrder[index]);
+    			if (view == this.itemViewOrder[index]) {
     				break;
     			}
     		}
@@ -116,6 +132,8 @@ Ext.application({
     		this.champRoute = view;
     	} else if (view.search('summoner') > -1) {
     		this.summonerRoute = view;
+    	} else if (view.search('item') > -1) {
+    		this.itemRoute = view;
     	}
     },
 
@@ -132,12 +150,13 @@ Ext.application({
     },
     
     // Global Application Variable Strings
-    CHAMPIONS_TXT: "Champions",
-    CHAMPION_SEL_TXT: "",
     CHAMPION_ID: "",
-    REGION: 'na',
-    ITEMS_TXT: "Items",
+    CHAMPION_SEL_TXT: "",
+    CHAMPIONS_TXT: "Champions",
+    ITEM_ID: "",
     ITEM_SEL_TXT: "",
-    ITEM_ID: ""
+    ITEMS_TXT: "Items",
+    REGION: 'na',
+    SEARCH: 'Search'
     
 });

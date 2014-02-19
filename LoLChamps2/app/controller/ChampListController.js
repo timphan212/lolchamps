@@ -10,6 +10,7 @@ Ext.define('LoLChamps.controller.ChampListController', {
 		],
 		refs: {
 			ChampListView: '#champlistview',
+			ChampListPanel: '#champlistview #champlistpanel',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar'
 		},
@@ -32,6 +33,7 @@ Ext.define('LoLChamps.controller.ChampListController', {
 			id: 'ChampList',
 			store: Ext.getStore('champliststore'),
 			itemTpl: '{name}',
+			height: '100%',
 			listeners: {
 				itemtap: function(list, index, target, record, e, eOpts) {
 					LoLChamps.app.CHAMPION_SEL_TXT = record.getData().name;
@@ -47,6 +49,6 @@ Ext.define('LoLChamps.controller.ChampListController', {
 				}
 			}
 		});
-		this.getChampListView().add(champlist);
+		this.getChampListPanel().add(champlist);
 	}
 });
