@@ -2,7 +2,7 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox', 'LoLChamps.reader.CustomReader'
     ],
     controllers: [
         'ChampListController', 'NavigationBarController', 'TitleBarController', 'ItemListController'
@@ -14,9 +14,9 @@ Ext.application({
         'ChampListStore', 'ChampInfoStore', 'ItemIDStore', 'ItemListStore'
     ],
     views: [
-        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'champ.ItemListView'
+        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
     ],
-
+    
     icon: {
         '57': 'resources/icons/Icon.png',
         '72': 'resources/icons/Icon~ipad.png',

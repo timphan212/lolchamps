@@ -6,7 +6,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	xtype: 'itemlistcontroller',
 	config: {
 		views: [
-			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'champ.ItemListView'
+			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
 		],
 		refs: {
 			ChampListView: '#champlistview',
@@ -21,7 +21,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			return;
 		}
 		
-		var i = 0;
+		/*var i = 0;
 		var j = new Array();
 		var funcs = [];
 		var itemStore = Ext.getStore('itemliststore');
@@ -32,7 +32,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		}
 		for(var itemID in j) {
 			console.log(itemStore.getData().getAt(0).get('3089'));
-		}/*
+		}
 		LoLChamps.app.ITEM_ID = "3089";
 		console.log(LoLChamps.app.ITEM_ID);
 		Ext.getStore('itemidstore').load({

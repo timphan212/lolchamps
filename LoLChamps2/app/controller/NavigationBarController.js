@@ -3,7 +3,7 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 	xtype: 'navbarcontroller',
 	config: {
 		views: [
-		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'champ.ItemListView'
+		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',

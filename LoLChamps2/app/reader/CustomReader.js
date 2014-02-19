@@ -1,4 +1,4 @@
-Ext.define('CustomReader', {
+Ext.define('LoLChamps.reader.CustomReader', {
 	extend: 'Ext.data.reader.Json',
 	alias: 'reader.customreader',
 	

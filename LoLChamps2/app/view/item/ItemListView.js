@@ -1,4 +1,4 @@
-Ext.define('LoLChamps.view.champ.ItemListView', {
+Ext.define('LoLChamps.view.item.ItemListView', {
 	extend: 'Ext.Panel',
 	xtype: 'itemlistview',
 	id: 'itemlistview',
