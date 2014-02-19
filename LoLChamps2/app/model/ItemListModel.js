@@ -3,7 +3,7 @@ Ext.define('LoLChamps.model.ItemListModel', {
 	config: {
 		fields: [
 		    {
-		    	name: 'data'
+		    	name: 'items'
 		    }    
 		]
 	}

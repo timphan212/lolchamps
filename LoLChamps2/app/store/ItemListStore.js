@@ -7,10 +7,10 @@ Ext.define('LoLChamps.store.ItemListStore', {
 		proxy: {
 			type: 'ajax',
 			url: 'https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION  + '/v1/item?locale=en_US&itemListData=all&api_key=' + apiKey,
-			model: 'LoLChamps.model.ItemListModel',
+			model: 'LoLChamps.model.ItemIDModel',
 			reader: {
 				type: 'customreader',
-				rootProperty: 'data'
+				rootProperty: 'items'
 			},
 			listeners: {
 				exception: function(store, response, eOpts) {

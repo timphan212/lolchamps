@@ -46,7 +46,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var itemlist = Ext.create('Ext.dataview.List', {
 			id: 'ItemList',
 			store: Ext.getStore('itemliststore'),
-			itemTpl: '{data}'
+			itemTpl: '{name}'
 		});
 		console.log(itemlist);
 		this.getItemListView().add(itemlist);
