@@ -13,15 +13,7 @@ Ext.define('LoLChamps.controller.ChampListController', {
 			ChampListPanel: '#champlistview #champlistpanel',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar'
-		},
-		routes: {
-			'champlistview': 'redirectTo',
-			'champinfoview': 'redirectTo'
 		}
-	},
-	
-	redirectTo: function() {
-		LoLChamps.app.removeUrl();
 	},
 	
 	createChampList: function() {

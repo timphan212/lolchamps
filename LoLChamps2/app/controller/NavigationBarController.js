@@ -20,7 +20,16 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 				tap: 'onItemListBtnTap'
 			}
 		},
-		routes: {}
+		routes: {
+			'champlistview': 'redirectTo',
+			'champinfoview': 'redirectTo',
+			'itemlistview': 'redirectTo',
+			'iteminfoview': 'redirectTo'
+		}
+	},
+	
+	redirectTo: function() {
+		LoLChamps.app.removeUrl();
 	},
 	
 	onChampListBtnTap: function(me, e, eOpts) {

@@ -12,15 +12,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			ItemListView: '#itemlistview',
 			ItemInfoView: '#iteminfoview',
 			TitleBar: '#loltitlebar'
-		},
-		routes: {
-			'itemlistview': 'redirectTo',
-			'iteminfoview': 'redirectTo'
 		}
-	},
-	
-	redirectTo: function() {
-		LoLChamps.app.removeURL();
 	},
 	
 	createItemList: function() {
