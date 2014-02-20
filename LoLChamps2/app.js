@@ -14,7 +14,7 @@ Ext.application({
         'ChampListStore', 'ChampInfoStore', 'ItemIDStore', 'ItemListStore'
     ],
     views: [
-        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
+        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView'
     ],
     
     icon: {

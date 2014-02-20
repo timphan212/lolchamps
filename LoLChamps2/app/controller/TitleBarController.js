@@ -6,13 +6,16 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	xtype: 'titlebarcontroller',
 	config: {
 		views: [
-			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
+			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView'
 		],
 		refs: {
 			ChampListView: '#champlistview',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar',
-			ChampInfoBackBtn: '#champinfoback'
+			ChampInfoBackBtn: '#champinfoback',
+			ItemListView: '#itemlistview',
+			ItemInfoView: '#iteminfoview',
+			ItemInfoBackBtn: '#iteminfoback'
 		},
 		control: {
 			ChampListView: {
@@ -23,6 +26,16 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				hide: 'onChampInfoHide'
 			},
 			ChampInfoBackBtn: {
+				tap: 'onChampBackBtnTap'
+			},
+			ItemListView: {
+				show: 'onItemInfoHide'
+			},
+			ItemInfoView: {
+				show: 'onItemInfoShow',
+				hide: 'onItemInfoHide'
+			},
+			ItemInfoBackBtn: {
 				tap: 'onChampBackBtnTap'
 			}
 		}
@@ -41,7 +54,20 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onChampBackBtnTap: function() {
 		LoLChamps.app.showView('champlistview');
 		LoLChamps.app.removeUrl();
+	},
+	
+	onItemInfoShow: function() {
+		this.getItemInfoBackBtn().show();
+		this.getTitleBar().setTitle(LoLChamps.app.ITEM_SEL_TXT);
+	},
+	
+	onItemInfoHide: function() {
+		this.getItemInfoBackBtn().hide();
+		this.getTitleBar().setTitle(LoLChamps.app.ITEMS_TXT);
+	},
+	
+	onItemBackBtnTap: function() {
+		LoLChamps.app.showView('itemlistview');
+		LoLChamps.app.removeUrl();
 	}
-	
-	
 });

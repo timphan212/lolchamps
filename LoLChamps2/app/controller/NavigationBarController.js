@@ -3,7 +3,7 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 	xtype: 'navbarcontroller',
 	config: {
 		views: [
-		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
+		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView'
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',
@@ -42,16 +42,16 @@ Ext.define('LoLChamps.controller.NavigationBarController', {
 	onItemListBtnTap: function(me, e, eOpts) {
 		LoLChamps.app.resetRoute(LoLChamps.app.itemRoute);
 		LoLChamps.app.setUrl(LoLChamps.app.itemRoute);
-		this.getTitleBar().setTitle("Item List");
-		if(!Ext.getCmp('ItemList')) {
-			Ext.getStore('itemliststore').load({
-				callback: function(records, operation, success) {
-					if(success) {
-						LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
-						Ext.Msg.alert('Request', 'done');
+		if(LoLChamps.app.itemRoute == 'itemlistview') {
+			if(!Ext.getCmp('ItemList')) {
+				Ext.getStore('itemliststore').load({
+					callback: function(records, operation, success) {
+						if(success) {
+							LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
+						}
 					}
-				}
-			})
+				})
+			}
 		}
 	}
 });

@@ -6,14 +6,21 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	xtype: 'itemlistcontroller',
 	config: {
 		views: [
-			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView'
+			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'
 		],
 		refs: {
-			ChampListView: '#champlistview',
-			ChampInfoView: '#champinfoview',
 			ItemListView: '#itemlistview',
+			ItemInfoView: '#iteminfoview',
 			TitleBar: '#loltitlebar'
+		},
+		routes: {
+			'itemlistview': 'redirectTo',
+			'iteminfoview': 'redirectTo'
 		}
+	},
+	
+	redirectTo: function() {
+		LoLChamps.app.removeURL();
 	},
 	
 	createItemList: function() {
@@ -21,34 +28,20 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			return;
 		}
 		
-		/*var i = 0;
-		var j = new Array();
-		var funcs = [];
-		var itemStore = Ext.getStore('itemliststore');
-		console.log(itemStore.getData().getAt(0).getData().data);
-		for(var itemObj in itemStore.getData().getAt(0).getData().data) {
-			j[i] = itemObj;
-			i++;
-		}
-		for(var itemID in j) {
-			console.log(itemStore.getData().getAt(0).get('3089'));
-		}
-		LoLChamps.app.ITEM_ID = "3089";
-		console.log(LoLChamps.app.ITEM_ID);
-		Ext.getStore('itemidstore').load({
-			callback: function(records, operation, success) {
-				if (success) {
-					console.log(this.getData().getAt(0).getData().name);
-				}
-			}
-		});*/
-		
 		var itemlist = Ext.create('Ext.dataview.List', {
 			id: 'ItemList',
 			store: Ext.getStore('itemliststore'),
-			itemTpl: '{name}'
+			itemTpl: '{name}',
+			listeners: {
+				itemtap: function(list, index, target, record, e, eOpts) {
+					LoLChamps.app.ITEM_SEL_TXT = record.getData().name;
+					LoLChamps.app.ITEM_ID = record.getData().id;
+					LoLChamps.app.setUrl('iteminfoview');
+					Ext.getCmp('iteminfoview').setHtml(record.getData().name + ': ' + record.getData().description);
+				}
+			}
 		});
-		console.log(itemlist);
+
 		this.getItemListView().add(itemlist);
 	}
 });
