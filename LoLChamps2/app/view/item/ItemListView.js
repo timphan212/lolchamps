@@ -3,6 +3,7 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 	xtype: 'itemlistview',
 	id: 'itemlistview',
 	config: {
-		layout: 'fit'
+		layout: 'fit',
+		hidden: true
 	}
 });

@@ -6,7 +6,7 @@ Ext.define('LoLChamps.view.TitleBar', {
 		docked: 'top',
 		title: LoLChamps.app.CHAMPIONS_TXT,
 		items: [{
-			id: 'champinfoback',
+			id: 'titlebackbtn',
 			text: LoLChamps.app.CHAMPIONS_TXT,
 			align: 'left',
 			xtype: 'button',
@@ -17,13 +17,15 @@ Ext.define('LoLChamps.view.TitleBar', {
 			align: 'right',
 			xtype: 'button',
 			text: 'NA'
-		}, {
-			id:'iteminfoback',
-			text: LoLChamps.app.ITEMS_TXT,
-			align: 'left',
-			xtype: 'button',
-			ui: 'back',
-			hidden:true
-		}]
+		}
+//		, {
+//			id:'iteminfoback',
+//			text: LoLChamps.app.ITEMS_TXT,
+//			align: 'left',
+//			xtype: 'button',
+//			ui: 'back',
+//			hidden:true
+//		}
+		]
 	}
 });

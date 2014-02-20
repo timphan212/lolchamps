@@ -12,10 +12,10 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ChampListView: '#champlistview',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar',
-			ChampInfoBackBtn: '#champinfoback',
+			TitleBarBackBtn: '#titlebackbtn',
 			ItemListView: '#itemlistview',
-			ItemInfoView: '#iteminfoview',
-			ItemInfoBackBtn: '#iteminfoback'
+			ItemInfoView: '#iteminfoview'//,
+//			ItemInfoBackBtn: '#iteminfoback'
 		},
 		control: {
 			ChampListView: {
@@ -25,8 +25,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				show: 'onChampInfoShow',
 				hide: 'onChampInfoHide'
 			},
-			ChampInfoBackBtn: {
-				tap: 'onChampBackBtnTap'
+			TitleBarBackBtn: {
+				tap: 'onTitleBackBtnTap'
 			},
 			ItemListView: {
 				show: 'onItemInfoHide'
@@ -34,40 +34,43 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ItemInfoView: {
 				show: 'onItemInfoShow',
 				hide: 'onItemInfoHide'
-			},
-			ItemInfoBackBtn: {
-				tap: 'onChampBackBtnTap'
 			}
+//,
+//			ItemInfoBackBtn: {
+//				tap: 'onChampBackBtnTap'
+//			}
 		}
 	},
 	
 	onChampInfoShow: function() {
-		this.getChampInfoBackBtn().show();
+		this.getTitleBarBackBtn().setText(LoLChamps.app.CHAMPIONS_TXT)
+		this.getTitleBarBackBtn().show();
 		this.getTitleBar().setTitle(LoLChamps.app.CHAMPION_SEL_TXT);
 	},
 	
 	onChampInfoHide: function() {
-		this.getChampInfoBackBtn().hide();
+		this.getTitleBarBackBtn().hide();
 		this.getTitleBar().setTitle(LoLChamps.app.CHAMPIONS_TXT);
 	},
 	
-	onChampBackBtnTap: function() {
-		LoLChamps.app.showView('champlistview');
+	onTitleBackBtnTap: function() {
 		LoLChamps.app.removeUrl();
 	},
 	
 	onItemInfoShow: function() {
-		this.getItemInfoBackBtn().show();
+		this.getTitleBarBackBtn().setText(LoLChamps.app.ITEMS_TXT)
+		this.getTitleBarBackBtn().show();
 		this.getTitleBar().setTitle(LoLChamps.app.ITEM_SEL_TXT);
 	},
 	
 	onItemInfoHide: function() {
-		this.getItemInfoBackBtn().hide();
+		this.getTitleBarBackBtn().hide();
 		this.getTitleBar().setTitle(LoLChamps.app.ITEMS_TXT);
-	},
-	
-	onItemBackBtnTap: function() {
-		LoLChamps.app.showView('itemlistview');
-		LoLChamps.app.removeUrl();
 	}
+//,
+//	
+//	onItemBackBtnTap: function() {
+//		LoLChamps.app.showView('itemlistview');
+//		LoLChamps.app.removeUrl();
+//	}
 });

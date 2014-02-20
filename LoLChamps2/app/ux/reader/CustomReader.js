@@ -1,4 +1,4 @@
-Ext.define('LoLChamps.reader.CustomReader', {
+Ext.define('LoLChamps.ux.reader.CustomReader', {
 	extend: 'Ext.data.reader.Json',
 	alias: 'reader.customreader',
 	
@@ -44,7 +44,7 @@ Ext.define('LoLChamps.reader.CustomReader', {
         	itemData[id].id = id;
         	items.push(itemData[id]);
         }
-        data.items = items;
+        data.data = items;
 
         return data;
 	}

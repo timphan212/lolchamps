@@ -2,7 +2,7 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox', 'LoLChamps.reader.CustomReader'
+        'Ext.MessageBox', 'LoLChamps.ux.reader.CustomReader'
     ],
     controllers: [
         'ChampListController', 'NavigationBarController', 'TitleBarController', 'ItemListController'
@@ -42,7 +42,7 @@ Ext.application({
     champViewOrder: ['champlistview', 'champinfoview'],
     
     itemRoute: 'itemlistview',
-    itemViewOrder: ['itemlistview'],
+    itemViewOrder: ['itemlistview', 'iteminfoview'],
     
     summonerRoute: 'summonerview',
 
@@ -56,6 +56,7 @@ Ext.application({
     },
     
     setUrl: function(newUrl) {
+    	this.showView(newUrl);
     	if (newUrl != this.getCurrentView()) {
     		this.routes.push(newUrl);
         	this.getApplication().getHistory().add(new Ext.app.Action({
@@ -63,7 +64,6 @@ Ext.application({
         	}), true);
         	this.updateLastSpecificRoute(newUrl);
     	}
-    	this.showView(newUrl);
     },
     
     addViews: function() {
@@ -86,10 +86,7 @@ Ext.application({
     },
     
     showView: function(view) {
-    	//TODO: check menus when we put menus in
-    	if (view == this.getCurrentView) {
-    		return;
-    	}
+    	//TODO: check menus/messageboxes when they come up
     	var curView = Ext.getCmp(this.getCurrentView());
     	if (curView) {
     		curView.hide();

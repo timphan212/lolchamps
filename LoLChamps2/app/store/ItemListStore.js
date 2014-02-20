@@ -10,7 +10,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 			model: 'LoLChamps.model.ItemIDModel',
 			reader: {
 				type: 'customreader',
-				rootProperty: 'items'
+				rootProperty: 'data'
 			},
 			listeners: {
 				exception: function(store, response, eOpts) {
