@@ -10,6 +10,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		],
 		refs: {
 			ItemListView: '#itemlistview',
+			ItemListPanel: '#itemlistview #itemlistpanel',
 			ItemInfoView: '#iteminfoview',
 			TitleBar: '#loltitlebar'
 		}
@@ -24,16 +25,21 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			id: 'ItemList',
 			store: Ext.getStore('itemliststore'),
 			itemTpl: '{name}',
+			height: '100%',
 			listeners: {
 				itemtap: function(list, index, target, record, e, eOpts) {
 					LoLChamps.app.ITEM_SEL_TXT = record.getData().name;
 					LoLChamps.app.ITEM_ID = record.getData().id;
 					LoLChamps.app.setUrl('iteminfoview');
-					Ext.getCmp('iteminfoview').setHtml(record.getData().name + ': ' + record.getData().description);
+					Ext.getCmp('iteminfoview').setHtml(record.getData().plaintext +
+													    '<BR><BR>' + record.getData().description +
+													    '<BR><BR>Recipe Cost: ' + record.getData().gold.base +
+													    '<BR>Total Cost: ' + record.getData().gold.total +
+													    '<BR>Sell: ' + record.getData().gold.sell);
 				}
 			}
 		});
-
-		this.getItemListView().add(itemlist);
+		
+		this.getItemListPanel().add(itemlist);
 	}
 });
