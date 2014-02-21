@@ -5,7 +5,7 @@ Ext.application({
         'Ext.MessageBox', 'LoLChamps.ux.reader.CustomReader'
     ],
     controllers: [
-        'ChampListController', 'NavigationBarController', 'TitleBarController', 'ItemListController'
+        'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController'
     ],
     models: [
         'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'ItemListModel'

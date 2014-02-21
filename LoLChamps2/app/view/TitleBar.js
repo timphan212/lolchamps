@@ -17,15 +17,6 @@ Ext.define('LoLChamps.view.TitleBar', {
 			align: 'right',
 			xtype: 'button',
 			text: 'NA'
-		}
-//		, {
-//			id:'iteminfoback',
-//			text: LoLChamps.app.ITEMS_TXT,
-//			align: 'left',
-//			xtype: 'button',
-//			ui: 'back',
-//			hidden:true
-//		}
-		]
+		}]
 	}
 });

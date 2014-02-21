@@ -17,13 +17,13 @@ Ext.define('LoLChamps.view.champ.ChampListView', {
 				placeHolder: LoLChamps.app.SEARCH,
 				flex: '4',
 				listeners: {
-					keyup: function(field, e, eOpts) {
-						if (Ext.getStore('champliststore')) {
-							Ext.getStore('champliststore').clearFilter();
-							var regex = new RegExp(this.getValue(), 'i');
-							Ext.getStore('champliststore').filter('name', regex);
-						}
-					}
+//					keyup: function(field, e, eOpts) {
+//						if (Ext.getStore('champliststore')) {
+//							Ext.getStore('champliststore').clearFilter();
+//							var regex = new RegExp(this.getValue(), 'i');
+//							Ext.getStore('champliststore').filter('name', regex);
+//						}
+//					}
 				}
 			}, {
 				xtype: 'selectfield',

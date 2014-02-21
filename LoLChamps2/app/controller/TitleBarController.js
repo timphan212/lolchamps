@@ -14,8 +14,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			TitleBar: '#loltitlebar',
 			TitleBarBackBtn: '#titlebackbtn',
 			ItemListView: '#itemlistview',
-			ItemInfoView: '#iteminfoview'//,
-//			ItemInfoBackBtn: '#iteminfoback'
+			ItemInfoView: '#iteminfoview'
 		},
 		control: {
 			ChampListView: {
@@ -35,10 +34,6 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				show: 'onItemInfoShow',
 				hide: 'onItemInfoHide'
 			}
-//,
-//			ItemInfoBackBtn: {
-//				tap: 'onChampBackBtnTap'
-//			}
 		}
 	},
 	
@@ -67,10 +62,4 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		this.getTitleBarBackBtn().hide();
 		this.getTitleBar().setTitle(LoLChamps.app.ITEMS_TXT);
 	}
-//,
-//	
-//	onItemBackBtnTap: function() {
-//		LoLChamps.app.showView('itemlistview');
-//		LoLChamps.app.removeUrl();
-//	}
 });
