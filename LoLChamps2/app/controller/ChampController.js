@@ -16,20 +16,36 @@ Ext.define('LoLChamps.controller.ChampController', {
 		}
 	},
 	
-	createChampSquare: function(id, text, width) {
-		var square = [{
-			xtype: 'image',
-			width: width,
-			height: width,
-			id: id + 'Square',
-			style: {
-				'background-image': 'url("resources/icons/Champions/Ashe/AsheSquare.png")',
-				'background-size': '100%'
-			}
-		}, {
-			html: text
-		}];
+	createChampSquare: function(name, text, width) {
+		var square = {
+				xtype: 'container',
+				layout: 'vbox',
+				items: [{
+					xtype: 'image',
+					width: width,
+					height: width,
+//					id: id + 'Square',
+					style: {
+						'background-image': 'url("resources/images/champions/' + name + '_Square_0.png")',
+						'background-size': '100%'
+					}
+				}, {
+					html: text,
+					
+				}]
+			};
 		return square;
+	},
+	
+	createHBoxContainer: function() {
+		return {
+			xtype: 'container',
+			layout: 'hbox',
+			items: [],
+//			style: {
+//				'clear': 'both'
+//			}
+		}
 	},
 	
 	updateChampPanel: function(width) {
@@ -38,21 +54,33 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
 		var rows = Math.ceil(count / columns);
 		var items = [];
-		var row = [];
-		for (var i=0; i<count; i=i+4) {
-			var name = champStoreData.get(i).get('name');
-			row.push(this.createChampSquare(name, name, width));
-			if (row.length % columns == 0 || i == count-1) {
-				items.push(row);
-				this.getChampListPanel().add(row);
-				row = [];
+		var container = this.createHBoxContainer();
+		var rowItems = [];
+		var name = ""
+		for (var i = 0; i < count; i++) {
+			name = champStoreData.getAt(i).get('name');
+			container.items.push(this.createChampSquare(name, name, width));
+			if (container.items.length % columns == 0 || i == (count-1)) {
+				items.push(container);
+				var container = {
+					xtype: 'container',
+					layout: 'hbox',
+					items: []
+				};
+				container.items = [];
 			}
 		}
-//		this.getChampListPanel().add(items);
+		var rows = {
+			xtype: 'container',
+			id: 'champpanel',
+			layout: 'vbox',
+			items: items
+		}
+		this.getChampListPanel().add(rows);
 	},
 	
 	createChampList: function() {
-		if (Ext.getCmp('ChampList')) {
+		if (Ext.getCmp('champpanel')) {
 			return;
 		}
 		

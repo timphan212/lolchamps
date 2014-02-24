@@ -43,7 +43,8 @@ Ext.define('LoLChamps.view.champ.ChampListView', {
 		}, {
 			xtype: 'panel',
 			itemId: 'champlistpanel',
-			flex: 1
+			flex: 1,
+			scrollable: 'vertical'
 		}]
 	}
 });
