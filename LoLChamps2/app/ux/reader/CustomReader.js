@@ -40,8 +40,18 @@ Ext.define('LoLChamps.ux.reader.CustomReader', {
         // Custom Restructuring for Item List
         var itemData = data.data;
         var items = [];
+        var enchantments = ['3255', '3256', '3257', '3258', '3259', '3260', '3261', '3262', '3263',
+                            '3264', '3265', '3266', '3267', '3268', '3269', '3270', '3271', '3272',
+                            '3273', '3274', '3275', '3276', '3277', '3278', '3279', '3280', '3281',
+                            '3282', '3283', '3284'];
         for (var id in itemData) {
         	itemData[id].id = id;
+        	if(id == '3043' || id == '3048' || id == '3290') {
+        		itemData[id].name = itemData[id].name + ' (Crystal Scar)';
+        	}
+        	if(enchantments.indexOf(id) != -1) {
+        		continue;
+        	}
         	items.push(itemData[id]);
         }
         data.data = items;
