@@ -4,6 +4,7 @@ Ext.define('LoLChamps.view.item.ItemInfoView', {
 	id: 'iteminfoview',
 	config: {
 		layout: 'fit',
+		scrollable: 'vertical',
 		hidden: true
 	}
 });

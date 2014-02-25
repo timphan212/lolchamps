@@ -25,7 +25,7 @@ Ext.define('LoLChamps.model.ItemIDModel', {
 			}, {
 				name: 'inStore'
 			}, {
-				name: 'info'
+				name: 'into'
 			}, {
 				name: 'name'
 			}, {
