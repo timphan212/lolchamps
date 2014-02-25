@@ -12,12 +12,49 @@ Ext.define('LoLChamps.controller.ChampController', {
 			ChampListView: '#champlistview',
 			ChampListPanel: '#champlistview #champlistpanel',
 			ChampInfoView: '#champinfoview',
-			TitleBar: '#loltitlebar'
+			TitleBar: '#loltitlebar',
+			SearchField: '#champlistview #champlistsearch',
+			F2PField: '#champlistview #champlistf2pselect'
+		},
+		control: {
+			SearchField: {
+				keyup: function(field, e, eOpts) {
+					if (Ext.getStore('champliststore')) {
+						this.getChampListPanel().setMasked(true);
+						Ext.getStore('champliststore').clearFilter();
+						var regex = new RegExp(field.getValue(), 'i');
+						Ext.getStore('champliststore').filter('displayName', regex);
+						if (this.getF2PField().getValue()) {
+							var regex2 = new RegExp(this.getF2PField().getValue(), 'i');
+							Ext.getStore('champliststore').filter('freeToPlay', regex2);
+						}
+						this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
+						this.getChampListPanel().setMasked(false);
+					}
+					
+				}
+			},
+			F2PField: {
+				change: function(field, newValue, oldValue, eOpts) {
+					if (Ext.getStore('champliststore')) {
+						this.getChampListPanel().setMasked(true);
+						Ext.getStore('champliststore').clearFilter();
+						var regex = new RegExp(this.getSearchField().getValue(), 'i');
+						Ext.getStore('champliststore').filter('displayName', regex);
+						if (newValue) {
+							var regex2 = new RegExp(newValue, 'i');
+							Ext.getStore('champliststore').filter('freeToPlay', regex2);
+						}
+						this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
+						this.getChampListPanel().setMasked(false);
+					}
+					
+				}
+			}
 		}
 	},
 	
 	createChampSquare: function(id, text, width) {
-		
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
@@ -50,17 +87,11 @@ Ext.define('LoLChamps.controller.ChampController', {
 					html: LoLChamps.app.DictionaryMapNames(text),
 					style: {
 						'font-size': '60%',
-						'padding-left': this.ghettoAssPercent(text)
+						'text-align': 'center'
 					}
 				}]
 			};
 		return square;
-	},
-	
-	ghettoAssPercent: function(text) {
-		var length = text.length > 10? 10 : text.length;
-		if (length < 6) length = 7;
-		return Math.floor((12-length)*6) + '%';
 	},
 	
 	createHBoxContainer: function() {
@@ -72,6 +103,13 @@ Ext.define('LoLChamps.controller.ChampController', {
 	},
 	
 	updateChampPanel: function(width) {
+		if (Ext.getCmp('champpanel')) {
+			Ext.getCmp('champpanel').destroy();
+		}
+		this.getChampListPanel().setMasked({
+			xtype: 'loadmask',
+			message: 'Filtering List'
+		});
 		var champStoreData = Ext.getStore('champliststore').getData();
 		var count = Ext.getStore('champliststore').getCount();
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
@@ -85,11 +123,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			container.items.push(this.createChampSquare(champStoreData.getAt(i).get('id'), name, width));
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
-				var container = {
-					xtype: 'container',
-					layout: 'hbox',
-					items: []
-				};
+				var container = this.createHBoxContainer();
 				container.items = [];
 			}
 		}
@@ -100,37 +134,14 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: items
 		}
 		this.getChampListPanel().add(rows);
+		this.getChampListPanel().setMasked(false);
 	},
 	
 	createChampList: function() {
 		if (Ext.getCmp('champpanel')) {
 			return;
 		}
-		
 		// Create Grid of Champions
-		this.updateChampPanel(80);
-		
-		// Create Basic List
-//		var champlist = Ext.create('Ext.dataview.List', {
-//			id: 'ChampList',
-//			store: Ext.getStore('champliststore'),
-//			itemTpl: '{name}',
-//			height: '100%',
-//			listeners: {
-//				itemtap: function(list, index, target, record, e, eOpts) {
-//					LoLChamps.app.CHAMPION_SEL_TXT = record.getData().name;
-//					LoLChamps.app.CHAMPION_ID = record.getData().id;
-//					LoLChamps.app.setUrl('champinfoview');
-//					Ext.getStore('champinfostore').load({
-//						callback: function(records, operation, success) {
-//							if (success) {
-//								Ext.getCmp('champinfoview').setHtml(this.getData().getAt(0).getData().lore);
-//							}
-//						}
-//					});
-//				}
-//			}
-//		});
-//		this.getChampListPanel().add(champlist);
+		this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
 	}
 });

@@ -15,30 +15,17 @@ Ext.define('LoLChamps.view.champ.ChampListView', {
 				xtype: 'searchfield',
 				itemId: 'champlistsearch',
 				placeHolder: LoLChamps.app.SEARCH,
-				flex: '4',
-				listeners: {
-//					keyup: function(field, e, eOpts) {
-//						if (Ext.getStore('champliststore')) {
-//							Ext.getStore('champliststore').clearFilter();
-//							var regex = new RegExp(this.getValue(), 'i');
-//							Ext.getStore('champliststore').filter('name', regex);
-//						}
-//					}
-				}
+				flex: '4'
 			}, {
 				xtype: 'selectfield',
 				itemId: 'champlistf2pselect',
 				flex: '1',
 				ui: 'action',
+				value: false,
 				options: [
 				     {text: 'All', value: false},
 				     {text: 'F2P', value: true}
-				],
-				listeners: {
-					change: function(field, newValue, oldValue, eOpts) {
-						
-					}
-				}
+				]
 			}]
 		}, {
 			xtype: 'panel',

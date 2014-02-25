@@ -4,6 +4,7 @@ Ext.define('LoLChamps.view.champ.ChampInfoView', {
 	id: 'champinfoview',
 	config: {
 		layout: 'fit',
+		scrollable: 'vertical',
 		hidden: true
 	}
 });
