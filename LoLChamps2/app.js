@@ -146,6 +146,25 @@ Ext.application({
         );
     },
     
+	DictionaryMapNames: function(text) {
+		var dictionary = {
+			'DrMundo': 'Dr. Mundo',
+			'MonkeyKing': 'Wukong',
+			'JarvanIV': 'Jarvan IV',
+			'KogMaw': "Kog'Maw",
+			'LeeSin': 'Lee Sin',
+			'MasterYi': 'Master Yi',
+			'MissFortune': 'Miss Fortune',
+			'TwistedFate': 'Twisted Fate',
+			'XinZhao': 'Xin Zhao'
+		};
+		if (dictionary[text]) {
+			return dictionary[text];
+		} else {
+			return text;
+		}
+	},
+    
     // Global Application Variable Strings
     CHAMPION_ID: "",
     CHAMPION_SEL_TXT: "",
@@ -153,7 +172,7 @@ Ext.application({
     ITEM_ID: "",
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
-    REGION: 'na',
+    REGION: 'euw',
     SEARCH: 'Search'
     
 });

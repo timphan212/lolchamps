@@ -21,6 +21,9 @@ Ext.define('LoLChamps.model.ChampListModel', {
 				name: 'name',
 				type: 'string'
 			}, {
+				name: 'displayName',
+				type: 'string'
+			}, {
 				name: 'botEnabled',
 				type: 'boolean'
 			}, {

@@ -16,7 +16,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 		}
 	},
 	
-	createChampSquare: function(name, text, width) {
+	createChampSquare: function(id, text, width) {
+		
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
@@ -24,27 +25,49 @@ Ext.define('LoLChamps.controller.ChampController', {
 					xtype: 'image',
 					width: width,
 					height: width,
-//					id: id + 'Square',
+					id: text + '_' + id,
 					style: {
-						'background-image': 'url("resources/images/champions/' + name + '_Square_0.png")',
+						'background-image': 'url("resources/images/champions/' + text + '_Square_0.png")',
 						'background-size': '100%'
+					},
+					listeners: {
+						tap: function(image, e, eOpts) {
+							var strID = image.getId();
+							var tokenIndex = strID.search('_');
+							LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
+							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
+							LoLChamps.app.setUrl('champinfoview');
+							Ext.getStore('champinfostore').load({
+								callback: function(records, operation, success) {
+									if (success) {
+										Ext.getCmp('champinfoview').setHtml(this.getData().getAt(0).getData().lore);
+									}
+								}
+							});
+						}
 					}
 				}, {
-					html: text,
-					
+					html: LoLChamps.app.DictionaryMapNames(text),
+					style: {
+						'font-size': '60%',
+						'padding-left': this.ghettoAssPercent(text)
+					}
 				}]
 			};
 		return square;
+	},
+	
+	ghettoAssPercent: function(text) {
+		var length = text.length > 10? 10 : text.length;
+		if (length < 6) length = 7;
+		return Math.floor((12-length)*6) + '%';
 	},
 	
 	createHBoxContainer: function() {
 		return {
 			xtype: 'container',
 			layout: 'hbox',
-			items: [],
-//			style: {
-//				'clear': 'both'
-//			}
+			items: []
 		}
 	},
 	
@@ -59,7 +82,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var name = ""
 		for (var i = 0; i < count; i++) {
 			name = champStoreData.getAt(i).get('name');
-			container.items.push(this.createChampSquare(name, name, width));
+			container.items.push(this.createChampSquare(champStoreData.getAt(i).get('id'), name, width));
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
 				var container = {

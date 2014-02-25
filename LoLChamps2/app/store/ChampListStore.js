@@ -27,6 +27,15 @@ Ext.define('LoLChamps.store.ChampListStore', {
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
+				for (var i = 0; i < records.length; i++) {
+					var name = records[i].get('name');
+					if (name == LoLChamps.app.DictionaryMapNames(name)) {
+						records[i].getData().displayName = name;
+					} else {
+						records[i].getData().displayName = LoLChamps.app.DictionaryMapNames(name);
+					}
+				}
+				store.sort('displayName', 'ASC');
 				Ext.getCmp('champlistview').setMasked(false);
 			}
 		}
