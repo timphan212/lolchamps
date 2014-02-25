@@ -4,6 +4,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	    'Ext.dataview.List', 'Ext.Img'
 	],
 	xtype: 'itemlistcontroller',
+	ITEM_SQUARE_WIDTH: 80,
 	config: {
 		views: [
 			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'
@@ -12,13 +13,15 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			ItemListView: '#itemlistview',
 			ItemListPanel: '#itemlistview #itemlistpanel',
 			ItemInfoView: '#iteminfoview',
+			ItemInfoContainer: '#iteminfoview #iteminfocontainer',
+			ItemIntoContainer: '#iteminfoview #itemintocontainer',
 			TitleBar: '#loltitlebar'
 		}
 	},
 	
 	createItemList: function() {
 		if (Ext.getCmp('ItemList')) {
-			return;
+			Ext.getCmp('ItemList').destroy();
 		}
 
 		var itemlist = Ext.create('Ext.dataview.List', {
@@ -32,30 +35,31 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					LoLChamps.app.ITEM_SEL_TXT = currItem.name;
 					LoLChamps.app.ITEM_ID = currItem.id;
 					LoLChamps.app.setUrl('iteminfoview');
-					var container = LoLChamps.app.getController('ItemListController').updateItemPanel(currItem, 80);
-					var test = Ext.getCmp('iteminfoview');
-					for(var i = 0; i < currItem.into.length; i++) {
-						
-					}
-					if(currItem.plaintext != null) {
-						test.setHtml(currItem.plaintext +
+					var container = LoLChamps.app.getController('ItemListController').updateItemPanel(currItem,
+							LoLChamps.app.getController('ItemListController').ITEM_SQUARE_WIDTH);
+					var itemInfo = Ext.getCmp('iteminfoview').child('#iteminfocontainer');
+					
+					if(currItem.plaintext != null) {	
+						itemInfo.setHtml(currItem.plaintext +
 							    '<BR><BR>' + currItem.description +
 							    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
 							    '<BR>Total Cost: ' + currItem.gold.total +
 							    '<BR>Sell: ' + currItem.gold.sell);
-						test.add(container);
 					}
 					else if(currItem.id == '3250' || currItem.id == '3251' || currItem.id == '3252' ||
 							currItem.id == '3253' || currItem.id == '3254') {
-						Ext.getCmp('iteminfoview').setHtml(currItem.description +
+						itemInfo.setHtml(currItem.description +
 							    '<BR><BR>Recipe Cost: ' + currItem.gold.base);
 					}
 					else {
-						Ext.getCmp('iteminfoview').setHtml(currItem.description +
+						itemInfo.setHtml(currItem.description +
 													    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
 													    '<BR>Total Cost: ' + currItem.gold.total +
 													    '<BR>Sell: ' + currItem.gold.sell);
 
+					}
+					if(container != null) {
+						Ext.getCmp('iteminfoview').child('#itemintocontainer').add(container);
 					}
 				}
 			}
@@ -68,6 +72,10 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		if (Ext.getCmp('itempanel')) {
 			Ext.getCmp('itempanel').destroy();
 		}
+		if(currItem.into == null) {
+			return;
+		}
+		
 		var count = currItem.into.length;
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
 		var rows = Math.ceil(count / columns);
@@ -75,6 +83,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var container = this.createHBoxContainer();
 		var rowItems = [];
 		var name = "";
+		Ext.getStore('itemliststore').clearFilter(); //need to find better way
 		
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
@@ -111,6 +120,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
+				padding: 10,
 				items: [{
 					xtype: 'image',
 					width: width,
@@ -118,7 +128,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					id: id,
 					style: {
 						'background-image': 'url("resources/images/items/' + id + '.png")',
-						'background-size': '100%'
+						'background-size': '100%',
+						'margin-left': 'auto',
+						'margin-right': 'auto'
 					},
 					/*listeners: {
 						tap: function(image, e, eOpts) {
@@ -140,6 +152,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					html: text,
 					style: {
 						'font-size': '60%',
+						'text-align': 'center'
 					}
 				}]
 			};

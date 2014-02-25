@@ -45,12 +45,16 @@ Ext.define('LoLChamps.ux.reader.CustomReader', {
                             '3273', '3274', '3275', '3276', '3277', '3278', '3279', '3280', '3281',
                             '3282', '3283', '3284'];
         for (var id in itemData) {
+        	if(enchantments.indexOf(id) != -1) {
+        		continue;
+        	}
         	itemData[id].id = id;
         	if(id == '3043' || id == '3048' || id == '3290') {
         		itemData[id].name = itemData[id].name + ' (Crystal Scar)';
         	}
-        	if(enchantments.indexOf(id) != -1) {
-        		continue;
+        	if(id == '3009' || id == '3020' || id == '3047' || id == '3111' ||
+        	   id == '3117' || id == '3158') {
+        		itemData[id].into = ['3254', '3253', '3252', '3251', '3250']
         	}
         	items.push(itemData[id]);
         }

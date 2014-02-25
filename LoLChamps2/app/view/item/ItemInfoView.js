@@ -3,8 +3,15 @@ Ext.define('LoLChamps.view.item.ItemInfoView', {
 	xtype: 'iteminfoview',
 	id: 'iteminfoview',
 	config: {
-		layout: 'fit',
+		layout: 'vbox',
 		scrollable: 'vertical',
-		hidden: true
+		hidden: true,
+		items: [{
+			xtype: 'container',
+			itemId: 'iteminfocontainer',
+		}, {
+			xtype: 'container',
+			itemId: 'itemintocontainer',
+		}]
 	}
 });
