@@ -4,6 +4,9 @@ Ext.define('LoLChamps.controller.ChampController', {
 	    'Ext.dataview.List', 'Ext.Img'
 	],
 	xtype: 'champcontroller',
+	
+	CHAMPION_SQUARE_WIDTH: 80,
+	
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
@@ -28,7 +31,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 							var regex2 = new RegExp(this.getF2PField().getValue(), 'i');
 							Ext.getStore('champliststore').filter('freeToPlay', regex2);
 						}
-						this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
+						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 						this.getChampListPanel().setMasked(false);
 					}
 					
@@ -45,7 +48,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 							var regex2 = new RegExp(newValue, 'i');
 							Ext.getStore('champliststore').filter('freeToPlay', regex2);
 						}
-						this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
+						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 						this.getChampListPanel().setMasked(false);
 					}
 					
@@ -142,6 +145,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 			return;
 		}
 		// Create Grid of Champions
-		this.updateChampPanel(LoLChamps.app.CHAMPION_SQUARE_WIDTH);
+		this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 	}
 });

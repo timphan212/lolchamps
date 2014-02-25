@@ -168,7 +168,6 @@ Ext.application({
     // Global Application Variable Strings
     CHAMPION_ID: "",
     CHAMPION_SEL_TXT: "",
-    CHAMPION_SQUARE_WIDTH: 80,
     CHAMPIONS_TXT: "Champions",
     ITEM_ID: "",
     ITEM_SEL_TXT: "",
