@@ -16,15 +16,6 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 				itemId: 'itemlistsearch',
 				placeHolder: LoLChamps.app.SEARCH,
 				flex: '4',
-				listeners: {
-					keyup: function(field, e, eOpts) {
-						if (Ext.getStore('itemliststore')) {
-							Ext.getStore('itemliststore').clearFilter();
-							var regex = new RegExp(this.getValue(), 'i');
-							Ext.getStore('itemliststore').filter('name', regex);
-						}
-					}
-				}
 			}, {
 					xtype: 'selectfield',
 					itemId: 'itemtagselect',
@@ -51,37 +42,7 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 					     {text: 'Mana Regen', value: 'ManaRegen'},
 					     {text: 'Boots', value: 'Boots'},
 					     {text: 'Other Movement', value: 'NonbootsMovement'}
-					],
-					listeners: {
-						change: function(field, newValue, oldValue, eOpts) {
-							if(this.getValue() === 'all') {
-								Ext.getStore('itemliststore').clearFilter();
-							}
-							else {
-							    if(Ext.getStore('itemliststore')) {
-							    	var itemStore = Ext.getStore('itemliststore').getData();
-							    	var count = 0;
-							    	var nameArr = [];
-							    	Ext.getStore('itemliststore').clearFilter();
-							    	while(itemStore.getAt(count) != null) {
-							    		if(itemStore.getAt(count).getData().tags != null) {
-							    			for(var i = 0; i < itemStore.getAt(count).getData().tags.length; i++) {
-							    				if(itemStore.getAt(count).getData().tags[i] == this.getValue()) {
-							    					nameArr.push(itemStore.getAt(count).getData().name);
-							    				}
-							    			}
-							    		}
-							    		count++;
-							    	}
-							    	Ext.getStore('itemliststore').filter(Ext.create('Ext.util.Filter', {
-							    		filterFn: function(item) {
-							    			return nameArr.some(function(name) { return name === item.get('name')});
-							    			}
-							    	}));
-							    }
-							}
-						}
-					}
+					]
 				}]
 		}, {
 			xtype: 'panel',

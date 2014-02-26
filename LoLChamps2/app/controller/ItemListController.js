@@ -15,7 +15,54 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			ItemInfoView: '#iteminfoview',
 			ItemInfoContainer: '#iteminfoview #iteminfocontainer',
 			ItemIntoContainer: '#iteminfoview #itemintocontainer',
+			SearchField: '#itemlistview #itemlistsearch',
+			TagField: '#itemlistview #itemtagselect',
 			TitleBar: '#loltitlebar'
+		},
+		control: {
+			SearchField: {
+				keyup: function(field, e, eOpts) {
+					if (Ext.getStore('itemliststore')) {
+						this.getItemListPanel().setMasked(true);
+						Ext.getStore('itemliststore').clearFilter();
+						var regex = new RegExp(field.getValue(), 'i');
+						Ext.getStore('itemliststore').filter('name', regex);
+						this.getItemListPanel().setMasked(false);
+					}
+				}
+			},
+			TagField: {
+				change: function(field, newValue, oldValue, eOpts) {
+					if(Ext.getStore('itemliststore')) {
+						this.getItemListPanel().setMasked(true);
+						if(field.getValue() === 'all') {
+							Ext.getStore('itemliststore').clearFilter();
+						}
+						else {
+							var itemStore = Ext.getStore('itemliststore').getData();
+							var count = 0;
+							var nameArr = [];
+							Ext.getStore('itemliststore').clearFilter();
+							while(itemStore.getAt(count) != null) {
+								if(itemStore.getAt(count).getData().tags != null) {
+									for(var i = 0; i < itemStore.getAt(count).getData().tags.length; i++) {
+										if(itemStore.getAt(count).getData().tags[i] == field.getValue()) {
+											nameArr.push(itemStore.getAt(count).getData().name);
+										}
+									}
+								}
+								count++;
+							}
+							Ext.getStore('itemliststore').filter(Ext.create('Ext.util.Filter', {
+								filterFn: function(item) {
+									return nameArr.some(function(name) { return name === item.get('name')});
+					   				}
+							}));
+						}
+						this.getItemListPanel().setMasked(false);
+					}
+				}
+			}
 		}
 	},
 	
@@ -83,12 +130,10 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var container = this.createHBoxContainer();
 		var rowItems = [];
 		var name = "";
-		Ext.getStore('itemliststore').clearFilter(); //need to find better way
-		
+
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
-			var index = Ext.getStore('itemliststore').find('id', id);
-			name = Ext.getStore('itemliststore').getData().getAt(index).getData().name;
+			var name = this.searchArr(Ext.getStore('itemliststore').getData().all, id);
 			container.items.push(this.createItemSquare(id, name, width));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
@@ -106,6 +151,14 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		}
 		
 		return rows;
+	},
+	
+	searchArr: function(arr, id) {
+		for(var index in arr) {
+			if(arr[index].getData().id == id) {
+				return arr[index].getData().name;
+			}
+		}
 	},
 	
 	createHBoxContainer: function() {
