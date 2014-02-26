@@ -1,7 +1,7 @@
 Ext.define('LoLChamps.controller.ChampController', {
 	extend: 'Ext.app.Controller',
 	requires: [
-	    'Ext.dataview.List', 'Ext.Img'
+	    'Ext.dataview.List', 'Ext.Img', 'Ext.tab.Panel'
 	],
 	xtype: 'champcontroller',
 	
@@ -17,7 +17,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar',
 			SearchField: '#champlistview #champlistsearch',
-			F2PField: '#champlistview #champlistf2pselect'
+			F2PField: '#champlistview #champlistf2pselect',
+			ChampLogoPanel: '#champinfoview #champlogopanel',
+			ChampTabPanel: '#champinfoview #champtabpanel',
+			ChampStatsView: '#champinfoview #champtabpanel #champstats',
+			ChampSpellsView: '#champinfoview #champtabpanel #champspells',
+			ChampLoreView: '#champinfoview #champtabpanel #champlore'
 		},
 		control: {
 			SearchField: {
@@ -57,6 +62,11 @@ Ext.define('LoLChamps.controller.ChampController', {
 		}
 	},
 	
+	// This is launched after app launch initialization
+	launch: function() {
+		this.addSwipeEvents();
+	},
+	
 	createChampSquare: function(id, text, width) {
 		var square = {
 				xtype: 'container',
@@ -80,9 +90,10 @@ Ext.define('LoLChamps.controller.ChampController', {
 							Ext.getStore('champinfostore').load({
 								callback: function(records, operation, success) {
 									if (success) {
-										Ext.getCmp('champinfoview').setHtml(this.getData().getAt(0).getData().lore);
+										this.cleanChampInfo();
+										this.generateChampInfo(records);
 									}
-								}
+								}, scope: LoLChamps.app.getController('ChampController')
 							});
 						}
 					}
@@ -95,6 +106,54 @@ Ext.define('LoLChamps.controller.ChampController', {
 				}]
 			};
 		return square;
+	},
+	
+	cleanChampInfo: function() {
+		this.getChampLogoPanel().removeAll(true,true);
+		this.getChampStatsView().removeAll(true,true);
+		this.getChampSpellsView().removeAll(true,true);
+		this.getChampLoreView().removeAll(true,true);
+	},
+	
+	generateChampInfo: function(records) {
+		if (records.length == 1) {
+			var champData = records[0].getData();
+			this.getChampLogoPanel().add(this.createLogoPanelForChamp(champData));
+			this.getChampLoreView().setHtml(champData.lore);
+			this.getChampLoreView().setStyle({'font-size': '70%'});
+		}
+	},
+	
+	createLogoPanelForChamp: function(champData) {
+		var logoPanel = this.createHBoxContainer();
+		logoPanel.items.push({
+			xtype: 'image',
+			width: this.CHAMPION_SQUARE_WIDTH,
+			height: this.CHAMPION_SQUARE_WIDTH,
+			style: {
+				'background-image': 'url("resources/images/champions/' + champData.id + '_Square_0.png")',
+				'background-size': '95%'
+			}
+		});
+		logoPanel.items.push({
+			xtype: 'container',
+			layout: 'vbox',
+			width: '100%',
+			items: [{
+				html: champData.name,
+				style: {
+					'font-size': '200%',
+					'text-align': 'center'
+				}
+			}, {
+				html: champData.title,
+				style: {
+					'font-size': '75%',
+					'text-align': 'center'
+				}
+			}]
+		});
+		return logoPanel;
 	},
 	
 	createHBoxContainer: function() {
@@ -146,5 +205,34 @@ Ext.define('LoLChamps.controller.ChampController', {
 		}
 		// Create Grid of Champions
 		this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
+	},
+	
+	addSwipeEvents: function() {
+		this.getChampStatsView().element.on({
+			swipe: function(event, node, eOpts) {
+				if (event.direction == 'left') {
+					this.getChampTabPanel().setActiveItem(this.getChampSpellsView());
+				}
+			},
+			scope: this
+		});
+		this.getChampSpellsView().element.on({
+			swipe: function(event, node, eOpts) {
+				if (event.direction == 'right') {
+					this.getChampTabPanel().setActiveItem(this.getChampStatsView());
+				} else if (event.direction == 'left') {
+					this.getChampTabPanel().setActiveItem(this.getChampLoreView());
+				}
+			},
+			scope: this
+		});
+		this.getChampLoreView().element.on({
+			swipe: function(event, node, eOpts) {
+				if (event.direction == 'right') {
+					this.getChampTabPanel().setActiveItem(this.getChampSpellsView());
+				}
+			},
+			scope: this
+		})
 	}
 });

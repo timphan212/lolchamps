@@ -20,6 +20,8 @@ Ext.define('LoLChamps.model.ChampInfoModel', {
 			}, {
 				name: 'allytips'
 			}, {
+				name: 'name'
+			}, {
 				name: 'lore'
 			}, {
 				name: 'info'
