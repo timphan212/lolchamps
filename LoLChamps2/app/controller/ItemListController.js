@@ -176,7 +176,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var nameArr = name.split(" ");
 		var newName = nameArr[0];
 		for(var i = 1; i < nameArr.length; i++) {
-			if((newName + nameArr[i]).length > 10) {
+			if((newName + nameArr[i]).length > 9) {
 				newName += "<BR>" + nameArr[i];
 			}
 			else {
