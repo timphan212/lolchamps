@@ -248,7 +248,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				}, {
 					html: text,
 					style: {
-						'font-size': '60%',
+						'font-size': '50%',
 						'text-align': 'center'
 					}
 				}]
