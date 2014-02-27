@@ -47,7 +47,8 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 		}, {
 			xtype: 'panel',
 			itemId: 'itemlistpanel',
-			flex: 1
+			flex: 1,
+			scrollable: 'vertical'
 		}]
 	}
 });
