@@ -74,6 +74,10 @@ Ext.application({
     },
     
     removeUrl: function() {
+    	if (!Ext.Msg.isHidden()) {
+    		Ext.Msg.hide();
+    		return;
+    	}
     	if (this.routes.length > 1) {
     		var viewObj = Ext.getCmp(this.getCurrentView());
     		if (viewObj) {
@@ -86,7 +90,6 @@ Ext.application({
     },
     
     showView: function(view) {
-    	//TODO: check menus/messageboxes when they come up
     	var curView = Ext.getCmp(this.getCurrentView());
     	if (curView) {
     		curView.hide();

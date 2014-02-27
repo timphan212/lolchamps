@@ -73,12 +73,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 				layout: 'vbox',
 				items: [{
 					xtype: 'image',
+					src: 'resources/images/champions/' + text + '_Square_0.png',
 					width: width,
 					height: width,
 					id: text + '_' + id,
 					style: {
-						'background-image': 'url("resources/images/champions/' + text + '_Square_0.png")',
-						'background-size': '100%'
+						'background-size': '95%'
 					},
 					listeners: {
 						tap: function(image, e, eOpts) {
@@ -86,15 +86,18 @@ Ext.define('LoLChamps.controller.ChampController', {
 							var tokenIndex = strID.search('_');
 							LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
 							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
-							LoLChamps.app.setUrl('champinfoview');
 							Ext.getStore('champinfostore').load({
 								callback: function(records, operation, success) {
 									if (success) {
+										LoLChamps.app.setUrl('champinfoview');
 										this.cleanChampInfo();
 										this.generateChampInfo(records);
 									}
 								}, scope: LoLChamps.app.getController('ChampController')
 							});
+						},
+						error: function(image, event) {
+							image.setSrc('resources/images/champions/Unknown_Square_0.png')
 						}
 					}
 				}, {
@@ -126,13 +129,19 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	createLogoPanelForChamp: function(champData) {
 		var logoPanel = this.createHBoxContainer();
+		
 		logoPanel.items.push({
 			xtype: 'image',
+			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
 			width: this.CHAMPION_SQUARE_WIDTH,
 			height: this.CHAMPION_SQUARE_WIDTH,
 			style: {
-				'background-image': 'url("resources/images/champions/' + champData.id + '_Square_0.png")',
 				'background-size': '95%'
+			},
+			listeners: {
+				error: function(image, event) {
+					image.setSrc('resources/images/champions/Unknown_Square_0.png')
+				}
 			}
 		});
 		logoPanel.items.push({

@@ -14,6 +14,9 @@ Ext.define('LoLChamps.store.ChampInfoStore', {
 			listeners: {
 				exception: function(store, response, eOpts) {
 					console.warn("ChampInfoStoreError");
+					if (response.status == 404) {
+						Ext.Msg.alert('Champion not found', '');
+					}
 				}
 			}
 		},
