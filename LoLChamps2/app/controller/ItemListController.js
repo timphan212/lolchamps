@@ -4,7 +4,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	    'Ext.dataview.List', 'Ext.Img'
 	],
 	xtype: 'itemlistcontroller',
-	ITEM_SQUARE_WIDTH: 80,
+	ITEM_SQUARE_WIDTH: 64,
 	config: {
 		views: [
 			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'
@@ -98,7 +98,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		for(var i = 0; i < count; i++) {
 			var name = this.formatName(itemData.getAt(i).getData().name);
 			var id = itemData.getAt(i).getData().id;
-			container.items.push(this.createItemSquare(id, name, width, 0, '_list'));
+			container.items.push(this.createItemSquare(id, name, width, '_list'));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
@@ -137,7 +137,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
 			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, id)).name);
-			container.items.push(this.createItemSquare(id, name, width, 10, '_info'));
+			container.items.push(this.createItemSquare(id, name, width, '_info'));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
@@ -174,9 +174,14 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	
 	formatName: function(name) {
 		var nameArr = name.split(" ");
-		var newName = "";
-		for(var i = 1; i < nameArr.length+1; i++) {
-			newName = newName.concat(nameArr[i-1] + "<BR>");
+		var newName = nameArr[0];
+		for(var i = 1; i < nameArr.length; i++) {
+			if((newName + nameArr[i]).length > 10) {
+				newName += "<BR>" + nameArr[i];
+			}
+			else {
+				newName += " " + nameArr[i];
+			}
 		}
 		
 		return newName;
@@ -213,11 +218,10 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		}
 	},
 	
-	createItemSquare: function(id, text, width, padding, caseStr) {
+	createItemSquare: function(id, text, width, caseStr) {
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
-				padding: padding,
 				items: [{
 					xtype: 'image',
 					width: width,
@@ -225,7 +229,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					id: id + caseStr,
 					style: {
 						'background-image': 'url("resources/images/items/' + id + '.png")',
-						'background-size': '90%',
+						'background-size': '100%',
 						'margin-left': 'auto',
 						'margin-right': 'auto'
 					},
