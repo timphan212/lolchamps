@@ -27,6 +27,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 						Ext.getStore('itemliststore').clearFilter();
 						var regex = new RegExp(field.getValue(), 'i');
 						Ext.getStore('itemliststore').filter('name', regex);
+						this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
 						this.getItemListPanel().setMasked(false);
 					}
 				}
