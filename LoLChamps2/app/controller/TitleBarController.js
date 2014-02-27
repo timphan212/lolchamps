@@ -14,7 +14,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			TitleBar: '#loltitlebar',
 			TitleBarBackBtn: '#titlebackbtn',
 			ItemListView: '#itemlistview',
-			ItemInfoView: '#iteminfoview'
+			ItemInfoView: '#iteminfoview',
+			SettingsBtn: '#settingsbtn'
 		},
 		control: {
 			ChampListView: {
@@ -33,6 +34,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ItemInfoView: {
 				show: 'onItemInfoShow',
 				hide: 'onItemInfoHide'
+			},
+			SettingsBtn: {
+				
 			}
 		}
 	},

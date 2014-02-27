@@ -13,10 +13,10 @@ Ext.define('LoLChamps.view.TitleBar', {
 			ui: 'back',
 			hidden: true
 		}, {
-			id: 'regionbtn',
+			id: 'settingsbtn',
 			align: 'right',
 			xtype: 'button',
-			text: 'NA'
+			text: '| | | |'
 		}]
 	}
 });

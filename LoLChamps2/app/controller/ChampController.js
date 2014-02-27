@@ -39,7 +39,14 @@ Ext.define('LoLChamps.controller.ChampController', {
 						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 						this.getChampListPanel().setMasked(false);
 					}
-					
+				},
+				clearicontap: function(field, e, eOpts) {
+					if (Ext.getStore('champliststore')) {
+						this.getChampListPanel().setMasked(true);
+						Ext.getStore('champliststore').clearFilter();
+						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
+						this.getChampListPanel().setMasked(false);
+					}
 				}
 			},
 			F2PField: {
@@ -151,7 +158,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				html: champData.name,
 				style: {
-					'font-size': '200%',
+					'font-size': '170%',
 					'text-align': 'center'
 				}
 			}, {
