@@ -30,6 +30,10 @@ Ext.define('LoLChamps.controller.ItemListController', {
 						this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
 						this.getItemListPanel().setMasked(false);
 					}
+				},
+				clearicontap: function(e, eOpts) {
+					Ext.getStore('itemliststore').clearFilter();
+					this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
 				}
 			},
 			TagField: {
@@ -229,7 +233,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					id: id + caseStr,
 					style: {
 						'background-image': 'url("resources/images/items/' + id + '.png")',
-						'background-size': '100%',
+						'background-size': '95%',
 						'margin-left': 'auto',
 						'margin-right': 'auto'
 					},
