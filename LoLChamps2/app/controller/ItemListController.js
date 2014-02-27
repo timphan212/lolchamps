@@ -79,35 +79,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			listeners: {
 				itemtap: function(list, index, target, record, e, eOpts) {
 					var currItem = record.getData();
-					LoLChamps.app.ITEM_SEL_TXT = currItem.name;
-					LoLChamps.app.ITEM_ID = currItem.id;
-					LoLChamps.app.setUrl('iteminfoview');
-					var container = LoLChamps.app.getController('ItemListController').updateItemPanel(currItem,
-							LoLChamps.app.getController('ItemListController').ITEM_SQUARE_WIDTH);
-					var itemInfo = Ext.getCmp('iteminfoview').child('#iteminfocontainer');
-					
-					if(currItem.plaintext != null) {	
-						itemInfo.setHtml(currItem.plaintext +
-							    '<BR><BR>' + currItem.description +
-							    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
-							    '<BR>Total Cost: ' + currItem.gold.total +
-							    '<BR>Sell: ' + currItem.gold.sell);
-					}
-					else if(currItem.id == '3250' || currItem.id == '3251' || currItem.id == '3252' ||
-							currItem.id == '3253' || currItem.id == '3254') {
-						itemInfo.setHtml(currItem.description +
-							    '<BR><BR>Recipe Cost: ' + currItem.gold.base);
-					}
-					else {
-						itemInfo.setHtml(currItem.description +
-													    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
-													    '<BR>Total Cost: ' + currItem.gold.total +
-													    '<BR>Sell: ' + currItem.gold.sell);
-
-					}
-					if(container != null) {
-						Ext.getCmp('iteminfoview').child('#itemintocontainer').add(container);
-					}
+					LoLChamps.app.getController('ItemListController').setupItemInfoView(currItem);
 				}
 			}
 		});
@@ -169,6 +141,37 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		}
 	},
 	
+	setupItemInfoView: function(currItem) {
+		LoLChamps.app.ITEM_SEL_TXT = currItem.name;
+		LoLChamps.app.ITEM_ID = currItem.id;
+		LoLChamps.app.setUrl('iteminfoview');
+		var container = this.updateItemPanel(currItem, this.ITEM_SQUARE_WIDTH);
+		var itemInfo = Ext.getCmp('iteminfoview').child('#iteminfocontainer');
+		
+		if(currItem.plaintext != null) {	
+			itemInfo.setHtml(currItem.plaintext +
+				    '<BR><BR>' + currItem.description +
+				    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
+				    '<BR>Total Cost: ' + currItem.gold.total +
+				    '<BR>Sell: ' + currItem.gold.sell);
+		}
+		else if(currItem.id == '3250' || currItem.id == '3251' || currItem.id == '3252' ||
+				currItem.id == '3253' || currItem.id == '3254') {
+			itemInfo.setHtml(currItem.description +
+				    '<BR><BR>Recipe Cost: ' + currItem.gold.base);
+		}
+		else {
+			itemInfo.setHtml(currItem.description +
+										    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
+										    '<BR>Total Cost: ' + currItem.gold.total +
+										    '<BR>Sell: ' + currItem.gold.sell);
+
+		}
+		if(container != null) {
+			Ext.getCmp('iteminfoview').child('#itemintocontainer').add(container);
+		}
+	},
+	
 	createItemSquare: function(id, text, width) {
 		var square = {
 				xtype: 'container',
@@ -187,40 +190,11 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					},
 					listeners: {
 						tap: function(image, e, eOpts) {
-							var strID = image.getId();
 							var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, id);
-							LoLChamps.app.ITEM_SEL_TXT = currItem.name;
-							LoLChamps.app.ITEM_ID = strID
-							LoLChamps.app.setUrl('iteminfoview');
 							Ext.getStore('itemliststore').load({
 								callback: function(records, operation, success) {
 									if(success) { 
-										var container = LoLChamps.app.getController('ItemListController').updateItemPanel(currItem,
-												LoLChamps.app.getController('ItemListController').ITEM_SQUARE_WIDTH);
-										var itemInfo = Ext.getCmp('iteminfoview').child('#iteminfocontainer');
-										
-										if(currItem.plaintext != null) {	
-											itemInfo.setHtml(currItem.plaintext +
-												    '<BR><BR>' + currItem.description +
-												    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
-												    '<BR>Total Cost: ' + currItem.gold.total +
-												    '<BR>Sell: ' + currItem.gold.sell);
-										}
-										else if(currItem.id == '3250' || currItem.id == '3251' || currItem.id == '3252' ||
-												currItem.id == '3253' || currItem.id == '3254') {
-											itemInfo.setHtml(currItem.description +
-												    '<BR><BR>Recipe Cost: ' + currItem.gold.base);
-										}
-										else {
-											itemInfo.setHtml(currItem.description +
-																		    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
-																		    '<BR>Total Cost: ' + currItem.gold.total +
-																		    '<BR>Sell: ' + currItem.gold.sell);
-
-										}
-										if(container != null) {
-											Ext.getCmp('iteminfoview').child('#itemintocontainer').add(container);
-										}
+										LoLChamps.app.getController('ItemListController').setupItemInfoView(currItem);
 									}
 								}
 							})
