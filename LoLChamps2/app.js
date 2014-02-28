@@ -159,7 +159,8 @@ Ext.application({
 			'MasterYi': 'Master Yi',
 			'MissFortune': 'Miss Fortune',
 			'TwistedFate': 'Twisted Fate',
-			'XinZhao': 'Xin Zhao'
+			'XinZhao': 'Xin Zhao',
+			'Velkoz': "Vel'Koz"
 		};
 		if (dictionary[text]) {
 			return dictionary[text];
@@ -175,7 +176,7 @@ Ext.application({
     ITEM_ID: "",
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
-    REGION: 'euw',
+    REGION: 'na',
     SEARCH: 'Search'
     
 });

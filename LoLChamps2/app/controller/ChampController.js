@@ -129,9 +129,55 @@ Ext.define('LoLChamps.controller.ChampController', {
 		if (records.length == 1) {
 			var champData = records[0].getData();
 			this.getChampLogoPanel().add(this.createLogoPanelForChamp(champData));
+			// Stats - TODO create another panel with shit
+			this.getChampStatsView().setHtml(this.PrintStats(champData));
+			this.getChampStatsView().setStyle({'font-size': '70%'});
+			// Spells - fucking crazy work
+			this.getChampSpellsView().add(this.createSpellsPanel(champData));
+			// Lore - TODO create another panel with many more css styling
 			this.getChampLoreView().setHtml(champData.lore);
 			this.getChampLoreView().setStyle({'font-size': '70%'});
 		}
+	},
+	
+	createSpellsPanel: function(champData) {
+		var passivePanel = this.createVBoxContainer([{
+			height: 30,
+			html: 'Passive'
+		}, this.createHBoxContainer([{
+			xtype: 'image',
+			src: 'resources/images/abilities/' + champData.passive.image.full,
+			height: 64,
+			width: 64,
+			style: {
+				'background-size': '95%'
+			}
+		}, {
+			xtype: 'container',
+			layout: 'vbox',
+			flex: 1,
+			items: [{
+				html: '<b><u>'+ champData.passive.name +'</u></b>',
+				style: {
+					'font-size': '80%'
+				}
+			}, {
+				html: champData.passive.description,
+				style: {
+					'font-size': '60%'
+				}
+			}]
+		}])]);
+		
+		return this.createVBoxContainer([passivePanel]);
+	},
+	
+	PrintStats: function(champData) {
+		var html = '';
+		for (var key in champData.stats) {
+			html += '<p><b>' + key.toUpperCase() +':</b> ' + champData.stats[key] + '</p>';
+		}
+		return html;
 	},
 	
 	createLogoPanelForChamp: function(champData) {
@@ -154,7 +200,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		logoPanel.items.push({
 			xtype: 'container',
 			layout: 'vbox',
-			width: '100%',
+			flex: 1,
 			items: [{
 				html: champData.name,
 				style: {
@@ -172,11 +218,19 @@ Ext.define('LoLChamps.controller.ChampController', {
 		return logoPanel;
 	},
 	
-	createHBoxContainer: function() {
+	createHBoxContainer: function(items) {
 		return {
 			xtype: 'container',
 			layout: 'hbox',
-			items: []
+			items: items? items : []
+		}
+	},
+	
+	createVBoxContainer: function(items) {
+		return {
+			xtype: 'container',
+			layout: 'vbox',
+			items: items? items : []
 		}
 	},
 	
@@ -217,7 +271,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	createChampList: function() {
 		if (Ext.getCmp('champpanel')) {
-			return;
+			this.getChampListPanel().removeAll(true,true);
 		}
 		// Create Grid of Champions
 		this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
