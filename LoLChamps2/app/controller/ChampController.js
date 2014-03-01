@@ -141,12 +141,22 @@ Ext.define('LoLChamps.controller.ChampController', {
 	},
 	
 	createSpellsPanel: function(champData) {
-		var passivePanel = this.createVBoxContainer([{
+		var passivePanel = this.createPassivePanel(champData.passive);
+		var spellPanel1 = this.createSpellPanel(champData.spells[0]);
+		var spellPanel2 = this.createSpellPanel(champData.spells[1]);
+		var spellPanel3 = this.createSpellPanel(champData.spells[2]);
+		var spellPanel4 = this.createSpellPanel(champData.spells[3]);
+		
+		return this.createVBoxContainer([passivePanel,spellPanel1,spellPanel2,spellPanel3,spellPanel4]);
+	},
+	
+	createPassivePanel: function(passive) {
+		return this.createVBoxContainer([{
 			height: 30,
 			html: 'Passive'
 		}, this.createHBoxContainer([{
 			xtype: 'image',
-			src: 'resources/images/abilities/' + champData.passive.image.full,
+			src: 'resources/images/abilities/' + passive.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -157,19 +167,37 @@ Ext.define('LoLChamps.controller.ChampController', {
 			layout: 'vbox',
 			flex: 1,
 			items: [{
-				html: '<b><u>'+ champData.passive.name +'</u></b>',
+				html: '<b><u>'+ passive.name +'</u></b>',
 				style: {
 					'font-size': '80%'
 				}
 			}, {
-				html: champData.passive.description,
+				html: passive.description,
 				style: {
 					'font-size': '60%'
 				}
 			}]
-		}])]);
-		
-		return this.createVBoxContainer([passivePanel]);
+		}])
+		]);
+	},
+	
+	createSpellPanel: function(spell) {
+		return this.createVBoxContainer([{
+			height: 30,
+			html: spell.name
+		}, this.createHBoxContainer([{
+			xtype: 'image',
+			src: 'resources/images/abilities/' + spell.image.full,
+			height: 64,
+			width: 64,
+			style: {
+				'background-size': '95%'
+			}
+		}, this.createVBoxContainer([{
+			
+		}])
+		])
+		]);
 	},
 	
 	PrintStats: function(champData) {
