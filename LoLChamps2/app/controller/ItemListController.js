@@ -77,7 +77,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		if (Ext.getCmp('ItemList')) {
 			Ext.getCmp('ItemList').destroy();
 		}
-
+		
 		this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
 	},
 	
@@ -160,6 +160,44 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		return rows;
 	},
 	
+	createItemTree: function(arr, width) {
+		if (Ext.getCmp('itemtreepanel')) {
+			Ext.getCmp('itemtreepanel').destroy();
+		}
+		if(arr.length == 0) {
+			return;
+		}
+		
+		var count = arr.length;
+		var columns = 1;
+		var rows = Math.ceil(count / columns);
+		var items = [];
+		var container = this.createHBoxContainer();
+		var rowItems = [];
+		var name = "";
+
+		for (var i = 0; i < count; i++) {
+			var id = arr[i];
+			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, arr[i])).name);
+			container.items.push(this.createItemSquare(id, name, width, '_tree_' + i));
+			
+			if (container.items.length % columns == 0 || i == (count-1)) {
+				items.push(container);
+				var container = this.createHBoxContainer();
+				container.items = [];
+			}
+		}
+		
+		var rows = {
+			xtype: 'container',
+			id: 'itemtreepanel',
+			layout: 'vbox',
+			items: items
+		}
+		
+		return rows;
+	},
+	
 	retrieveItem: function(arr, id) {
 		for(var index in arr) {
 			if(arr[index].getData().id == id) {
@@ -191,13 +229,30 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		return newName;
 	},
 	
+	retrieveFromItems: function(currItem, arr) {
+		arr.push(currItem.id);
+		if(currItem.from != null) {
+			for(var i = 0; i < currItem.from.length; i++) {
+				this.retrieveFromItems(this.retrieveItem(Ext.getStore('itemliststore').getData().all, currItem.from[i]), arr);
+			}
+		}
+		
+		return arr;
+	},
+	
 	setupItemInfoView: function(currItem) {
 		LoLChamps.app.ITEM_SEL_TXT = currItem.name;
 		LoLChamps.app.ITEM_ID = currItem.id;
 		LoLChamps.app.setUrl('iteminfoview');
-		var container = this.updateItemPanel(currItem, this.ITEM_SQUARE_WIDTH);
+		var arr = [];
+		arr = this.retrieveFromItems(currItem, arr);
+		var itemTree = this.createItemTree(arr, this.ITEM_SQUARE_WIDTH);
 		var itemInfo = Ext.getCmp('iteminfoview').child('#iteminfocontainer');
+		var container = this.updateItemPanel(currItem, this.ITEM_SQUARE_WIDTH);
 		
+		if(itemTree != null) {
+			Ext.getCmp('iteminfoview').child('#itemtreecontainer').add(itemTree);
+		}
 		if(currItem.plaintext != null) {	
 			itemInfo.setHtml(currItem.plaintext +
 				    '<BR><BR>' + currItem.description +

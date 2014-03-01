@@ -8,6 +8,9 @@ Ext.define('LoLChamps.view.item.ItemInfoView', {
 		hidden: true,
 		items: [{
 			xtype: 'container',
+			itemId: 'itemtreecontainer'
+		}, {
+			xtype: 'container',
 			itemId: 'iteminfocontainer',
 		}, {
 			xtype: 'container',
