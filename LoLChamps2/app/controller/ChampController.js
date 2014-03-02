@@ -130,7 +130,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			var champData = records[0].getData();
 			this.getChampLogoPanel().add(this.createLogoPanelForChamp(champData));
 			// Stats - TODO create another panel with shit
-			this.getChampStatsView().setHtml(this.PrintStats(champData));
+			this.getChampStatsView().setHtml(this.printStats(champData));
 			this.getChampStatsView().setStyle({'font-size': '70%'});
 			// Spells - fucking crazy work
 			this.getChampSpellsView().add(this.createSpellsPanel(champData));
@@ -151,10 +151,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 	},
 	
 	createPassivePanel: function(passive) {
-		return this.createVBoxContainer([{
-			height: 30,
-			html: 'Passive'
-		}, this.createHBoxContainer([{
+		return this.createHBoxContainer([{
 			xtype: 'image',
 			src: 'resources/images/abilities/' + passive.image.full,
 			height: 64,
@@ -167,7 +164,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			layout: 'vbox',
 			flex: 1,
 			items: [{
-				html: '<b><u>'+ passive.name +'</u></b>',
+				html: '<b><u>'+ passive.name +'</u></b> (Passive)',
 				style: {
 					'font-size': '80%'
 				}
@@ -177,30 +174,80 @@ Ext.define('LoLChamps.controller.ChampController', {
 					'font-size': '60%'
 				}
 			}]
-		}])
-		]);
+		}]);
 	},
 	
 	createSpellPanel: function(spell) {
-		return this.createVBoxContainer([{
-			height: 30,
-			html: spell.name
-		}, this.createHBoxContainer([{
+		var columnWidth = window.innerWidth - 64;
+		return this.createHBoxContainer([{
 			xtype: 'image',
-			src: 'resources/images/abilities/' + spell.image.full,
+			src: 'http://ddragon.leagueoflegends.com/cdn/4.3.12/img/spell/' + spell.image.full,
 			height: 64,
 			width: 64,
 			style: {
 				'background-size': '95%'
 			}
 		}, this.createVBoxContainer([{
-			
+			xtype: 'container',
+			layout: 'vbox',
+			items: [{
+				html: '<b><u>'+ spell.name +'</u></b>',
+				style: {
+					'font-size': '80%'
+				}
+			}, {
+				width: columnWidth,
+				html: this.encodeToolTip(spell),
+				style: {
+					'font-size': '60%'
+				}
+			}]
 		}])
-		])
 		]);
 	},
 	
-	PrintStats: function(champData) {
+	encodeToolTip: function(spell) {
+		var tooltip = spell.tooltip;
+		var indexA = tooltip.indexOf('{{');
+		var indexB = tooltip.indexOf('}}');
+		var count = 0;
+		while (indexA > 0 && indexB > 0) {
+			var effVar = tooltip.slice(indexA,indexB);
+			if (effVar.indexOf('e') > 0) {
+				var index = parseInt(effVar.slice(effVar.indexOf('e')+1,effVar.indexOf('e')+2));
+				tooltip = tooltip.slice(0,indexA) + spell.effectBurn[index-1] + tooltip.slice(indexB+2);
+			} else if (effVar.indexOf('a') > 0) {
+				var index = parseInt(effVar.slice(effVar.indexOf('a')+1,effVar.indexOf('a')+2));
+				for (var i = 0; i < spell.vars.length; i++) {
+					if (spell.vars[i].key == 'a' + index) {
+						if (spell.vars[i].coeff.length) {
+							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
+						} else {
+							tooltip = tooltip.slice(0,indexA) + '<font color="green">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+						}
+					}
+				}
+			} else if (effVar.indexOf('f') > 0) {
+				var index = parseInt(effVar.slice(effVar.indexOf('f')+1,effVar.indexOf('f')+2));
+				for (var i = 0; i < spell.vars.length; i++) {
+					if (spell.vars[i].key == 'f' + index) {
+						if (spell.vars[i].coeff.length) {
+							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
+						} else {
+							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+						}
+					}
+				}
+			}
+			indexA = tooltip.indexOf('{{');
+			indexB = tooltip.indexOf('}}');
+			count++;
+			if (count > 10) return tooltip;
+		}
+		return tooltip;
+	},
+	
+	printStats: function(champData) {
 		var html = '';
 		for (var key in champData.stats) {
 			html += '<p><b>' + key.toUpperCase() +':</b> ' + champData.stats[key] + '</p>';
