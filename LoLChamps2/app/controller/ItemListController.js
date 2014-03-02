@@ -32,8 +32,13 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					}
 				},
 				clearicontap: function(e, eOpts) {
-					Ext.getStore('itemliststore').clearFilter();
-					this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
+					if(Ext.getStore('itemliststore')) {
+						this.getItemListPanel().setMasked(true);
+						Ext.getStore('itemliststore').clearFilter();
+						this.updateItemListPanel(this.ITEM_SQUARE_WIDTH);
+						this.getItemListPanel().setMasked(false);
+					}
+					
 				}
 			},
 			TagField: {
@@ -93,16 +98,13 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var itemData = Ext.getStore('itemliststore').getData();
 		var count = Ext.getStore('itemliststore').getCount();
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
-		var rows = Math.ceil(count / columns);
 		var items = [];
 		var container = this.createHBoxContainer();
-		var rowItems = [];
-		var name = "";
 		
 		for(var i = 0; i < count; i++) {
 			var name = this.formatName(itemData.getAt(i).getData().name);
 			var id = itemData.getAt(i).getData().id;
-			container.items.push(this.createItemSquare(id, name, width, '_list'));
+			container.items.push(this.createItemSquare(id, name, width, '_list', false));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
@@ -132,16 +134,13 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		
 		var count = currItem.into.length;
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
-		var rows = Math.ceil(count / columns);
 		var items = [];
 		var container = this.createHBoxContainer();
-		var rowItems = [];
-		var name = "";
 
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
 			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, id)).name);
-			container.items.push(this.createItemSquare(id, name, width, '_info'));
+			container.items.push(this.createItemSquare(id, name, width, '_info', false));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
@@ -167,19 +166,58 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		if(arr.length == 0) {
 			return;
 		}
-		
+
 		var count = arr.length;
 		var columns = 1;
-		var rows = Math.ceil(count / columns);
 		var items = [];
 		var container = this.createHBoxContainer();
-		var rowItems = [];
-		var name = "";
-
+		var indentArr = [0];
+		var indentCount = 0;
+		var tabStr = '';
+		var nestLevel = 1;
+		var tempIndentCount = 0;
+		for(var i = 0; i < 16; i++) {
+			tabStr += '&nbsp;'
+		}
+		
+		for(var i= 1; i < arr.length; i++) {
+			var currItem = this.retrieveItem(Ext.getStore('itemliststore').getData().all, arr[i]);
+			indentArr[i] = 1;
+			
+			if(currItem.from == null) {
+				if(indentCount > 0) {
+					indentArr[i] += nestLevel;
+					indentCount--;
+					if(indentCount == 0) {
+						nestLevel = 1;
+					}
+				}
+				else if(tempIndentCount > 0) {
+					indentArr[i] += nestLevel;
+				}
+			}
+			else {
+				if(indentCount > 0) {
+					indentArr[i] += nestLevel;
+					nestLevel++;
+					indentCount--;
+					if(indentCount > 0) {
+						tempIndentCount = indentCount;
+					}
+				}
+				indentCount = currItem.from.length;
+			}
+		}
 		for (var i = 0; i < count; i++) {
 			var id = arr[i];
 			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, arr[i])).name);
-			container.items.push(this.createItemSquare(id, name, width, '_tree_' + i));
+			
+			while(indentArr[i] > 0) {
+				container.items.push(this.createItemSquare('blank', tabStr, width, '_filler', true));
+				indentArr[i]--;
+			}
+			
+			container.items.push(this.createItemSquare(id, name, width, '_tree_' + i, false));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
@@ -194,7 +232,6 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			layout: 'vbox',
 			items: items
 		}
-		
 		return rows;
 	},
 	
@@ -251,7 +288,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var container = this.updateItemPanel(currItem, this.ITEM_SQUARE_WIDTH);
 		
 		if(itemTree != null) {
-			Ext.getCmp('iteminfoview').child('#itemtreecontainer').add(itemTree);
+				Ext.getCmp('iteminfoview').child('#itemtreecontainer').add(itemTree);
 		}
 		if(currItem.plaintext != null) {	
 			itemInfo.setHtml(currItem.plaintext +
@@ -277,7 +314,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		}
 	},
 	
-	createItemSquare: function(id, text, width, caseStr) {
+	createItemSquare: function(id, text, width, caseStr, hideObj) {
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
@@ -285,11 +322,12 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					xtype: 'image',
 					width: width,
 					height: width,
+					hidden: hideObj,
 					id: id + caseStr,
 					style: {
 						'background-image': 'url("resources/images/items/' + id + '.png")',
 						'background-size': '95%',
-						'margin-left': 'auto',
+						'margin-left': 'auto', 
 						'margin-right': 'auto'
 					},
 					listeners: {
