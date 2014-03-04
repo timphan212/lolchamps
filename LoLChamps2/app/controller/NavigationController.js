@@ -3,13 +3,16 @@ Ext.define('LoLChamps.controller.NavigationController', {
 	xtype: 'navigationcontroller',
 	config: {
 		views: [
-		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView'
+		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
+		    'summoner.SummonerInfoView'
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',
 			ChampListView: '#champlistview',
 			ItemInfoBtn: '#iteminfobtn',
 			ItemListView: '#itemlistview',
+			SummonerInfoView: '#summonerinfoview',
+			SummonerInfoBtn: '#summonerinfobtn',
 			TitleBar: '#loltitlebar'
 		},
 		control: {
@@ -18,13 +21,17 @@ Ext.define('LoLChamps.controller.NavigationController', {
 			},
 			ItemInfoBtn: {
 				tap: 'onItemListBtnTap'
+			},
+			SummonerInfoBtn: {
+				tap: 'onSummonerBtnTap'
 			}
 		},
 		routes: {
 			'champlistview': 'redirectTo',
 			'champinfoview': 'redirectTo',
 			'itemlistview': 'redirectTo',
-			'iteminfoview': 'redirectTo'
+			'iteminfoview': 'redirectTo',
+			'summonerinfoview': 'redirectTo'
 		}
 	},
 	
@@ -64,6 +71,22 @@ Ext.define('LoLChamps.controller.NavigationController', {
 					callback: function(records, operation, success) {
 						if(success) {
 							LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
+						}
+					}
+				})
+			}
+		}
+	},
+	
+	onSummonerBtnTap: function(me, e, eOpts) {
+		LoLChamps.app.resetRoute(LoLChamps.app.summonerRoute);
+		LoLChamps.app.setUrl(LoLChamps.app.summonerRoute);
+		if(LoLChamps.app.summonerRoute == 'summonerinfoview') {
+			if(!Ext.getCmp('SummonerInfo')) {
+				Ext.getStore('summonerstore').load({
+					callback: function(records, operation, success) {
+						if(success) {
+							LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
 						}
 					}
 				})

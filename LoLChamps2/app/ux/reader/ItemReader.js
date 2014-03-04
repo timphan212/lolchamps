@@ -1,6 +1,6 @@
-Ext.define('LoLChamps.ux.reader.CustomReader', {
+Ext.define('LoLChamps.ux.reader.ItemReader', {
 	extend: 'Ext.data.reader.Json',
-	alias: 'reader.customreader',
+	alias: 'reader.itemreader',
 	
 	getResponseData : function(response) {
 		var responseText = response;

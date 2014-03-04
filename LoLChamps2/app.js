@@ -2,19 +2,20 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox', 'LoLChamps.ux.reader.CustomReader'
+        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader'
     ],
     controllers: [
-        'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController'
+        'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController', 'SummonerController'
     ],
     models: [
-        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'ItemListModel'
+        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'SummonerIDModel'
     ],
     stores: [
-        'ChampListStore', 'ChampInfoStore', 'ItemIDStore', 'ItemListStore'
+        'ChampListStore', 'ChampInfoStore', 'ItemListStore', 'SummonerIDStore'
     ],
     views: [
-        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView'
+        'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
+        'summoner.SummonerInfoView'
     ],
     
     icon: {
@@ -44,7 +45,7 @@ Ext.application({
     itemRoute: 'itemlistview',
     itemViewOrder: ['itemlistview', 'iteminfoview'],
     
-    summonerRoute: 'summonerview',
+    summonerRoute: 'summonerinfoview',
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
@@ -176,6 +177,8 @@ Ext.application({
     ITEM_ID: "",
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
+    SUMMONER_NAME: 'Fious',
+    SUMMONER_TXT: 'Summoner',
     REGION: 'na',
     SEARCH: 'Search'
     

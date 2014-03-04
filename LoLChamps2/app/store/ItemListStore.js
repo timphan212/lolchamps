@@ -9,7 +9,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 			url: 'https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION  + '/v1/item?locale=en_US&itemListData=all&api_key=' + apiKey,
 			model: 'LoLChamps.model.ItemIDModel',
 			reader: {
-				type: 'customreader',
+				type: 'itemreader',
 				rootProperty: 'data'
 			},
 			listeners: {
