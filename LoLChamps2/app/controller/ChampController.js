@@ -153,7 +153,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 	createPassivePanel: function(passive) {
 		return this.createHBoxContainer([{
 			xtype: 'image',
-			src: 'resources/images/abilities/' + passive.image.full,
+//			src: 'resources/images/abilities/' + passive.image.full,
+			src: 'http://ddragon.leagueoflegends.com/cdn/4.3.12/img/passive/' + passive.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -218,25 +219,34 @@ Ext.define('LoLChamps.controller.ChampController', {
 				tooltip = tooltip.slice(0,indexA) + spell.effectBurn[index-1] + tooltip.slice(indexB+2);
 			} else if (effVar.indexOf('a') > 0) {
 				var index = parseInt(effVar.slice(effVar.indexOf('a')+1,effVar.indexOf('a')+2));
-				for (var i = 0; i < spell.vars.length; i++) {
-					if (spell.vars[i].key == 'a' + index) {
-						if (spell.vars[i].coeff.length) {
-							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
-						} else {
-							tooltip = tooltip.slice(0,indexA) + '<font color="green">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+				if (spell.vars) {
+					for (var i = 0; i < spell.vars.length; i++) {
+						if (spell.vars[i].key == 'a' + index) {
+							if (spell.vars[i].coeff.length) {
+								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
+							} else {
+								tooltip = tooltip.slice(0,indexA) + '<font color="green">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+							}
 						}
 					}
+				} else {
+					tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
 				}
+				
 			} else if (effVar.indexOf('f') > 0) {
 				var index = parseInt(effVar.slice(effVar.indexOf('f')+1,effVar.indexOf('f')+2));
-				for (var i = 0; i < spell.vars.length; i++) {
-					if (spell.vars[i].key == 'f' + index) {
-						if (spell.vars[i].coeff.length) {
-							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
-						} else {
-							tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+				if (spell.vars) {
+					for (var i = 0; i < spell.vars.length; i++) {
+						if (spell.vars[i].key == 'f' + index) {
+							if (spell.vars[i].coeff.length) {
+								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
+							} else {
+								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
+							}
 						}
 					}
+				} else {
+					tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
 				}
 			}
 			indexA = tooltip.indexOf('{{');
