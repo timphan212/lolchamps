@@ -13,7 +13,7 @@ Ext.define('LoLChamps.store.SummonerIDStore', {
 			},
 			listeners: {
 				exception: function(store, response, eOpts) {
-					console.warn("SummonerStoreError");
+					Ext.getCmp('summonerinfoview').child('#summoneridcontainer').setHtml('<font color="red">User does not exist, please try again.</font>');
 				}
 			}
 		},
