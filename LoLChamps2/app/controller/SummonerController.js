@@ -11,7 +11,30 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		refs: {
 			SummonerInfoView: '#summonerinfoview',
 			SummonerIDContainer: '#summonerinfoview #summoneridcontainer',
+			SummonerSubmitBtn: '#summonersubmit',
+			SummonerTextField: '#summonertextfield',
 			TitleBar: '#loltitlebar'
+		},
+		
+		control: {
+			SummonerSubmitBtn: {
+				tap: 'onSummonerSubmitBtn'
+			}
+		}
+	},
+	
+	onSummonerSubmitBtn: function() {
+		if(Ext.getCmp('summonertextfield').getValue() != null) {
+			LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
+			if(!Ext.getCmp('SummonerInfo')) {
+				Ext.getStore('summonerstore').load({
+					callback: function(records, operation, success) {
+						if(success) {
+							LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
+						}
+					}
+				})
+			};
 		}
 	},
 	

@@ -81,16 +81,5 @@ Ext.define('LoLChamps.controller.NavigationController', {
 	onSummonerBtnTap: function(me, e, eOpts) {
 		LoLChamps.app.resetRoute(LoLChamps.app.summonerRoute);
 		LoLChamps.app.setUrl(LoLChamps.app.summonerRoute);
-		if(LoLChamps.app.summonerRoute == 'summonerinfoview') {
-			if(!Ext.getCmp('SummonerInfo')) {
-				Ext.getStore('summonerstore').load({
-					callback: function(records, operation, success) {
-						if(success) {
-							LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
-						}
-					}
-				})
-			}
-		}
 	}
 });
