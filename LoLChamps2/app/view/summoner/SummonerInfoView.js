@@ -1,11 +1,12 @@
 Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 	extend: 'Ext.Panel',
+	requires: [
+	   	    'Ext.tab.Panel'
+	   	],
 	xtype: 'summonerinfoview',
 	id: 'summonerinfoview',
 	config: {
 		layout: 'vbox',
-		scrollable: 'vertical',
-		hidden: true,
 		items: [{
 			xtype: 'fieldset',
 			layout: 'hbox',
@@ -22,8 +23,23 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 	        	id: 'summonersubmit'
 			}
 			]}, {
-			xtype: 'container',
-			itemId: 'summoneridcontainer'
-		}]
+			xtype: 'tabpanel',
+			itemId: 'summonertabpanel',
+			flex: 1,
+			items: [{
+				title: 'Summoner Stats',
+				itemId: 'summonerstats',
+				scrollable: 'vertical'
+			}, {
+				title: 'Ranked Stats',
+				itemId: 'summonerranked',
+				scrollable: 'vertical'
+			}, {
+				title: 'Recent Games',
+				itemId: 'summonerrecent',
+				scrollable: 'vertical'
+			}]
+		}
+		]
 	}
 });

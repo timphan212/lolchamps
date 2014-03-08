@@ -179,6 +179,7 @@ Ext.application({
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
     SUBMIT_TXT: 'Submit',
+    SUMMONER_ID: "",
     SUMMONER_NAME: 'Fious',
     SUMMONER_TXT: 'Summoner',
     REGION: 'na',
