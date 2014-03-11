@@ -8,10 +8,10 @@ Ext.application({
         'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController', 'SummonerController'
     ],
     models: [
-        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'SummonerIDModel'
+        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'SummonerIDModel', 'SummonerSummaryModel'
     ],
     stores: [
-        'ChampListStore', 'ChampInfoStore', 'ItemListStore', 'SummonerIDStore'
+        'ChampListStore', 'ChampInfoStore', 'ItemListStore', 'SummonerIDStore', 'SummonerSummaryStore'
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
@@ -179,9 +179,10 @@ Ext.application({
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
     SUBMIT_TXT: 'Submit',
-    SUMMONER_ID: "",
+    SUMMONER_ID: "21328540",
     SUMMONER_NAME: 'Fious',
     SUMMONER_TXT: 'Summoner',
+    SEASON: 'SEASON4',
     REGION: 'na',
     SEARCH: 'Search'
     
