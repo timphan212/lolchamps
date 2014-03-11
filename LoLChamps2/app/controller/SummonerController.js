@@ -110,7 +110,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 					continue;
 				}
 				
-				sumStr += 'Mode: ' + summonerSummary.getAt(i).getData().playerStatSummaryType + '<BR>' + 
+				sumStr += 'Mode: ' + this.formatMode(summonerSummary.getAt(i).getData().playerStatSummaryType) + '<BR>' + 
 						  'Wins: ' + summonerSummary.getAt(i).getData().wins + '<BR>';
 				
 				if(summonerSummary.getAt(i).getData().losses != null) {
@@ -121,6 +121,60 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			}
 			
 			this.getSummonerStatsSummary().setHtml(sumStr);
+		}
+	},
+	
+	formatMode: function(modeStr) {
+		if(modeStr == 'AramUnranked5x5') {
+			return 'Howling Abyss';
+		}
+		else if(modeStr == 'CoopVsAI') {
+			return 'Summoner\'s Rift (Co-op vs. AI)'; 
+		}
+		else if(modeStr == 'CoopVsAI3x3') {
+			return 'Twisted Treeline (Co-op vs. AI)';
+		}
+		else if(modeStr == 'OdinUnranked') {
+			return 'The Crystal Scar';
+		}
+		else if(modeStr == 'RankedPremade3x3') {
+			return 'Twisted Treeline (Ranked Pre-made)';
+		}
+		else if(modeStr == 'RankedPremade5x5') {
+			return 'Summoner\'s Rift (Ranked Pre-made';
+		}
+		else if(modeStr == 'RankedSolo5x5') {
+			return 'Summoner\'s Rift (Ranked Solo/Duo)';
+		}
+		else if(modeStr == 'RankedTeam3x3') {
+			return 'Twisted Treeline (Ranked Teams)';
+		}
+		else if(modeStr == 'RankedTeam5x5') {
+			return 'Summoner\'s Rift (Ranked Teams)';
+		}
+		else if(modeStr == 'Unranked') {
+			return 'Summoner\'s Rift (Normal)';		
+		}
+		else if(modeStr == 'Unranked3x3') {
+			return 'Twisted Treeline (Normal)';
+		}
+		else if(modeStr == 'OneForAll5x5') {
+			return 'One For All';
+		}
+		else if(modeStr == 'FirstBlood1x1') {
+			return 'First Blood (1v1)';
+		}
+		else if(modeStr == 'FirstBlood2x2') {
+			return 'First Blood (2v2)';
+		}
+		else if(modeStr == 'SummonersRift6x6') {
+			return 'Hexakill';
+		}
+		else if(modeStr == 'CAP5x5') {
+			return 'Summoner\'s Rift (Team Builder)';
+		}
+		else {
+			return modeStr;
 		}
 	}
 });
