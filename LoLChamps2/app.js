@@ -8,10 +8,10 @@ Ext.application({
         'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController', 'SummonerController'
     ],
     models: [
-        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'SummonerIDModel', 'SummonerSummaryModel'
+        'ChampListModel', 'ChampInfoModel', 'ItemIDModel', 'SummonerIDModel', 'SummonerSummaryModel', 'SummonerRankedModel'
     ],
     stores: [
-        'ChampListStore', 'ChampInfoStore', 'ItemListStore', 'SummonerIDStore', 'SummonerSummaryStore'
+        'ChampListStore', 'ChampInfoStore', 'ItemListStore', 'SummonerIDStore', 'SummonerSummaryStore', 'SummonerRankedStore'
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',

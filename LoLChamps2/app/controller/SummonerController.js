@@ -86,19 +86,20 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			this.getSummonerStatsID().setHtml('ID: ' + summonerInfo.id + '<BR>' +
 								 'Name: ' + summonerInfo.name + '<BR>' +
 								 'Level: ' + summonerInfo.summonerLevel);
+			this.getSummonerSummary();
 		}
-		this.getSummonerSummary();
 	},
 	
 	getSummonerSummary: function() {
-		if(Ext.getStore('summonersummarystore'))
-		Ext.getStore('summonersummarystore').load({
-			callback: function(records, operation, success) {
-				if(success) {
-					LoLChamps.app.getController('SummonerController').createSummonerSummary();
+		if(Ext.getStore('summonersummarystore')) {
+			Ext.getStore('summonersummarystore').load({
+				callback: function(records, operation, success) {
+					if(success) {
+						LoLChamps.app.getController('SummonerController').createSummonerSummary();
+					}
 				}
-			}
-		})
+			})
+		}
 	},
 	
 	createSummonerSummary: function() {
@@ -121,6 +122,45 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			}
 			
 			this.getSummonerStatsSummary().setHtml(sumStr);
+			this.getSummonerRanked();
+		}
+	},
+	
+	getSummonerRanked: function() {
+		if(Ext.getStore('summonerrankedstore')) {
+			Ext.getStore('summonerrankedstore').load({
+				callback: function(records, operation, success) {
+					if(success) {
+						LoLChamps.app.getController('SummonerController').createSummonerRanked();
+					}
+				}
+			})
+		}
+	},
+	
+	createSummonerRanked: function() {
+		if(Ext.getStore('summonerrankedstore')) {
+			var summonerRanked = Ext.getStore('summonerrankedstore').getData();
+			var rankedStr = '';
+			for(var i = 0; i < summonerRanked.getCount(); i++) {
+				rankedStr += 'Mode: ' + this.formatQueueType(summonerRanked.getAt(i).getData().queueType) + '<BR>' +
+							 'Name/Team Name: ' + summonerRanked.getAt(i).getData().playerOrTeamName + '<BR>' +
+							 'League Name: ' + summonerRanked.getAt(i).getData().leagueName + '<BR>' +
+							 'Tier: ' + summonerRanked.getAt(i).getData().tier + ' ' + summonerRanked.getAt(i).getData().rank + '<BR>' +
+							 'League Points: ' + summonerRanked.getAt(i).getData().leaguePoints + ' LP <BR>' +
+							 'Wins: ' + summonerRanked.getAt(i).getData().wins + '<BR>';
+				
+				if(summonerRanked.getAt(i).getData().miniSeries != null) {
+					var wins = summonerRanked.getAt(i).getData().miniSeries.wins;
+					var losses = summonerRanked.getAt(i).getData().miniSeries.losses;
+					var target = summonerRanked.getAt(i).getData().miniSeries.target - wins
+					rankedStr += 'Promotional Series: ' + wins + ' wins/' + losses + ' losses (Needs ' + target + ' win(s) left!) <BR>';
+				}
+				
+				rankedStr += '<BR>';
+			}
+			
+			this.getSummonerRankedView().setHtml(rankedStr);
 		}
 	},
 	
@@ -175,6 +215,21 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		}
 		else {
 			return modeStr;
+		}
+	},
+	
+	formatQueueType: function(rankedStr) {
+		if(rankedStr == 'RANKED_TEAM_3x3') {
+			return 'Twisted Treeline';
+		}
+		else if(rankedStr == 'RANKED_TEAM_5x5') {
+			return 'Summoner\'s Rift (Ranked Teams)';
+		}
+		else if(rankedStr == 'RANKED_SOLO_5x5') {
+			return 'Summoner\'s Rift (Ranked Solo)';
+		}
+		else {
+			return rankedStr;
 		}
 	}
 });
