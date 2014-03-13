@@ -116,12 +116,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			var list = Ext.create('Ext.dataview.List', {
 				id: 'SummonerSummary',
 				store: Ext.getStore('summonersummarystore'),
-				itemTpl: tpl,
-				listeners: {
-					itemtap: function(index, target, record, e, eOpts) {
-						var currItem = Ext.getStore('summonersummarystore').getData().getAt(target).getData();
-					}
-				}
+				itemTpl: tpl
 			});
 
 			this.getSummonerStatsView().add(list);
