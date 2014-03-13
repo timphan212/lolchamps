@@ -1,7 +1,7 @@
 Ext.define('LoLChamps.controller.SummonerController', {
 	extend: 'Ext.app.Controller',
 	requires: [
-	    'Ext.dataview.List', 'Ext.Img'
+	    'Ext.dataview.List', 'Ext.Img', 'Ext.XTemplate'
 	],
 	xtype: 'summonercontroller',
 	config: {
@@ -82,10 +82,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	createSummoner: function() {
 		if(Ext.getStore('summoneridstore')) {
 			var summonerInfo = Ext.getStore('summoneridstore').getData().getAt(0).getData();
-			LoLChamps.app.SUMMONER_ID = summonerInfo.id;			
-			this.getSummonerStatsID().setHtml('ID: ' + summonerInfo.id + '<BR>' +
-								 'Name: ' + summonerInfo.name + '<BR>' +
-								 'Level: ' + summonerInfo.summonerLevel);
+			LoLChamps.app.SUMMONER_ID = summonerInfo.id;
 			this.getSummonerSummary();
 		}
 	},
@@ -103,25 +100,31 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	},
 	
 	createSummonerSummary: function() {
+		if(Ext.getCmp('SummonerSummary')) {
+			Ext.getCmp('SummonerSummary').destroy();
+		}
 		if(Ext.getStore('summonersummarystore')) {
-			var summonerSummary = Ext.getStore('summonersummarystore').getData();
-			var sumStr = '<BR>';
-			for(var i = 0; i < summonerSummary.getCount(); i++) {
-				if(summonerSummary.getAt(i).getData().wins == 0 && summonerSummary.getAt(i).getData().losses == 0) {
-					continue;
+			for(var i = 0; i < Ext.getStore('summonersummarystore').getCount(); i++) {
+				var currItem = Ext.getStore('summonersummarystore').getData().getAt(i).getData();
+				if(currItem.wins == 0 && currItem.losses == 0) {
+					Ext.getStore('summonersummarystore').removeAt(i);
 				}
-				
-				sumStr += 'Mode: ' + this.formatMode(summonerSummary.getAt(i).getData().playerStatSummaryType) + '<BR>' + 
-						  'Wins: ' + summonerSummary.getAt(i).getData().wins + '<BR>';
-				
-				if(summonerSummary.getAt(i).getData().losses != null) {
-					sumStr += 'Losses: ' + summonerSummary.getAt(i).getData().losses + '<BR>';
-				}
-				
-				sumStr += '<BR>';
 			}
-			
-			this.getSummonerStatsSummary().setHtml(sumStr);
+			var tpl = new Ext.XTemplate(
+					'{[LoLChamps.app.getController(\'SummonerController\').formatSummaryTemplate(values)]}'
+			);
+			var list = Ext.create('Ext.dataview.List', {
+				id: 'SummonerSummary',
+				store: Ext.getStore('summonersummarystore'),
+				itemTpl: tpl,
+				listeners: {
+					itemtap: function(index, target, record, e, eOpts) {
+						var currItem = Ext.getStore('summonersummarystore').getData().getAt(target).getData();
+					}
+				}
+			});
+
+			this.getSummonerStatsView().add(list);
 			this.getSummonerRanked();
 		}
 	},
@@ -181,7 +184,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			return 'Twisted Treeline (Ranked Pre-made)';
 		}
 		else if(modeStr == 'RankedPremade5x5') {
-			return 'Summoner\'s Rift (Ranked Pre-made';
+			return 'Summoner\'s Rift (Ranked Pre-made)';
 		}
 		else if(modeStr == 'RankedSolo5x5') {
 			return 'Summoner\'s Rift (Ranked Solo/Duo)';
@@ -231,5 +234,22 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		else {
 			return rankedStr;
 		}
-	}
+	},
+	
+	formatSummaryTemplate: function(values) {
+		tempStr = '';
+		
+		if(values.wins == 0 && values.losses == 0) {
+			return;
+		}
+		
+		tempStr += '<p>Mode: ' + this.formatMode(values.playerStatSummaryType) + '</p>';
+		tempStr += '<p>Wins: ' + values.wins + '</p>';
+		
+		if(values.losses != null) {
+			tempStr += '<p>Losses: ' + values.losses + '</p>';
+		}
+		
+		return tempStr;
+	},
 });

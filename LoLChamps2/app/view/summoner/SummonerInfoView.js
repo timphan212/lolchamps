@@ -18,33 +18,26 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 				flex: '4',
 			}, {
 				iconCls: 'search',
-	        	flex: 1,
+	        	flex: '1',
 	        	xtype: 'button',
 	        	id: 'summonersubmit'
 			}
 			]}, {
 			xtype: 'tabpanel',
 			itemId: 'summonertabpanel',
-			flex: 1,
+			flex: '1',
 			items: [{
 				title: 'Summoner Stats',
 				itemId: 'summonerstats',
-				scrollable: 'vertical',
-				items: [{
-					xtype: 'container',
-					itemId: 'summonerid'
-				}, {
-					xtype: 'container',
-					itemId: 'summonersummary'
-				}]
+				xtype: 'list',
 			}, {
 				title: 'Ranked Stats',
 				itemId: 'summonerranked',
 				scrollable: 'vertical'
 			}, {
+				xtype: 'list',
 				title: 'Recent Games',
-				itemId: 'summonerrecent',
-				scrollable: 'vertical'
+				itemId: 'summonerrecent'
 			}]
 		}
 		]
