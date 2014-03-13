@@ -29,15 +29,16 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 			items: [{
 				title: 'Summoner Stats',
 				itemId: 'summonerstats',
-				xtype: 'list',
+				xtype: 'list'
 			}, {
 				title: 'Ranked Stats',
 				itemId: 'summonerranked',
-				scrollable: 'vertical'
+				xtype: 'list'
+					
 			}, {
-				xtype: 'list',
 				title: 'Recent Games',
-				itemId: 'summonerrecent'
+				itemId: 'summonerrecent',
+				xtype: 'list'
 			}]
 		}
 		]

@@ -137,28 +137,22 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	},
 	
 	createSummonerRanked: function() {
+		if(Ext.getCmp('SummonerRanked')) {
+			Ext.getCmp('SummonerRanked').destroy();
+		}
 		if(Ext.getStore('summonerrankedstore')) {
 			var summonerRanked = Ext.getStore('summonerrankedstore').getData();
 			var rankedStr = '';
-			for(var i = 0; i < summonerRanked.getCount(); i++) {
-				rankedStr += 'Mode: ' + this.formatQueueType(summonerRanked.getAt(i).getData().queueType) + '<BR>' +
-							 'Name/Team Name: ' + summonerRanked.getAt(i).getData().playerOrTeamName + '<BR>' +
-							 'League Name: ' + summonerRanked.getAt(i).getData().leagueName + '<BR>' +
-							 'Tier: ' + summonerRanked.getAt(i).getData().tier + ' ' + summonerRanked.getAt(i).getData().rank + '<BR>' +
-							 'League Points: ' + summonerRanked.getAt(i).getData().leaguePoints + ' LP <BR>' +
-							 'Wins: ' + summonerRanked.getAt(i).getData().wins + '<BR>';
-				
-				if(summonerRanked.getAt(i).getData().miniSeries != null) {
-					var wins = summonerRanked.getAt(i).getData().miniSeries.wins;
-					var losses = summonerRanked.getAt(i).getData().miniSeries.losses;
-					var target = summonerRanked.getAt(i).getData().miniSeries.target - wins
-					rankedStr += 'Promotional Series: ' + wins + ' wins/' + losses + ' losses (Needs ' + target + ' win(s) left!) <BR>';
-				}
-				
-				rankedStr += '<BR>';
-			}
+			var tpl = new Ext.XTemplate(
+					'{[LoLChamps.app.getController(\'SummonerController\').formatRankedTemplate(values)]}'
+			);
+			var list = Ext.create('Ext.dataview.List', {
+				id: 'SummonerRanked',
+				store: Ext.getStore('summonerrankedstore'),
+				itemTpl: tpl
+			});
 			
-			this.getSummonerRankedView().setHtml(rankedStr);
+			this.getSummonerRankedView().add(list);
 		}
 	},
 	
@@ -247,4 +241,24 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		
 		return tempStr;
 	},
+	
+	formatRankedTemplate: function(values) {
+		tempStr = '';
+		tempStr += '<p>Mode: ' + this.formatQueueType(values.queueType) + '</p>';
+		tempStr += '<p>Name/Team Name: ' + values.playerOrTeamName + '</p>';
+		tempStr += '<p>League Name: ' + values.leagueName + '</p>';
+		tempStr += '<p>Tier: ' + values.tier + ' '  + values.rank + '</p>';
+		tempStr += '<p>League Points: ' + values.leaguePoints + ' LP</p>';
+		tempStr += '<p>Wins: ' + values.wins + '</p>';
+		
+		if(values.miniSeries != null) {
+			var wins = values.miniSeries.wins;
+			var losses = values.miniSeries.losses;
+			var target = values.miniSeries.target - wins;
+			
+			tempStr += 'Promotional Series: ' + wins + ' wins/' + losses + ' losses (Needs ' + target + ' win(s) left!) </p>';
+		}
+		
+		return tempStr;
+	}
 });
