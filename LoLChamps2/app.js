@@ -15,7 +15,7 @@ Ext.application({
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-        'summoner.SummonerInfoView'
+        'summoner.SummonerInfoView', 'summoner.SummonerTapView'
     ],
     
     icon: {
@@ -46,6 +46,7 @@ Ext.application({
     itemViewOrder: ['itemlistview', 'iteminfoview'],
     
     summonerRoute: 'summonerinfoview',
+    summonerViewOrder: ['summonerinfoview', 'summonertapview'],
 
     launch: function() {
         // Destroy the #appLoadingIndicator element
@@ -179,8 +180,8 @@ Ext.application({
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
     SUBMIT_TXT: 'Submit',
-    SUMMONER_ID: "21328540",
-    SUMMONER_NAME: 'Fious',
+    SUMMONER_ID: "",
+    SUMMONER_NAME: "",
     SUMMONER_TXT: 'Summoner',
     SEASON: 'SEASON4',
     REGION: 'na',

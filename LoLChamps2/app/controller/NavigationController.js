@@ -4,7 +4,7 @@ Ext.define('LoLChamps.controller.NavigationController', {
 	config: {
 		views: [
 		    'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-		    'summoner.SummonerInfoView'
+		    'summoner.SummonerInfoView', 'summoner.SummonerTapView'
 		],
 		refs: {
 			ChampListBtn: '#champlistbtn',
@@ -13,6 +13,7 @@ Ext.define('LoLChamps.controller.NavigationController', {
 			ItemListView: '#itemlistview',
 			SummonerInfoView: '#summonerinfoview',
 			SummonerInfoBtn: '#summonerinfobtn',
+			SummonerTapView: '#summonertapview',
 			TitleBar: '#loltitlebar'
 		},
 		control: {
@@ -31,7 +32,8 @@ Ext.define('LoLChamps.controller.NavigationController', {
 			'champinfoview': 'redirectTo',
 			'itemlistview': 'redirectTo',
 			'iteminfoview': 'redirectTo',
-			'summonerinfoview': 'redirectTo'
+			'summonerinfoview': 'redirectTo',
+			'summonertapview': 'redirectTo'
 		}
 	},
 	

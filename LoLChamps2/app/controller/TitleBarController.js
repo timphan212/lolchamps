@@ -7,7 +7,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-			'summoner.SummonerInfoView'
+			'summoner.SummonerInfoView', 'summoner.SummonerTapView'
 		],
 		refs: {
 			ChampListView: '#champlistview',
@@ -17,7 +17,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ItemListView: '#itemlistview',
 			ItemInfoView: '#iteminfoview',
 			SettingsBtn: '#settingsbtn',
-			SummonerInfoView: '#summonerinfoview'
+			SummonerInfoView: '#summonerinfoview',
+			SummonerTapView: '#summonertapview'
 		},
 		control: {
 			ChampListView: {
@@ -41,8 +42,11 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				
 			},
 			SummonerInfoView: {
-				show: 'onSummonerInfoShow',
-				hide: 'onSummonerInfoHide'
+				show: 'onSummonerTapHide'
+			},
+			SummonerTapView: {
+				show: 'onSummonerTapShow',
+				hide: 'onSummonerTapHide'
 			}
 		}
 	},
@@ -63,7 +67,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onItemInfoShow: function() {
-		this.getTitleBarBackBtn().setText(LoLChamps.app.ITEMS_TXT)
+		this.getTitleBarBackBtn().setText(LoLChamps.app.ITEMS_TXT);
 		this.getTitleBarBackBtn().show();
 		this.getTitleBar().setTitle(LoLChamps.app.ITEM_SEL_TXT);
 	},
@@ -73,11 +77,14 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		this.getTitleBar().setTitle(LoLChamps.app.ITEMS_TXT);
 	},
 	
-	onSummonerInfoShow: function() {
-		this.getTitleBar().setTitle(LoLChamps.app.SUMMONER_TXT);
+	onSummonerTapShow: function() {
+		this.getTitleBarBackBtn().setText(LoLChamps.app.SUMMONER_TXT);
+		this.getTitleBarBackBtn().show();
+		this.getTitleBar().setTitle(LoLChamps.app.SUMMONER_NAME)
 	},
 	
-	onSummonerInfoHide: function() {
-
+	onSummonerTapHide: function() {
+		this.getTitleBarBackBtn().hide();
+		this.getTitleBar().setTitle(LoLChamps.app.SUMMONER_TXT);
 	}
 });
