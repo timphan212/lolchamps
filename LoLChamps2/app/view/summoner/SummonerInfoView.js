@@ -7,6 +7,7 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 	id: 'summonerinfoview',
 	config: {
 		layout: 'vbox',
+		fullscreen: 'true',
 		items: [{
 			xtype: 'fieldset',
 			layout: 'hbox',
@@ -27,18 +28,14 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 			itemId: 'summonertabpanel',
 			flex: '1',
 			items: [{
-				title: 'Summoner Stats',
+				title: 'Summary',
 				itemId: 'summonerstats',
 				xtype: 'list'
 			}, {
-				title: 'Ranked Stats',
+				title: 'Ranked',
 				itemId: 'summonerranked',
 				xtype: 'list'
 					
-			}, {
-				title: 'Recent Games',
-				itemId: 'summonerrecent',
-				xtype: 'list'
 			}]
 		}
 		]

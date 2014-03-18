@@ -15,17 +15,20 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			SummonerStatsID: '#summonerinfoview #summonertabpanel #summonerstats #summonerid',
 			SummonerStatsSummary: '#summonerinfoview #summonertabpanel #summonerstats #summonersummary',
 			SummonerRankedView: '#summonerinfoview #summonertabpanel #summonerranked',
-			SummonerRecentView: '#summonerinfoview #summonertabpanel #summonerrecent',
 			SummonerSubmitBtn: '#summonersubmit',
 			SummonerTextField: '#summonertextfield',
 			SummonerTapView: '#summonertapview',
 			SummonerTapPanel: '#summonertapview #summonertappanel',
+			SummonerTextField: '#summonerinfoview #summonertextfield',
 			TitleBar: '#loltitlebar'
 		},
 		
 		control: {
 			SummonerSubmitBtn: {
 				tap: 'onSummonerSubmitBtn'
+			},
+			SummonerTextField: {
+				action: 'onSummonerSubmitBtn'
 			}
 		}
 	},
@@ -47,20 +50,10 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			swipe: function(event, node, eOpts) {
 				if (event.direction == 'right') {
 					this.getSummonerTabPanel().setActiveItem(this.getSummonerStatsView());
-				} else if (event.direction == 'left') {
-					this.getSummonerTabPanel().setActiveItem(this.getSummonerRecentView());
 				}
 			},
 			scope: this
 		});
-		this.getSummonerRecentView().element.on({
-			swipe: function(event, node, eOpts) {
-				if (event.direction == 'right') {
-					this.getSummonerTabPanel().setActiveItem(this.getSummonerRankedView());
-				}
-			},
-			scope: this
-		})
 	},
 	
 	onSummonerSubmitBtn: function() {

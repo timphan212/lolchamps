@@ -54,7 +54,8 @@ Ext.application({
         
         // Add Views
         this.addViews();
-        this.setUrl('champlistview');
+        //this.setUrl('champlistview');
+        this.getController('NavigationController').onChampListBtnTap();
     },
     
     setUrl: function(newUrl) {
@@ -123,6 +124,13 @@ Ext.application({
     		for (var index in this.itemViewOrder) {
     			this.routes.push(this.itemViewOrder[index]);
     			if (view == this.itemViewOrder[index]) {
+    				break;
+    			}
+    		}
+    	} else if (view.search('summoner') > -1) {
+    		for (var index in this.summonerViewOrder) {
+    			this.routes.push(this.summonerViewOrder[index]);
+    			if (view == this.summonerViewOrder[index]) {
     				break;
     			}
     		}
