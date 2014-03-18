@@ -7,7 +7,6 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 	id: 'summonerinfoview',
 	config: {
 		layout: 'vbox',
-		fullscreen: 'true',
 		items: [{
 			xtype: 'fieldset',
 			layout: 'hbox',
