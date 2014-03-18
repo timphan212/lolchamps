@@ -204,6 +204,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			case 'RankedTeam5x5':
 				str = 'Summoner\'s Rift (Ranked Teams)';
 				break;
+			case 'RankedTeam3x3':
+				str = 'Twisted Treeline (Ranked)';
+				break;
 			case 'Unranked':
 				str = 'Summoner\'s Rift (Normal)';
 				break;
