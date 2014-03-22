@@ -6,6 +6,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 	xtype: 'champcontroller',
 	
 	CHAMPION_SQUARE_WIDTH: 80,
+	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.3.18/img',
 	
 	config: {
 		views: [
@@ -130,8 +131,9 @@ Ext.define('LoLChamps.controller.ChampController', {
 			var champData = records[0].getData();
 			this.getChampLogoPanel().add(this.createLogoPanelForChamp(champData));
 			// Stats - TODO create another panel with shit
-			this.getChampStatsView().setHtml(this.printStats(champData));
-			this.getChampStatsView().setStyle({'font-size': '70%'});
+//			this.getChampStatsView().setHtml(this.printStats(champData));
+			this.getChampStatsView().add(this.createChampStatsPanel(champData));
+//			this.getChampStatsView().setStyle({'font-size': '70%'});
 			// Spells - fucking crazy work
 			this.getChampSpellsView().add(this.createSpellsPanel(champData));
 			// Lore - TODO create another panel with many more css styling
@@ -154,7 +156,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		return this.createHBoxContainer([{
 			xtype: 'image',
 //			src: 'resources/images/abilities/' + passive.image.full,
-			src: 'http://ddragon.leagueoflegends.com/cdn/4.3.12/img/passive/' + passive.image.full,
+			src: this.IMAGE_SRC_PATH + '/passive/' + passive.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -182,7 +184,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var columnWidth = window.innerWidth - 64;
 		return this.createHBoxContainer([{
 			xtype: 'image',
-			src: 'http://ddragon.leagueoflegends.com/cdn/4.3.12/img/spell/' + spell.image.full,
+			src: this.IMAGE_SRC_PATH + '/spell/' + spell.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -265,12 +267,88 @@ Ext.define('LoLChamps.controller.ChampController', {
 		return html;
 	},
 	
+	createChampStatsPanel: function(champData) {
+		var stats = champData.stats;
+		var leftItems = [this.createStatPanel('hp', stats['hp'], stats['hpperlevel']),
+		                 this.createStatPanel('hpregen', stats['hpregen'], stats['hpregenperlevel']),
+		                 this.createStatPanel('attackdamage', stats['attackdamage'], stats['attackdamageperlevel']),
+		                 this.createStatPanel('attackrange', stats['attackrange'], ""),
+		                 this.createStatPanel('movespeed', stats['movespeed'], "")];
+		var rightItems = [this.createStatPanel('mp', stats['mp'], stats['mpperlevel']),
+		                  this.createStatPanel('mpregen', stats['mpregen'], stats['mpregenperlevel']),
+		                  this.createStatPanel('attackspeedoffset', stats['attackspeedoffset'], stats['attackspeedperlevel']),
+		                  this.createStatPanel('armor', stats['armor'], stats['armorperlevel']),
+		                  this.createStatPanel('spellblock', stats['spellblock'], stats['spellblockperlevel'])];
+		var leftCol = this.createVBoxContainer(leftItems);
+		var rightCol = this.createVBoxContainer(rightItems);
+		var panel = {
+			xtype: 'container',
+			layout: 'hbox',
+			flex: 1,
+			items: [leftCol,rightCol]
+			
+		};
+//		return this.createHBoxContainer([leftCol,rightCol]);
+		return panel;
+	},
+	
+	createStatPanel: function(statLabel, statValue, statGrowth) {
+		if (statLabel == 'attackspeedoffset') {
+			statGrowth = statGrowth + '%';
+			statValue = (1/(1.6*(1+parseFloat(statValue)))).toFixed(3);
+		}
+		var statperlevel = statGrowth != ""? ' (' + statGrowth + ') per level' : "";
+		return this.createHBoxContainer([{
+			xtype: 'image',
+//			src: this.IMAGE_SRC_PATH + '/spell/' + spell.image.full,
+//			height: 64,
+//			width: 64,
+//			style: {
+//				'background-size': '95%'
+//			}
+		}, this.createVBoxContainer([{
+			xtype: 'container',
+			layout: 'vbox',
+			width: window.innerWidth/2,
+			items: [{
+				html: this.DictionaryMapStats(statLabel) +':'
+			}, {
+				html: statValue + statperlevel,
+				style: {
+					'font-size': '80%'
+				}
+			}]
+		}])
+		]);
+	},
+	
+	DictionaryMapStats: function(text) {
+		var dictionary = {
+			'armor': 'Armor',
+			'attackdamage': 'Attack Damage',
+			'attackrange': 'Attack Range',
+			'attackspeedoffset': 'Attack Speed',
+			'hp': 'Health',
+			'hpregen': 'Health Regen',
+			'movespeed': 'Movement Speed',
+			'mp': 'Mana',
+			'mpregen': 'Mana Regen',
+			'spellblock': 'Magic Resist'
+		};
+		if (dictionary[text]) {
+			return dictionary[text];
+		} else {
+			return text;
+		}
+	},
+	
 	createLogoPanelForChamp: function(champData) {
 		var logoPanel = this.createHBoxContainer();
 		
 		logoPanel.items.push({
 			xtype: 'image',
-			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
+//			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
+			src: this.IMAGE_SRC_PATH + '/champion/' + champData.id + '.png',
 			width: this.CHAMPION_SQUARE_WIDTH,
 			height: this.CHAMPION_SQUARE_WIDTH,
 			style: {

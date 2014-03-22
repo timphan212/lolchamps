@@ -49,7 +49,7 @@ Ext.define('LoLChamps.controller.NavigationController', {
 				Ext.getCmp('ChampList').destroy();
 			}
 			if (this.getChampListBtn().tappedTime) {
-				if (new Date() - this.getChampListBtn().tappedTime < 1500) {
+				if (new Date() - this.getChampListBtn().tappedTime < 3500) {
 					return;
 				}
 			}
