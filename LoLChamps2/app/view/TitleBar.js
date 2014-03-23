@@ -16,7 +16,8 @@ Ext.define('LoLChamps.view.TitleBar', {
 			id: 'settingsbtn',
 			align: 'right',
 			xtype: 'button',
-			text: '| | | |'
+			iconCls: 'settings',
+			iconMask: true
 		}]
 	}
 });

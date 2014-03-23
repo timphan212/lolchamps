@@ -15,7 +15,7 @@ Ext.define('LoLChamps.store.SummonerIDStore', {
 				exception: function(store, response, eOpts) {
 					Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerstats').setHtml('<font color="red">User does not exist, please try again.</font>');
 					Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">User does not exist, please try again.</font>');
-					Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerrecent').setHtml('<font color="red">User does not exist, please try again.</font>');				}
+				}
 			}
 		},
 		listeners: {

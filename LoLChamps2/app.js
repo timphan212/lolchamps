@@ -15,7 +15,7 @@ Ext.application({
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-        'summoner.SummonerInfoView', 'summoner.SummonerTapView'
+        'summoner.SummonerInfoView', 'summoner.SummonerTapView', 'Settings'
     ],
     
     icon: {
@@ -187,6 +187,7 @@ Ext.application({
     ITEM_ID: "",
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
+    LOCALE: "en_US",
     SUBMIT_TXT: 'Submit',
     SUMMONER_ID: "",
     SUMMONER_NAME: "",

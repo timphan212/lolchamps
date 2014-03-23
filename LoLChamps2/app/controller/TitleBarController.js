@@ -7,7 +7,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-			'summoner.SummonerInfoView', 'summoner.SummonerTapView'
+			'summoner.SummonerInfoView', 'summoner.SummonerTapView', 'Settings'
 		],
 		refs: {
 			ChampListView: '#champlistview',
@@ -17,6 +17,10 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ItemListView: '#itemlistview',
 			ItemInfoView: '#iteminfoview',
 			SettingsBtn: '#settingsbtn',
+			SettingsView: '#settingsview',
+			SettingsLocaleSel: '#settingsview #fieldselect #localeselect',
+			SettingsRegionSel: '#settingsview #fieldselect #regionselect',
+			SettingsSeasonSel: '#settingsview #fieldselect #seasonselect',
 			SummonerInfoView: '#summonerinfoview',
 			SummonerTapView: '#summonertapview'
 		},
@@ -39,7 +43,19 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				hide: 'onItemInfoHide'
 			},
 			SettingsBtn: {
-				
+				tap: 'onSettingsBtnTap'
+			},
+			SettingsLocaleSel: {
+				change: 'onLocaleChange'
+			},
+			SettingsRegionSel: {
+				change: 'onRegionChange'
+			},
+			SettingsSeasonSel: {
+				change: 'onSeasonChange'
+			},
+			SettingsView: {
+				mousedown: 'onSettingsMouseDown'
 			},
 			SummonerInfoView: {
 				show: 'onSummonerTapHide'
@@ -86,5 +102,25 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onSummonerTapHide: function() {
 		this.getTitleBarBackBtn().hide();
 		this.getTitleBar().setTitle(LoLChamps.app.SUMMONER_TXT);
+	},
+	
+	onSettingsBtnTap: function(button, e, eOpts) {
+		Ext.getCmp('settingsview').showBy(button);
+	},
+	
+	onSeasonChange: function(newValue, oldValue, eOpts) {
+		LoLChamps.app.SEASON = newValue.getValue();
+	},
+	
+	onLocaleChange: function(newValue, oldValue, eOpts) {
+		LoLChamps.app.LOCALE = newValue.getValue();
+	},
+	
+	onRegionChange: function(newValue, oldValue, eOpts) {
+		LoLChamps.app.REGION = newValue.getValue();
+	},
+	
+	onSettingsMouseDown: function(e, eOpts) {
+		console.log('hello');
 	}
 });
