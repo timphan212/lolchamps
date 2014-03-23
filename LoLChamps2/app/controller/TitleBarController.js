@@ -105,7 +105,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onSettingsBtnTap: function(button, e, eOpts) {
-		Ext.getCmp('settingsview').showBy(button);
+		this.getSettingsView().showBy(button);
 	},
 	
 	onSeasonChange: function(newValue, oldValue, eOpts) {

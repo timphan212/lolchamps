@@ -10,6 +10,7 @@ Ext.define('LoLChamps.view.Settings', {
 		items: [
 		    {
 		        xtype: 'fieldset',
+		        title: 'Settings',
 		        itemId: 'fieldselect',
 		        items: [
 		        	{
