@@ -5,6 +5,8 @@ Ext.define('LoLChamps.view.Settings', {
 	   	],
 	xtype: 'settingsview',
 	id: 'settingsview',
+	modal: 'true',
+	hideOnMaskTap: 'true',
 	config: {
 		layout: 'vbox',
 		items: [

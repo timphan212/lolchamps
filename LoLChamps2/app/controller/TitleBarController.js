@@ -54,9 +54,6 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			SettingsSeasonSel: {
 				change: 'onSeasonChange'
 			},
-			SettingsView: {
-				mousedown: 'onSettingsMouseDown'
-			},
 			SummonerInfoView: {
 				show: 'onSummonerTapHide'
 			},
@@ -105,6 +102,11 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onSettingsBtnTap: function(button, e, eOpts) {
+		if (!this.getSettingsView().isHidden()) {
+			this.getSettingsView().hide();
+			return;
+		}
+		
 		this.getSettingsView().showBy(button);
 	},
 	
@@ -119,8 +121,4 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onRegionChange: function(newValue, oldValue, eOpts) {
 		LoLChamps.app.REGION = newValue.getValue();
 	},
-	
-	onSettingsMouseDown: function(e, eOpts) {
-		console.log('hello');
-	}
 });
