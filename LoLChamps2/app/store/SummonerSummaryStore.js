@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.SummonerSummaryStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.2/stats/by-summoner/' + LoLChamps.app.SUMMONER_ID + '/summary?season=' + LoLChamps.app.SEASON + '&api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.SummonerSummaryModel',
 			reader: {
 				type: 'json',

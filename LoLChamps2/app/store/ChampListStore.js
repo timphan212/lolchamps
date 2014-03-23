@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.ChampListStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.1/champion?api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.ChampListModel',
 			reader: {
 				type: 'json',

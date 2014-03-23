@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION  + '/v1/item?locale=' + LoLChamps.app.LOCALE + '&itemListData=all&api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.ItemIDModel',
 			reader: {
 				type: 'itemreader',

@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.ChampInfoStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1/champion/' + LoLChamps.app.CHAMPION_ID + '?locale=' + LoLChamps.app.LOCALE + '&champData=all&api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.ChampInfoModel',
 			reader: {
 				type: 'json'

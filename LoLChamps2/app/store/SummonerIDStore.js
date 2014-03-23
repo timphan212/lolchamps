@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.SummonerIDStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.3/summoner/by-name/' + LoLChamps.app.SUMMONER_NAME + '?api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.SummonerIDModel',
 			reader: {
 				type: 'summonerreader'

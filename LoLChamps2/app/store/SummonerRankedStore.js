@@ -6,7 +6,7 @@ Ext.define('LoLChamps.store.SummonerRankedStore', {
 		autoLoad: false,
 		proxy: {
 			type: 'ajax',
-			url: 'https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v2.3/league/by-summoner/' + LoLChamps.app.SUMMONER_ID + '/entry?api_key=' + apiKey,
+			url: '',
 			model: 'LoLChamps.model.SummonerRankedModel',
 			reader: {
 				type: 'json'

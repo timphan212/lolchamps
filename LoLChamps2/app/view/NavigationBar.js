@@ -11,21 +11,21 @@ Ext.define('LoLChamps.view.NavigationBar', {
 		        	iconCls: 'navButton',
 		        	flex: 1,
 		        	xtype: 'button',
-		        	text: LoLChamps.app.CHAMPIONS_TXT,
+		        	text: 'Champions',
 		        	id: 'champlistbtn'
 		        },
 		        {
 		        	iconCls: 'navButton',
 		        	flex: 1,
 		        	xtype: 'button',
-		        	text: LoLChamps.app.ITEMS_TXT,
+		        	text: 'Items',
 		        	id: 'iteminfobtn'
 		        },
 		        {
 		        	iconCls: 'navButton',
 		        	flex: 1,
 		        	xtype: 'button',
-		        	text: LoLChamps.app.SUMMONER_TXT,
+		        	text: 'Summoners',
 		        	id: 'summonerinfobtn'
 		        }
 		       ]
