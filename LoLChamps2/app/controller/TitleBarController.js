@@ -120,5 +120,5 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	
 	onRegionChange: function(newValue, oldValue, eOpts) {
 		LoLChamps.app.REGION = newValue.getValue();
-	},
+	}
 });

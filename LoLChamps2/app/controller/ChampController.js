@@ -299,7 +299,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		}
 		var statperlevel = statGrowth != ""? ' (' + statGrowth + ') per level' : "";
 		return this.createHBoxContainer([{
-			xtype: 'image',
+			xtype: 'image'
 //			src: this.IMAGE_SRC_PATH + '/spell/' + spell.image.full,
 //			height: 64,
 //			width: 64,

@@ -14,7 +14,7 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 			items: [{
 				xtype: 'searchfield',
 				itemId: 'itemlistsearch',
-				placeHolder: LoLChamps.app.SEARCH,
+				placeHolder: 'Search',
 				flex: '4',
 			}, {
 					xtype: 'selectfield',

@@ -9,7 +9,7 @@ Ext.define('LoLChamps.view.champ.ChampInfoView', {
 		layout: 'vbox',
 		items: [{
 			xtype: 'panel',
-			itemId: 'champlogopanel',
+			itemId: 'champlogopanel'
 		}, {
 			xtype: 'tabpanel',
 			itemId: 'champtabpanel',

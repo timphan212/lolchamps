@@ -11,10 +11,10 @@ Ext.define('LoLChamps.view.item.ItemInfoView', {
 			itemId: 'itemtreecontainer'
 		}, {
 			xtype: 'container',
-			itemId: 'iteminfocontainer',
+			itemId: 'iteminfocontainer'
 		}, {
 			xtype: 'container',
-			itemId: 'itemintocontainer',
+			itemId: 'itemintocontainer'
 		}]
 	}
 });
