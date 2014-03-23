@@ -4,10 +4,10 @@ Ext.define('LoLChamps.view.TitleBar', {
 	id: 'loltitlebar',
 	config: {
 		docked: 'top',
-		title: LoLChamps.app.CHAMPIONS_TXT,
+		title: 'Champions',
 		items: [{
 			id: 'titlebackbtn',
-			text: LoLChamps.app.CHAMPIONS_TXT,
+			text: 'Champions',
 			align: 'left',
 			xtype: 'button',
 			ui: 'back',
