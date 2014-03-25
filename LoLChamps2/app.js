@@ -54,7 +54,7 @@ Ext.application({
         
         // Add Views
         this.addViews();
-        //this.setUrl('champlistview');
+        this.setUrl('champlistview');
         this.getController('NavigationController').onChampListBtnTap();
     },
     
@@ -161,6 +161,7 @@ Ext.application({
     
 	DictionaryMapNames: function(text) {
 		var dictionary = {
+			'FiddleSticks': 'Fiddlesticks',
 			'DrMundo': 'Dr. Mundo',
 			'MonkeyKing': 'Wukong',
 			'JarvanIV': 'Jarvan IV',

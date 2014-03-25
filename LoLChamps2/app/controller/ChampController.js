@@ -81,7 +81,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 				layout: 'vbox',
 				items: [{
 					xtype: 'image',
-					src: 'resources/images/champions/' + text + '_Square_0.png',
+//					src: 'resources/images/champions/' + text + '_Square_0.png',
+					src: this.IMAGE_SRC_PATH + '/champion/' + text +'.png',
 					width: width,
 					height: width,
 					id: text + '_' + id,
@@ -92,12 +93,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 						tap: function(image, e, eOpts) {
 							var strID = image.getId();
 							var tokenIndex = strID.search('_');
-							LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
+							LoLChamps.app.CHAMPION_SEL_TXT = LoLChamps.app.DictionaryMapNames(strID.substring(0,tokenIndex));
 							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
+							LoLChamps.app.setUrl('champinfoview');
 							Ext.getStore('champinfostore').load({
 								callback: function(records, operation, success) {
 									if (success) {
-										LoLChamps.app.setUrl('champinfoview');
 										this.cleanChampInfo();
 										this.generateChampInfo(records);
 									}

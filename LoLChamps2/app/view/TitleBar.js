@@ -13,6 +13,11 @@ Ext.define('LoLChamps.view.TitleBar', {
 			ui: 'back',
 			hidden: true
 		}, {
+			id: 'refreshbtn',
+			iconCls: 'refresh',
+			align: 'left',
+			xtype: 'button'
+		}, {
 			id: 'settingsbtn',
 			align: 'right',
 			xtype: 'button',
