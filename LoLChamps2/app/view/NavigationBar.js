@@ -3,7 +3,7 @@ Ext.define('LoLChamps.view.NavigationBar', {
 	xtype: 'navigationbar',
 	id: 'navigationbar',
 	config: {
-		height: '60px',
+		height: '48px',
 		docked: 'bottom',
 		layout: 'hbox',
 		items: [

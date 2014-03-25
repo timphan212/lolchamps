@@ -12,28 +12,26 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		refs: {
 			ChampListView: '#champlistview',
 			ChampInfoView: '#champinfoview',
-			TitleBar: '#loltitlebar',
-			TitleBarBackBtn: '#titlebackbtn',
 			ItemListView: '#itemlistview',
 			ItemInfoView: '#iteminfoview',
+			RefreshBtn: '#refreshbtn',
 			SettingsBtn: '#settingsbtn',
 			SettingsView: '#settingsview',
 			SettingsLocaleSel: '#settingsview #fieldselect #localeselect',
 			SettingsRegionSel: '#settingsview #fieldselect #regionselect',
 			SettingsSeasonSel: '#settingsview #fieldselect #seasonselect',
 			SummonerInfoView: '#summonerinfoview',
-			SummonerTapView: '#summonertapview'
+			SummonerTapView: '#summonertapview',
+			TitleBar: '#loltitlebar',
+			TitleBarBackBtn: '#titlebackbtn',
 		},
 		control: {
 			ChampListView: {
-				show: 'onChampInfoHide'
+				show: 'onChampInfoHide',
 			},
 			ChampInfoView: {
 				show: 'onChampInfoShow',
 				hide: 'onChampInfoHide'
-			},
-			TitleBarBackBtn: {
-				tap: 'onTitleBackBtnTap'
 			},
 			ItemListView: {
 				show: 'onItemInfoHide'
@@ -41,6 +39,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			ItemInfoView: {
 				show: 'onItemInfoShow',
 				hide: 'onItemInfoHide'
+			},
+			RefreshBtn: {
+				tap: 'onRefreshBtnTap'
 			},
 			SettingsBtn: {
 				tap: 'onSettingsBtnTap'
@@ -60,6 +61,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			SummonerTapView: {
 				show: 'onSummonerTapShow',
 				hide: 'onSummonerTapHide'
+			},
+			TitleBarBackBtn: {
+				tap: 'onTitleBackBtnTap'
 			}
 		}
 	},
@@ -88,6 +92,19 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onItemInfoHide: function() {
 		this.getTitleBarBackBtn().hide();
 		this.getTitleBar().setTitle(LoLChamps.app.ITEMS_TXT);
+	},
+	
+	onRefreshBtnTap: function() {
+		//TODO
+		if (LoLChamps.app.getCurrentView() == 'champlistview') {
+			Ext.getStore('champliststore').load({
+				callback: function(records, operation, success) {
+					if (success) {
+						LoLChamps.app.getController('LoLChamps.controller.ChampController').createChampList();
+					}
+				}
+			});
+		}
 	},
 	
 	onSummonerTapShow: function() {

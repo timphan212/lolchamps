@@ -45,15 +45,9 @@ Ext.define('LoLChamps.controller.NavigationController', {
 		LoLChamps.app.resetRoute(LoLChamps.app.champRoute);
 		LoLChamps.app.setUrl(LoLChamps.app.champRoute);
 		if (LoLChamps.app.champRoute == 'champlistview') {
-			if (Ext.getCmp('ChampList')) {
-				Ext.getCmp('ChampList').destroy();
+			if (Ext.getCmp('champpanel')) {
+				return;
 			}
-			if (this.getChampListBtn().tappedTime) {
-				if (new Date() - this.getChampListBtn().tappedTime < 3500) {
-					return;
-				}
-			}
-			this.getChampListBtn().tappedTime = new Date();
 			Ext.getStore('champliststore').load({
 				callback: function(records, operation, success) {
 					if (success) {
