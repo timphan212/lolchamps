@@ -102,7 +102,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var container = this.createHBoxContainer();
 		
 		for(var i = 0; i < count; i++) {
-			var name = this.formatName(itemData.getAt(i).getData().name);
+			var name = itemData.getAt(i).getData().name;
 			var id = itemData.getAt(i).getData().id;
 			container.items.push(this.createItemSquare(id, name, width, id + '_list', false));
 			
@@ -139,7 +139,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
-			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, id)).name);
+			var name = (this.retrieveItem(Ext.getStore('itemliststore').getData().all, id)).name;
 			container.items.push(this.createItemSquare(id, name, width, id + '_info', false));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
@@ -181,7 +181,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		
 		for (var i = 0; i < count; i++) {
 			var id = arr[i];
-			var name = this.formatName((this.retrieveItem(Ext.getStore('itemliststore').getData().all, arr[i])).name);
+			var name = (this.retrieveItem(Ext.getStore('itemliststore').getData().all, arr[i])).name;
 			var prevIndent = indentArr[i-1];
 			var currIndent = 1;
 			var blankBool = this.getFormation(indentArr, i);
@@ -250,21 +250,6 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			layout: 'hbox',
 			items: []
 		}
-	},
-	
-	formatName: function(name) {
-		var nameArr = name.split(" ");
-		var newName = nameArr[0];
-		for(var i = 1; i < nameArr.length; i++) {
-			if((newName + nameArr[i]).length > 9) {
-				newName += "<BR>" + nameArr[i];
-			}
-			else {
-				newName += " " + nameArr[i];
-			}
-		}
-		
-		return newName;
 	},
 	
 	getFromItems: function(currItem, arr) {
@@ -394,8 +379,11 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				}, {
 					html: text,
 					style: {
+						'width': '64px',
 						'font-size': '50%',
-						'text-align': 'center'
+						'text-align': 'center',
+						'overflow': 'true'
+						
 					}
 				}]
 			};
