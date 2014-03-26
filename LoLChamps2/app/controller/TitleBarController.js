@@ -124,6 +124,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			return;
 		}
 		
+		this.getSettingsView().setModal(true);
+		this.getSettingsView().setHideOnMaskTap(true);
 		this.getSettingsView().showBy(button);
 	},
 	

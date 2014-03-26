@@ -15,7 +15,7 @@ Ext.define('LoLChamps.view.summoner.SummonerInfoView', {
 				xtype: 'textfield',
 				id: 'summonertextfield',
 				placeHolder: 'Enter Name',
-				flex: '4',
+				flex: '4'
 			}, {
 				iconCls: 'search',
 	        	flex: '1',
