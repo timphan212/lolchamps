@@ -62,15 +62,16 @@ Ext.define('LoLChamps.controller.NavigationController', {
 		LoLChamps.app.resetRoute(LoLChamps.app.itemRoute);
 		LoLChamps.app.setUrl(LoLChamps.app.itemRoute);
 		if(LoLChamps.app.itemRoute == 'itemlistview') {
-			if(!Ext.getCmp('ItemList')) {
-				Ext.getStore('itemliststore').load({
-					callback: function(records, operation, success) {
-						if(success) {
-							LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
-						}
-					}
-				})
+			if (Ext.getCmp('itemlistpanel')) {
+				return;
 			}
+			Ext.getStore('itemliststore').load({
+				callback: function(records, operation, success) {
+					if(success) {
+						LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
+					}
+				}
+			})
 		}
 	},
 	
