@@ -4,6 +4,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	    'Ext.dataview.List'
 	],
 	xtype: 'titlebarcontroller',
+	OLD_REGION: '',
+	OLD_LOCALE: '',
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
@@ -19,9 +21,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			SettingsView: '#settingsview',
 			SettingsLocaleSel: '#settingsview #fieldselect #localeselect',
 			SettingsRegionSel: '#settingsview #fieldselect #regionselect',
-			SettingsSeasonSel: '#settingsview #fieldselect #seasonselect',
 			SummonerInfoView: '#summonerinfoview',
 			SummonerTapView: '#summonertapview',
+			SummonerTextField: '#summonertextfield',
 			TitleBar: '#loltitlebar',
 			TitleBarBackBtn: '#titlebackbtn',
 		},
@@ -54,6 +56,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			},
 			SettingsSeasonSel: {
 				change: 'onSeasonChange'
+			},
+			SettingsView: {
+				hide: 'onSettingsRefresh'
 			},
 			SummonerInfoView: {
 				show: 'onSummonerTapHide'
@@ -95,7 +100,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onRefreshBtnTap: function() {
-		//TODO
+		//TODO ADD CHAMP INFO VIEW?
 		if (LoLChamps.app.getCurrentView() == 'champlistview') {
 			Ext.getStore('champliststore').load({
 				callback: function(records, operation, success) {
@@ -105,12 +110,62 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				}
 			});
 		}
+		else if(LoLChamps.app.getCurrentView() == 'itemlistview') {
+			Ext.getStore('itemliststore').load({
+				callback:function(records, operation, success) {
+					if(success) {
+						LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
+					}
+				}
+			});
+		}
+		else if(LoLChamps.app.getCurrentView() == 'iteminfoview') {
+			var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, LoLChamps.app.ITEM_ID);
+			Ext.getStore('itemliststore').load({
+				callback: function(records, operation, success) {
+					if(success) { 
+						LoLChamps.app.getController('ItemListController').setupItemInfoView(currItem);
+					}
+				}
+			});
+		}
+		else if(LoLChamps.app.getCurrentView() == 'summonerinfoview') {
+			if(Ext.getCmp('summonertextfield').getValue() != null && Ext.getCmp('summonertextfield').getValue().length > 0) {
+				LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
+				if(!Ext.getCmp('summonerstats')) {
+					Ext.getStore('summoneridstore').load({
+						callback: function(records, operation, success) {
+							if(success) {
+								LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
+							}
+						}
+					});
+				}
+			}
+		}
+		else if(LoLChamps.app.getCurrentView() == 'summonertapview') {
+			if(!Ext.getCmp('summonerstats')) {
+				Ext.getStore('summoneridstore').load({
+					callback: function(records, operation, success) {
+						if(success) {
+							LoLChamps.app.resetRoute(LoLChamps.app.summonerRoute);
+							LoLChamps.app.setUrl('summonerinfoview');
+							LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
+						}
+						else {
+							LoLChamps.app.resetRoute(LoLChamps.app.summonerRoute);
+							LoLChamps.app.setUrl('summonerinfoview');
+						}
+					}
+				});
+			}
+		}
 	},
 	
 	onSummonerTapShow: function() {
 		this.getTitleBarBackBtn().setText(LoLChamps.app.SUMMONER_TXT);
 		this.getTitleBarBackBtn().show();
-		this.getTitleBar().setTitle(LoLChamps.app.SUMMONER_NAME)
+		this.getTitleBar().setTitle(LoLChamps.app.MODE_TXT)
 	},
 	
 	onSummonerTapHide: function() {
@@ -124,9 +179,12 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			return;
 		}
 		
+		this.OLD_LOCALE = LoLChamps.app.LOCALE;
+		this.OLD_REGION = LoLChamps.app.REGION;
 		this.getSettingsView().setModal(true);
 		this.getSettingsView().setHideOnMaskTap(true);
 		this.getSettingsView().showBy(button);
+		
 	},
 	
 	onSeasonChange: function(newValue, oldValue, eOpts) {
@@ -139,5 +197,11 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	
 	onRegionChange: function(newValue, oldValue, eOpts) {
 		LoLChamps.app.REGION = newValue.getValue();
+	},
+	
+	onSettingsRefresh: function(eOpts) {
+		if(this.OLD_LOCALE != LoLChamps.app.LOCALE || this.OLD_REGION != LoLChamps.app.REGION) {
+			this.onRefreshBtnTap();
+		}
 	}
 });

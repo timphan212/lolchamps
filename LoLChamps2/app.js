@@ -189,6 +189,7 @@ Ext.application({
     ITEM_SEL_TXT: "",
     ITEMS_TXT: "Items",
     LOCALE: "en_US",
+    MODE_TXT: "",
     SUBMIT_TXT: 'Submit',
     SUMMONER_ID: "",
     SUMMONER_NAME: "",

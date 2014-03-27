@@ -15,15 +15,6 @@ Ext.define('LoLChamps.view.Settings', {
 		        items: [
 		        	{
 		        		xtype: 'selectfield',
-		        		label: 'Season',
-		        		itemId: 'seasonselect',
-		        		options: [
-		        		          {text: '4', value: 'SEASON4'},
-		        		          {text: '3', value: 'SEASON3'}
-		        		]
-		        	}, 
-		        	{
-		        		xtype: 'selectfield',
 		        		label: 'Region',
 		        		itemId: 'regionselect',
 		        		options: [
@@ -31,12 +22,9 @@ Ext.define('LoLChamps.view.Settings', {
 		        		          {text: 'BR', value: 'br'},
 		        		          {text: 'EUNE', value: 'eune'},
 		        		          {text: 'EUW', value: 'euw'},
-		        		          {text: 'KR', value: 'kr'},
 		        		          {text: 'LAN', value: 'lan'},
 		        		          {text: 'LAS', value: 'las'},
-		        		          {text: 'OCE', value: 'oce'},
-		        		          {text: 'RU', value: 'ru'},
-		        		          {text: 'TR', value: 'tr'}
+		        		          {text: 'OCE', value: 'oce'}
 		        		]
 		        	},
 		        	{

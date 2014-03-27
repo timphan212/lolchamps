@@ -313,7 +313,6 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	
 	setupItemInfoView: function(currItem) {
 		LoLChamps.app.ITEM_SEL_TXT = currItem.name;
-		LoLChamps.app.ITEM_ID = currItem.id;
 		LoLChamps.app.setUrl('iteminfoview');
 		var arr = [];
 		arr = this.getFromItems(currItem, arr);
@@ -366,6 +365,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 					},
 					listeners: {
 						tap: function(image, e, eOpts) {
+							LoLChamps.app.ITEM_ID = id;
 							var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, id);
 							Ext.getStore('itemliststore').load({
 								callback: function(records, operation, success) {

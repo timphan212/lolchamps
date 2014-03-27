@@ -60,7 +60,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		if(Ext.getCmp('summonerstats')) {
 			Ext.getCmp('summonerstats').destroy();
 		}
-		if(Ext.getCmp('summonertextfield').getValue() != null) {
+		if(Ext.getCmp('summonertextfield').getValue() != null && Ext.getCmp('summonertextfield').getValue().length > 0) {
 			LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
 			if(!Ext.getCmp('summonerstats')) {
 				Ext.getStore('summoneridstore').load({
@@ -69,8 +69,8 @@ Ext.define('LoLChamps.controller.SummonerController', {
 							LoLChamps.app.getController('LoLChamps.controller.SummonerController').createSummoner();
 						}
 					}
-				})
-			};
+				});
+			}
 		}
 	},
 	
@@ -116,7 +116,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				listeners: {
 					itemtap: function(index, target, record, e, eOpts) {
 						var currItem = Ext.getStore('summonersummarystore').getData().getAt(target).getData();
-						LoLChamps.app.SUMMONER_NAME = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerStatSummaryType);
+						LoLChamps.app.MODE_TXT = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerStatSummaryType);
 						LoLChamps.app.setUrl('summonertapview');
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerSummary(currItem);
 						Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);
@@ -158,7 +158,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				listeners: {
 					itemtap: function(index, target, record, e, eOpts) {
 						var currItem = Ext.getStore('summonerrankedstore').getData().getAt(target).getData();
-						LoLChamps.app.SUMMONER_NAME = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerOrTeamName);
+						LoLChamps.app.MODE_TXT = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerOrTeamName);
 						LoLChamps.app.setUrl('summonertapview');
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerRanked(currItem);
 						Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);

@@ -13,7 +13,13 @@ Ext.define('LoLChamps.store.SummonerRankedStore', {
 			},
 			listeners: {
 				exception: function(store, response, eOpts) {
-					Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">User has not played ranked games before.</font>');
+					Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').removeAll();	
+					if (response.status == 401) {
+						Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">Ranked information is not available for ' + LoLChamps.app.REGION.toUpperCase() + ' server.</font>');
+					}
+					else {
+						Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">User has not played ranked games before.</font>');
+					}
 				}
 			}
 		},
