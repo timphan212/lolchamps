@@ -22,7 +22,7 @@ Ext.define('LoLChamps.store.SummonerIDStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl('https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.3/summoner/by-name/' + LoLChamps.app.SUMMONER_NAME + '?api_key=' + apiKey);
+				this.getProxy().setUrl('https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.4/summoner/by-name/' + LoLChamps.app.SUMMONER_NAME + '?api_key=' + apiKey);
 				Ext.getCmp('summonerinfoview').setMasked({
 					xtype: 'loadmask',
 					message: 'Retrieving Summoner from ' + LoLChamps.app.REGION.toUpperCase()

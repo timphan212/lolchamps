@@ -186,6 +186,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			var currIndent = 1;
 			var blankBool = this.getFormation(indentArr, i);
 
+			if(arr[0] == '3250' || arr[0] == '3251' || arr[0] == '3252' || arr[0] == '3253' || arr[0] == '3254') {
+				break;
+			}
 			
 			while(currIndent <= indentArr[i] && i > 0) {
 				if(currIndent == indentArr[i]) {
@@ -374,6 +377,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 									}
 								}
 							})
+						},
+						error: function(image, event) {
+							image.setSrc('resources/images/items/blank.png')
 						}
 					}
 				}, {

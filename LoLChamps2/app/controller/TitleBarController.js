@@ -100,12 +100,21 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onRefreshBtnTap: function() {
-		//TODO ADD CHAMP INFO VIEW?
 		if (LoLChamps.app.getCurrentView() == 'champlistview') {
 			Ext.getStore('champliststore').load({
 				callback: function(records, operation, success) {
 					if (success) {
 						LoLChamps.app.getController('LoLChamps.controller.ChampController').createChampList();
+					}
+				}
+			});
+		}
+		else if (LoLChamps.app.getCurrentView() == 'champinfoview') {
+			Ext.getStore('champinfostore').load({
+				callback: function(records, operation, success) {
+					if (success) {
+						LoLChamps.app.getController('LoLChamps.controller.ChampController').cleanChampInfo();
+						LoLChamps.app.getController('LoLChamps.controller.ChampController').generateChampInfo(LoLChamps.app.CHAMPION_DATA);
 					}
 				}
 			});

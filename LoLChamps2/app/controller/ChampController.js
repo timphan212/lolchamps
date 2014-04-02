@@ -99,6 +99,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 							Ext.getStore('champinfostore').load({
 								callback: function(records, operation, success) {
 									if (success) {
+										LoLChamps.app.CHAMPION_DATA = records;
 										this.cleanChampInfo();
 										this.generateChampInfo(records);
 									}

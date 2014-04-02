@@ -221,6 +221,12 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			case 'CAP5x5':
 				str = 'Summoner\'s Rift (Team Builder)';
 				break;
+			case 'URF':
+				str = 'Ultra Rapid Fire Mode';
+				break;
+			case 'URFBots':
+				str = 'Ultra Rapid Fire Mode (Co-op vs. AI)';
+				break;
 			default:
 				str = modeStr;
 				break;
