@@ -5,6 +5,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	],
 	xtype: 'itemlistcontroller',
 	ITEM_SQUARE_WIDTH: 64,
+	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.5.4/img',
 	config: {
 		views: [
 			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'

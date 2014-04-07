@@ -20,7 +20,7 @@ Ext.define('LoLChamps.store.ChampListStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl('https://prod.api.pvp.net/api/lol/' + LoLChamps.app.REGION + '/v1.1/champion?api_key=' + apiKey);
+				this.getProxy().setUrl(LoLChamps.app.API_URL + LoLChamps.app.REGION + '/v1.1/champion?api_key=' + apiKey);
 				Ext.getCmp('champlistview').setMasked({
 					xtype: 'loadmask',
 					message: 'Retrieving Champion List for ' + LoLChamps.app.REGION.toUpperCase()

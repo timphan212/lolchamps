@@ -6,7 +6,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 	xtype: 'champcontroller',
 	
 	CHAMPION_SQUARE_WIDTH: 80,
-	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.3.18/img',
+	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.5.4/img',
 	
 	config: {
 		views: [

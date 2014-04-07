@@ -20,6 +20,7 @@ Ext.define('LoLChamps.view.Settings', {
 		        		options: [
 		        		          {text: 'NA', value: 'na'},
 		        		          {text: 'BR', value: 'br'},
+		        		          {text: 'KR', value: 'kr'},
 		        		          {text: 'EUNE', value: 'eune'},
 		        		          {text: 'EUW', value: 'euw'},
 		        		          {text: 'LAN', value: 'lan'},

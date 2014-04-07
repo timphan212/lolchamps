@@ -6,6 +6,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	xtype: 'titlebarcontroller',
 	OLD_REGION: '',
 	OLD_LOCALE: '',
+	KR_REGION: 'http://asia.api.pvp.net/api/lol/',
+	OTHER_REGION: 'https://prod.api.pvp.net/api/lol/',
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
@@ -53,9 +55,6 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			},
 			SettingsRegionSel: {
 				change: 'onRegionChange'
-			},
-			SettingsSeasonSel: {
-				change: 'onSeasonChange'
 			},
 			SettingsView: {
 				hide: 'onSettingsRefresh'
@@ -196,15 +195,18 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		
 	},
 	
-	onSeasonChange: function(newValue, oldValue, eOpts) {
-		LoLChamps.app.SEASON = newValue.getValue();
-	},
-	
 	onLocaleChange: function(newValue, oldValue, eOpts) {
 		LoLChamps.app.LOCALE = newValue.getValue();
 	},
 	
 	onRegionChange: function(newValue, oldValue, eOpts) {
+		if(newValue.getValue() == 'kr') {
+			LoLChamps.app.API_URL = this.KR_REGION;
+		}
+		else {
+			LoLChamps.app.API_URL = this.OTHER_REGION;
+		}
+		
 		LoLChamps.app.REGION = newValue.getValue();
 	},
 	
