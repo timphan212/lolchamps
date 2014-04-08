@@ -20,7 +20,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl('https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1/item?locale=' + LoLChamps.app.LOCALE + '&itemListData=all&api_key=' + apiKey);
+				this.getProxy().setUrl('https://prod.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1.2/item?locale=' + LoLChamps.app.LOCALE + '&itemListData=all&api_key=' + apiKey);
 				Ext.getCmp('itemlistview').setMasked({
 					xtype: 'loadmask',
 					message: 'Retrieving Item List for ' + LoLChamps.app.REGION.toUpperCase()

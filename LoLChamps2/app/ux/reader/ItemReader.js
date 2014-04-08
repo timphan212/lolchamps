@@ -40,21 +40,54 @@ Ext.define('LoLChamps.ux.reader.ItemReader', {
         // Custom Restructuring for Item List
         var itemData = data.data;
         var items = [];
-        var enchantments = ['3255', '3256', '3257', '3258', '3259', '3260', '3261', '3262', '3263',
-                            '3264', '3265', '3266', '3267', '3268', '3269', '3270', '3271', '3272',
-                            '3273', '3274', '3275', '3276', '3277', '3278', '3279', '3280', '3281',
-                            '3282', '3283', '3284'];
+        
         for (var id in itemData) {
-        	if(enchantments.indexOf(id) != -1) {
-        		continue;
-        	}
         	itemData[id].id = id;
+        	
+        	//Help differentiate between crystal scar/summoner rift items
         	if(id == '3043' || id == '3048' || id == '3290') {
         		itemData[id].name = itemData[id].name + ' (Crystal Scar)';
         	}
-        	if(id == '3009' || id == '3020' || id == '3047' || id == '3111' ||
-        	   id == '3117' || id == '3158') {
-        		itemData[id].into = ['3254', '3253', '3252', '3251', '3250']
+        	//Format bonetooth stuff
+        	if(id == '3166') {
+        		itemData[id].into = ['3167', '3168', '3169', '3171', '3175'];
+        	}
+        	else if(id == '3169') {
+        		itemData[id].into = [];
+        	}
+        	else if(id == '3175') {
+        		itemData[id].from = [];
+        	}
+        	else if(id == '3405') {
+        		itemData[id].into = ['3406', '3407', '3408', '3409', '3410'];
+        	}
+        	else if(id == '3411') {
+        		itemData[id].into = ['3412', '3413', '3414', '3415', '3416'];
+        	}
+        	else if(id == '3417') {
+        		itemData[id].into = ['3418', '3419', '3420', '3421', '3422'];
+        	}
+        	//Format boots stuff
+        	else if(id == '3006') {
+        		itemData[id].into = ['3250', '3251', '3252', '3253', '3254'];
+        	}
+        	else if(id == '3020') {
+        		itemData[id].into = ['3255', '3256', '3257', '3258', '3259'];
+        	}
+        	else if(id == '3047') {
+        		itemData[id].into = ['3260', '3261', '3262', '3263', '3264'];
+        	}
+        	else if(id == '3111') {
+        		itemData[id].into = ['3265', '3266', '3267', '3268', '3269'];
+        	}
+        	else if(id == '3117') {
+        		itemData[id].into = ['3270', '3271', '3272', '3273', '3274'];
+        	}
+        	else if(id == '3158') {
+        		itemData[id].into = ['3275', '3276', '3277', '3278', '3279'];
+        	}
+        	else if(id == '3009') {
+        		itemData[id].into = ['3280', '3281', '3282', '3283', '3284'];
         	}
         	items.push(itemData[id]);
         }

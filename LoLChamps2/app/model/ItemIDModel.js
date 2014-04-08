@@ -21,11 +21,15 @@ Ext.define('LoLChamps.model.ItemIDModel', {
 			}, {
 				name: 'hideFromAll'
 			}, {
+				name: 'id'
+			}, {
 				name: 'image'
 			}, {
 				name: 'inStore'
 			}, {
 				name: 'into'
+			}, {
+				name: 'maps'
 			}, {
 				name: 'name'
 			}, {
@@ -34,6 +38,8 @@ Ext.define('LoLChamps.model.ItemIDModel', {
 				name: 'requiredChampion'
 			}, {
 				name: 'rune'
+			}, {
+				name: 'sanitizedDescription'
 			}, {
 				name: 'specialRecipe'
 			}, {

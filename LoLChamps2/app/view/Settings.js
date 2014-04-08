@@ -42,6 +42,13 @@ Ext.define('LoLChamps.view.Settings', {
 		        		          {text: 'Korean', value: 'ko_KR'},
 		        		          {text: 'Russian', value: 'ro_RO'},
 		        		          {text: 'Greek', value: 'el_GR'},
+		        		          {text: 'Romanian', value: 'ro_RO'},
+		        		          {text: 'Turkish', value: 'tr_TR'},
+		        		          {text: 'Thai', value: 'th_TH'},
+		        		          {text: 'Vietnamese', value: 'vn_VN'},
+		        		          {text: 'Indonesian', value: 'id_ID'},
+		        		          {text: 'Chinese (China)', value: 'zh_CN'},
+		        		          {text: 'Chinese (Taiwan)', value: 'zh_TW'},		        		          
 		        		          {text: 'Portugese', value: 'pt_BR'}
 		        		]
 		        	}

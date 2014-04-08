@@ -6,6 +6,12 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	xtype: 'itemlistcontroller',
 	ITEM_SQUARE_WIDTH: 64,
 	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.5.4/img',
+	BONETOOTH_GRID_SKIP: ['3167', '3168', '3169', '3171', '3175', '3406', '3407', '3408', '3409', '3410',
+						  '3412', '3413', '3414', '3415', '3416', '3418', '3419', '3420', '3421', '3422'],
+	ENCHANTMENT_GRID_SKIP: ['3250', '3251', '3252', '3253', '3254', '3255', '3256', '3257', '3258', '3259',
+	                        '3260', '3261', '3262', '3263', '3264', '3265', '3266', '3267', '3268', '3269',
+	                        '3270', '3271', '3272', '3273', '3274', '3275', '3276', '3277', '3278', '3279',
+	                        '3280', '3281', '3282', '3283', '3284'],
 	config: {
 		views: [
 			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'
@@ -105,6 +111,11 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		for(var i = 0; i < count; i++) {
 			var name = itemData.getAt(i).getData().name;
 			var id = itemData.getAt(i).getData().id;
+			
+			if(this.BONETOOTH_GRID_SKIP.indexOf(id) != -1 || this.ENCHANTMENT_GRID_SKIP.indexOf(id) != -1) {
+				continue;
+			}
+			
 			container.items.push(this.createItemSquare(id, name, width, id + '_list', false));
 			
 			if (container.items.length % columns == 0 || i == (count-1)) {
@@ -112,6 +123,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				var container = this.createHBoxContainer();
 				container.items = [];
 			}
+		}
+		if(container != null) {
+			items.push(container);
 		}
 		
 		var rows = {
@@ -186,10 +200,6 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			var prevIndent = indentArr[i-1];
 			var currIndent = 1;
 			var blankBool = this.getFormation(indentArr, i);
-
-			if(arr[0] == '3250' || arr[0] == '3251' || arr[0] == '3252' || arr[0] == '3253' || arr[0] == '3254') {
-				break;
-			}
 			
 			while(currIndent <= indentArr[i] && i > 0) {
 				if(currIndent == indentArr[i]) {
@@ -327,24 +337,11 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		if(itemTree != null) {
 				Ext.getCmp('iteminfoview').child('#itemtreecontainer').add(itemTree);
 		}
-		if(currItem.plaintext != null) {	
-			itemInfo.setHtml(currItem.plaintext +
-				    '<BR><BR>' + currItem.description +
+		if(currItem.description != null) {	
+			itemInfo.setHtml('<BR>' + currItem.description +
 				    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
 				    '<BR>Total Cost: ' + currItem.gold.total +
 				    '<BR>Sell: ' + currItem.gold.sell);
-		}
-		else if(currItem.id == '3250' || currItem.id == '3251' || currItem.id == '3252' ||
-				currItem.id == '3253' || currItem.id == '3254') {
-			itemInfo.setHtml(currItem.description +
-				    '<BR><BR>Recipe Cost: ' + currItem.gold.base);
-		}
-		else {
-			itemInfo.setHtml(currItem.description +
-										    '<BR><BR>Recipe Cost: ' + currItem.gold.base +
-										    '<BR>Total Cost: ' + currItem.gold.total +
-										    '<BR>Sell: ' + currItem.gold.sell);
-
 		}
 		if(container != null) {
 			Ext.getCmp('iteminfoview').child('#itemintocontainer').add(container);
@@ -358,29 +355,32 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				items: [{
 					xtype: 'image',
 					width: width,
+					src: this.IMAGE_SRC_PATH + '/item/' + id + '.png',
 					height: width,
 					hidden: hideObj,
 					id: caseStr,
 					style: {
-						'background-image': 'url("resources/images/items/' + id + '.png")',
+						//'background-image': 'url("resources/images/items/' + id + '.png")',
 						'background-size': '95%',
 						'margin-left': 'auto', 
 						'margin-right': 'auto'
 					},
 					listeners: {
 						tap: function(image, e, eOpts) {
-							LoLChamps.app.ITEM_ID = id;
-							var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, id);
-							Ext.getStore('itemliststore').load({
-								callback: function(records, operation, success) {
-									if(success) { 
-										LoLChamps.app.getController('ItemListController').setupItemInfoView(currItem);
+							if(id != 'blank' && id != 'angle' && id != 'line') {
+								LoLChamps.app.ITEM_ID = id;
+								var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, id);
+								Ext.getStore('itemliststore').load({
+									callback: function(records, operation, success) {
+										if(success) { 
+											LoLChamps.app.getController('ItemListController').setupItemInfoView(currItem);
+										}
 									}
-								}
-							})
+								})
+							}
 						},
 						error: function(image, event) {
-							image.setSrc('resources/images/items/blank.png')
+							image.setSrc('resources/images/items/' + id + '.png')
 						}
 					}
 				}, {
