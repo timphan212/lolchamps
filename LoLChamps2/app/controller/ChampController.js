@@ -350,7 +350,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		logoPanel.items.push({
 			xtype: 'image',
 //			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
-			src: this.IMAGE_SRC_PATH + '/champion/' + champData.id + '.png',
+			src: this.IMAGE_SRC_PATH + '/champion/' + champData.name + '.png',
 			width: this.CHAMPION_SQUARE_WIDTH,
 			height: this.CHAMPION_SQUARE_WIDTH,
 			style: {
