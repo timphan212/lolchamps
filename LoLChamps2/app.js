@@ -181,6 +181,8 @@ Ext.application({
 	},
     
     // Global Application Variable Strings
+	API_URL: "https://prod.api.pvp.net/api/lol/",
+	CHAMPION_DATA: "",
     CHAMPION_ID: "",
     CHAMPION_SEL_TXT: "",
     CHAMPIONS_TXT: "Champions",
