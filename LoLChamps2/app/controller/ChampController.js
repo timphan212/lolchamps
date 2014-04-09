@@ -91,8 +91,10 @@ Ext.define('LoLChamps.controller.ChampController', {
 				}, {
 					html: text,
 					style: {
+						'width': '80px',
 						'font-size': '60%',
-						'text-align': 'center'
+						'text-align': 'center',
+						'overflow': 'true'
 					}
 				}]
 			};
