@@ -18,7 +18,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar',
 			SearchField: '#champlistview #champlistsearch',
-			F2PField: '#champlistview #champlistf2pselect',
 			ChampLogoPanel: '#champinfoview #champlogopanel',
 			ChampTabPanel: '#champinfoview #champtabpanel',
 			ChampStatsView: '#champinfoview #champtabpanel #champstats',
@@ -91,7 +90,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 				}, {
 					html: text,
 					style: {
-						'width': '80px',
+						'width': width+'px',
 						'font-size': '60%',
 						'text-align': 'center',
 						'overflow': 'true'
