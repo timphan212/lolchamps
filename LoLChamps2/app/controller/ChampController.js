@@ -71,7 +71,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 						tap: function(image, e, eOpts) {
 							var strID = image.getItemId();
 							var tokenIndex = strID.search('_');
-							LoLChamps.app.CHAMPION_SEL_TXT = LoLChamps.app.DictionaryMapNames(strID.substring(0,tokenIndex));
+							LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
 							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
 							LoLChamps.app.setUrl('champinfoview');
 							Ext.getStore('champinfostore').load({
