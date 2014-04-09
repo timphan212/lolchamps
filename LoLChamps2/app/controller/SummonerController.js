@@ -148,8 +148,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		if(Ext.getStore('summonerrankedstore')) {
 			var summonerRanked = Ext.getStore('summonerrankedstore').getData();
 			var rankedStr = '';
+			console.log(summonerRanked);
 			var tpl = new Ext.XTemplate(
-					'{[LoLChamps.app.getController(\'SummonerController\').formatRankedTemplate(values)]}'
+					'{[LoLChamps.app.getController(\'SummonerController\').formatRankedTemplate(values)]}</div>'
 			);
 			var list = Ext.create('Ext.dataview.List', {
 				id: 'SummonerRanked',
@@ -480,8 +481,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	
 	formatRankedTemplate: function(values) {
 		tempStr = '';
-		tempStr += '<p>Mode: ' + this.formatQueueType(values.queueType) + '</p>';
-		tempStr += '<p>Name/Team Name: ' + values.playerOrTeamName + '</p>';
+		tempStr += '<div style="display:inline-block;width:100%;"><img src="resources/images/ranked/' + values.tier + '_' + values.rank + '.png" class="list-image" width="64" height="64"  style="float:left;"/>'
+		tempStr += '<p>Mode: ' + this.formatQueueType(values.queueType);
+		tempStr += '<BR>Name/Team Name: ' + values.playerOrTeamName + '</p></div>';
 		
 		return tempStr;
 	}
