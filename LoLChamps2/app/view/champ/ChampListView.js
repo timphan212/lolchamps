@@ -15,17 +15,7 @@ Ext.define('LoLChamps.view.champ.ChampListView', {
 				xtype: 'searchfield',
 				itemId: 'champlistsearch',
 				placeHolder: 'Search',
-				flex: '4'
-			}, {
-				xtype: 'selectfield',
-				itemId: 'champlistf2pselect',
-				flex: '1',
-				ui: 'action',
-				value: false,
-				options: [
-				     {text: 'All', value: false},
-				     {text: 'F2P', value: true}
-				]
+				flex: 1
 			}]
 		}, {
 			xtype: 'panel',

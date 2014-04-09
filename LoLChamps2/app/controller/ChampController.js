@@ -32,11 +32,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 						this.getChampListPanel().setMasked(true);
 						Ext.getStore('champliststore').clearFilter();
 						var regex = new RegExp(field.getValue(), 'i');
-						Ext.getStore('champliststore').filter('displayName', regex);
-						if (this.getF2PField().getValue()) {
-							var regex2 = new RegExp(this.getF2PField().getValue(), 'i');
-							Ext.getStore('champliststore').filter('freeToPlay', regex2);
-						}
+						Ext.getStore('champliststore').filter('name', regex);
 						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 						this.getChampListPanel().setMasked(false);
 					}
@@ -49,23 +45,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 						this.getChampListPanel().setMasked(false);
 					}
 				}
-			},
-			F2PField: {
-				change: function(field, newValue, oldValue, eOpts) {
-					if (Ext.getStore('champliststore')) {
-						this.getChampListPanel().setMasked(true);
-						Ext.getStore('champliststore').clearFilter();
-						var regex = new RegExp(this.getSearchField().getValue(), 'i');
-						Ext.getStore('champliststore').filter('displayName', regex);
-						if (newValue) {
-							var regex2 = new RegExp(newValue, 'i');
-							Ext.getStore('champliststore').filter('freeToPlay', regex2);
-						}
-						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
-						this.getChampListPanel().setMasked(false);
-					}
-					
-				}
 			}
 		}
 	},
@@ -75,23 +54,22 @@ Ext.define('LoLChamps.controller.ChampController', {
 		this.addSwipeEvents();
 	},
 	
-	createChampSquare: function(id, text, width) {
+	createChampSquare: function(id, imageName, text, width) {
 		var square = {
 				xtype: 'container',
 				layout: 'vbox',
 				items: [{
 					xtype: 'image',
-//					src: 'resources/images/champions/' + text + '_Square_0.png',
-					src: this.IMAGE_SRC_PATH + '/champion/' + text +'.png',
+					src: this.IMAGE_SRC_PATH + '/champion/' + imageName +'.png',
 					width: width,
 					height: width,
-					id: text + '_' + id,
+					itemId: text + '_' + id,
 					style: {
 						'background-size': '95%'
 					},
 					listeners: {
 						tap: function(image, e, eOpts) {
-							var strID = image.getId();
+							var strID = image.getItemId();
 							var tokenIndex = strID.search('_');
 							LoLChamps.app.CHAMPION_SEL_TXT = LoLChamps.app.DictionaryMapNames(strID.substring(0,tokenIndex));
 							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
@@ -111,7 +89,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 						}
 					}
 				}, {
-					html: LoLChamps.app.DictionaryMapNames(text),
+					html: text,
 					style: {
 						'font-size': '60%',
 						'text-align': 'center'
@@ -133,7 +111,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 			var champData = records[0].getData();
 			this.getChampLogoPanel().add(this.createLogoPanelForChamp(champData));
 			// Stats - TODO create another panel with shit
-//			this.getChampStatsView().setHtml(this.printStats(champData));
 			this.getChampStatsView().add(this.createChampStatsPanel(champData));
 //			this.getChampStatsView().setStyle({'font-size': '70%'});
 			// Spells - fucking crazy work
@@ -259,14 +236,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 			if (count > 10) return tooltip;
 		}
 		return tooltip;
-	},
-	
-	printStats: function(champData) {
-		var html = '';
-		for (var key in champData.stats) {
-			html += '<p><b>' + key.toUpperCase() +':</b> ' + champData.stats[key] + '</p>';
-		}
-		return html;
 	},
 	
 	createChampStatsPanel: function(champData) {
@@ -416,8 +385,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var rowItems = [];
 		var name = ""
 		for (var i = 0; i < count; i++) {
-			name = champStoreData.getAt(i).get('name');
-			container.items.push(this.createChampSquare(champStoreData.getAt(i).get('id'), name, width));
+			container.items.push(this.createChampSquare(champStoreData.getAt(i).get('id'), champStoreData.getAt(i).get('key'), champStoreData.getAt(i).get('name'), width));
 			if (container.items.length % columns == 0 || i == (count-1)) {
 				items.push(container);
 				var container = this.createHBoxContainer();

@@ -9,8 +9,8 @@ Ext.define('LoLChamps.store.ChampListStore', {
 			url: '',
 			model: 'LoLChamps.model.ChampListModel',
 			reader: {
-				type: 'json',
-				rootProperty: 'champions'
+				type: 'champreader',
+				rootProperty: 'data'
 			},
 			listeners: {
 				exception: function(store, response, eOpts) {
@@ -20,22 +20,14 @@ Ext.define('LoLChamps.store.ChampListStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl(LoLChamps.app.API_URL + LoLChamps.app.REGION + '/v1.1/champion?api_key=' + apiKey);
+				this.getProxy().setUrl(LoLChamps.app.API_URL + 'static-data/' + LoLChamps.app.REGION + '/v1.2/champion?locale=' + LoLChamps.app.LOCALE + '&champData=info&api_key=' + apiKey);
 				Ext.getCmp('champlistview').setMasked({
 					xtype: 'loadmask',
 					message: 'Retrieving Champion List for ' + LoLChamps.app.REGION.toUpperCase()
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
-				for (var i = 0; i < records.length; i++) {
-					var name = records[i].get('name');
-					if (name == LoLChamps.app.DictionaryMapNames(name)) {
-						records[i].getData().displayName = name;
-					} else {
-						records[i].getData().displayName = LoLChamps.app.DictionaryMapNames(name);
-					}
-				}
-				store.sort('displayName', 'ASC');
+				store.sort('name', 'ASC');
 				Ext.getCmp('champlistview').setMasked(false);
 			}
 		}
