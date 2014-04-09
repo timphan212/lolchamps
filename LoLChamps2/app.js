@@ -2,7 +2,7 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader'
+        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader', 'LoLChamps.ux.reader.ChampReader'
     ],
     controllers: [
         'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController', 'SummonerController'
@@ -159,26 +159,26 @@ Ext.application({
         );
     },
     
-	DictionaryMapNames: function(text) {
-		var dictionary = {
-			'FiddleSticks': 'Fiddlesticks',
-			'DrMundo': 'Dr. Mundo',
-			'MonkeyKing': 'Wukong',
-			'JarvanIV': 'Jarvan IV',
-			'KogMaw': "Kog'Maw",
-			'LeeSin': 'Lee Sin',
-			'MasterYi': 'Master Yi',
-			'MissFortune': 'Miss Fortune',
-			'TwistedFate': 'Twisted Fate',
-			'XinZhao': 'Xin Zhao',
-			'Velkoz': "Vel'Koz"
-		};
-		if (dictionary[text]) {
-			return dictionary[text];
-		} else {
-			return text;
-		}
-	},
+//	DictionaryMapNames: function(text) {
+//		var dictionary = {
+//			'FiddleSticks': 'Fiddlesticks',
+//			'DrMundo': 'Dr. Mundo',
+//			'MonkeyKing': 'Wukong',
+//			'JarvanIV': 'Jarvan IV',
+//			'KogMaw': "Kog'Maw",
+//			'LeeSin': 'Lee Sin',
+//			'MasterYi': 'Master Yi',
+//			'MissFortune': 'Miss Fortune',
+//			'TwistedFate': 'Twisted Fate',
+//			'XinZhao': 'Xin Zhao',
+//			'Velkoz': "Vel'Koz"
+//		};
+//		if (dictionary[text]) {
+//			return dictionary[text];
+//		} else {
+//			return text;
+//		}
+//	},
     
     // Global Application Variable Strings
 	API_URL: "https://prod.api.pvp.net/api/lol/",
