@@ -379,27 +379,22 @@ Ext.define('LoLChamps.controller.ChampController', {
 		});
 		var champStoreData = Ext.getStore('champliststore').getData();
 		var count = Ext.getStore('champliststore').getCount();
-		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
+		var columns = Math.floor(Ext.Viewport.getWindowWidth() / (width+8));
 		var rows = Math.ceil(count / columns);
-		var items = [];
-		var container = this.createHBoxContainer();
-		var rowItems = [];
-		var name = ""
+		var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
+		var html = '';
 		for (var i = 0; i < count; i++) {
-			container.items.push(this.createChampSquare(champStoreData.getAt(i).get('id'), champStoreData.getAt(i).get('key'), champStoreData.getAt(i).get('name'), width));
-			if (container.items.length % columns == 0 || i == (count-1)) {
-				items.push(container);
-				var container = this.createHBoxContainer();
-				container.items = [];
+			if (i % columns == 0) {
+				html += '<div style="padding-left:' + padding + 'px">'
+			}
+			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px"><img src="' + this.IMAGE_SRC_PATH + '/champion/' + champStoreData.getAt(i).get('key') + '.png" width="' + width + '" height="' + width + '"/>';
+			html += '<p style="text-align: center; font-size: 65%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
+			html += '</span>';
+			if (i % columns == columns-1 || i == count-1) {
+				html += '</div>';
 			}
 		}
-		var rows = {
-			xtype: 'container',
-			id: 'champpanel',
-			layout: 'vbox',
-			items: items
-		}
-		this.getChampListPanel().add(rows);
+		this.getChampListPanel().setHtml(html);
 		this.getChampListPanel().setMasked(false);
 	},
 	
