@@ -107,35 +107,22 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
 		var items = [];
 		var container = this.createHBoxContainer();
-		
+
+		var html = '';
 		for(var i = 0; i < count; i++) {
 			var name = itemData.getAt(i).getData().name;
 			var id = itemData.getAt(i).getData().id;
 			
 			if(this.BONETOOTH_GRID_SKIP.indexOf(id) != -1 || this.ENCHANTMENT_GRID_SKIP.indexOf(id) != -1) {
 				continue;
-			}
+			}	
 			
-			container.items.push(this.createItemSquare(id, name, width, id + '_list', false));
-			
-			if (container.items.length % columns == 0 || i == (count-1)) {
-				items.push(container);
-				var container = this.createHBoxContainer();
-				container.items = [];
-			}
+			html += '<span style="display: inline-block; margin-left: 6px; margin-right: 6px; vertical-align: top"><img src="' + this.IMAGE_SRC_PATH + '/item/' + id + '.png" width="' + width + '" height="' + width + '"/>';
+			html += '<p style="text-align: center; font-size: 60%; overflow: true; width:' + width + 'px">' + name + '</p>';
+			html += '</span>';
 		}
-		if(container != null) {
-			items.push(container);
-		}
-		
-		var rows = {
-				xtype: 'container',
-				id: 'itemlistpanel',
-				layout: 'vbox',
-				items: items
-		}
-		
-		this.getItemListPanel().add(rows);
+
+		this.getItemListPanel().setHtml(html);
 		this.getItemListPanel().setMasked(false);
 	},
 	

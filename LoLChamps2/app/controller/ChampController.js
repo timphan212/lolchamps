@@ -387,7 +387,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			if (i % columns == 0) {
 				html += '<div style="padding-left:' + padding + 'px">'
 			}
-			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px"><img src="' + this.IMAGE_SRC_PATH + '/champion/' + champStoreData.getAt(i).get('key') + '.png" width="' + width + '" height="' + width + '"/>';
+			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px; vertical-align: top"><img src="' + this.IMAGE_SRC_PATH + '/champion/' + champStoreData.getAt(i).get('key') + '.png" width="' + width + '" height="' + width + '"/>';
 			html += '<p style="text-align: center; font-size: 65%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
 			html += '</span>';
 			if (i % columns == columns-1 || i == count-1) {
