@@ -60,6 +60,10 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		if(Ext.getCmp('summonerstats')) {
 			Ext.getCmp('summonerstats').destroy();
 		}
+		this.getSummonerTabPanel().setMasked({
+			xtype: 'loadmask',
+			message: 'Loading'
+		});
 		if(Ext.getCmp('summonertextfield').getValue() != null && Ext.getCmp('summonertextfield').getValue().length > 0) {
 			LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
 			if(!Ext.getCmp('summonerstats')) {
@@ -72,6 +76,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				});
 			}
 		}
+		this.getSummonerTabPanel().setMasked(false);
 	},
 	
 	createSummoner: function() {
