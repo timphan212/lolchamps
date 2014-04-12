@@ -41,6 +41,7 @@ Ext.define('LoLChamps.ux.reader.ChampReader', {
         var champData = data.data;
         var items = [];
         for (var id in champData) {
+        	champData[id].version = data.version;
         	items.push(champData[id]);
         }
         data.data = items;

@@ -13,6 +13,8 @@ Ext.define('LoLChamps.model.ChampListModel', {
 				name: 'key'
 			}, {
 				name: 'info',
+			}, {
+				name: 'version'
 			}
 		]
 	}

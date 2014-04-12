@@ -29,6 +29,11 @@ Ext.define('LoLChamps.store.ChampListStore', {
 			load: function(store, records, successful, operation, eOpts) {
 				store.sort('name', 'ASC');
 				Ext.getCmp('champlistview').setMasked(false);
+				if (records) {
+					if (records.length > 0) {
+						LoLChamps.app.VERSION = records[0].getData().version;
+					}
+				}
 			}
 		}
 	}

@@ -198,6 +198,7 @@ Ext.application({
     SUMMONER_TXT: 'Summoner',
     SEASON: 'SEASON4',
     REGION: 'na',
-    SEARCH: 'Search'
+    SEARCH: 'Search',
+    VERSION: '4.5.4'
     
 });

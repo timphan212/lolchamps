@@ -6,7 +6,6 @@ Ext.define('LoLChamps.controller.ChampController', {
 	xtype: 'champcontroller',
 	
 	CHAMPION_SQUARE_WIDTH: 80,
-	IMAGE_SRC_PATH: 'http://ddragon.leagueoflegends.com/cdn/4.5.4/img',
 	
 	config: {
 		views: [
@@ -51,55 +50,32 @@ Ext.define('LoLChamps.controller.ChampController', {
 	// This is launched after app launch initialization
 	launch: function() {
 		this.addSwipeEvents();
+		this.addTapEvents();
 	},
 	
-	createChampSquare: function(id, imageName, text, width) {
-		var square = {
-				xtype: 'container',
-				layout: 'vbox',
-				items: [{
-					xtype: 'image',
-					src: this.IMAGE_SRC_PATH + '/champion/' + imageName +'.png',
-					width: width,
-					height: width,
-					itemId: text + '_' + id,
-					style: {
-						'background-size': '95%'
-					},
-					listeners: {
-						tap: function(image, e, eOpts) {
-							var strID = image.getItemId();
-							var tokenIndex = strID.search('_');
-							LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
-							LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
-							LoLChamps.app.setUrl('champinfoview');
-							Ext.getStore('champinfostore').load({
-								callback: function(records, operation, success) {
-									if (success) {
-										LoLChamps.app.CHAMPION_DATA = records;
-										this.cleanChampInfo();
-										this.generateChampInfo(records);
-									}
-								}, scope: LoLChamps.app.getController('ChampController')
-							});
-						},
-						error: function(image, event) {
-							image.setSrc('resources/images/champions/Unknown_Square_0.png')
-						}
-					}
-				}, {
-					html: text,
-					style: {
-						'width': width+'px',
-						'font-size': '60%',
-						'text-align': 'center',
-						'overflow': 'true'
-					}
-				}]
-			};
-		return square;
+	getImageSrcPath: function() {
+		return 'http://ddragon.leagueoflegends.com/cdn/' + LoLChamps.app.VERSION + '/img';
 	},
 	
+	onChampPanelTap: function(target, object, e, eOpts) {
+		if (object.nodeName == 'IMG' || object.nodeName == 'OBJECT') {
+			var strID = object.name;
+			var tokenIndex = strID.search('_');
+			LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
+			LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
+			LoLChamps.app.setUrl('champinfoview');
+			Ext.getStore('champinfostore').load({
+				callback: function(records, operation, success) {
+					if (success) {
+						LoLChamps.app.CHAMPION_DATA = records;
+						this.cleanChampInfo();
+						this.generateChampInfo(records);
+					}
+				}, scope: LoLChamps.app.getController('ChampController')
+			});
+		}
+	},
+
 	cleanChampInfo: function() {
 		this.getChampLogoPanel().removeAll(true,true);
 		this.getChampStatsView().removeAll(true,true);
@@ -136,7 +112,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		return this.createHBoxContainer([{
 			xtype: 'image',
 //			src: 'resources/images/abilities/' + passive.image.full,
-			src: this.IMAGE_SRC_PATH + '/passive/' + passive.image.full,
+			src: this.getImageSrcPath() + '/passive/' + passive.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -164,7 +140,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var columnWidth = window.innerWidth - 64;
 		return this.createHBoxContainer([{
 			xtype: 'image',
-			src: this.IMAGE_SRC_PATH + '/spell/' + spell.image.full,
+			src: this.getImageSrcPath() + '/spell/' + spell.image.full,
 			height: 64,
 			width: 64,
 			style: {
@@ -272,7 +248,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var statperlevel = statGrowth != ""? ' (' + statGrowth + ') per level' : "";
 		return this.createHBoxContainer([{
 			xtype: 'image'
-//			src: this.IMAGE_SRC_PATH + '/spell/' + spell.image.full,
+//			src: this.getImageSrcPath() + '/spell/' + spell.image.full,
 //			height: 64,
 //			width: 64,
 //			style: {
@@ -320,7 +296,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		logoPanel.items.push({
 			xtype: 'image',
 //			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
-			src: this.IMAGE_SRC_PATH + '/champion/' + champData.key + '.png',
+			src: this.getImageSrcPath() + '/champion/' + champData.key + '.png',
 			width: this.CHAMPION_SQUARE_WIDTH,
 			height: this.CHAMPION_SQUARE_WIDTH,
 			style: {
@@ -383,12 +359,20 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var rows = Math.ceil(count / columns);
 		var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
 		var html = '';
+		var name_id = '';
 		for (var i = 0; i < count; i++) {
 			if (i % columns == 0) {
 				html += '<div style="padding-left:' + padding + 'px">'
 			}
-			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px; vertical-align: top"><img src="' + this.IMAGE_SRC_PATH + '/champion/' + champStoreData.getAt(i).get('key') + '.png" width="' + width + '" height="' + width + '"/>';
-			html += '<p style="text-align: center; font-size: 65%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
+			name_id = champStoreData.getAt(i).get('name') + '_' + champStoreData.getAt(i).get('id');
+			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px; vertical-align: top">';
+				/*fuck dis shiitz
+				html += '<object data="' + this.getImageSrcPath() + '/champion/' + champStoreData.getAt(i).get('key') + '.png" type="image/png" width="' + width + '" height="' + width + '" name="' + name_id +'">';
+				html +=	'<img src="resources/images/champions/Unknown_Square_0.png" width="' + width + '" height="' + width + '" alt="' + champStoreData.getAt(i).get('id') +'" name="' + name_id + '"/>';
+				html += '</object>';
+				*/
+				html +=	'<img src="' + this.getImageSrcPath() + '/champion/' + champStoreData.getAt(i).get('key') + '.png" type="image/png" width="' + width + '" height="' + width + '" alt="' + champStoreData.getAt(i).get('id') +'" name="' + name_id + '"/>';
+				html += '<p style="text-align: center; font-size: 65%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
 			html += '</span>';
 			if (i % columns == columns-1 || i == count-1) {
 				html += '</div>';
@@ -432,6 +416,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 				}
 			},
 			scope: this
+		})
+	},
+	
+	addTapEvents: function() {
+		this.getChampListPanel().element.on({
+			tap: this.onChampPanelTap
 		})
 	}
 });
