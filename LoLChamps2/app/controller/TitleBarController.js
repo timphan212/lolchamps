@@ -122,6 +122,9 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			Ext.getStore('itemliststore').load({
 				callback:function(records, operation, success) {
 					if(success) {
+						if(Ext.getStore('itemliststore').isFiltered()) {
+							Ext.getStore('itemliststore').clearFilter();
+						}
 						LoLChamps.app.getController('LoLChamps.controller.ItemListController').createItemList();
 					}
 				}
