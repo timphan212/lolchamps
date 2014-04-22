@@ -7,6 +7,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	OLD_REGION: '',
 	OLD_LOCALE: '',
 	KR_REGION: 'http://asia.api.pvp.net/api/lol/',
+	TR_RU_REGION: 'http://eu.api.pvp.net/api/lol/',
 	OTHER_REGION: 'https://prod.api.pvp.net/api/lol/',
 	config: {
 		views: [
@@ -206,10 +207,13 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		if(newValue.getValue() == 'kr') {
 			LoLChamps.app.API_URL = this.KR_REGION;
 		}
+		else if(newValue.getValue() == 'tr' || newValue.getValue() == 'ru') {
+			LoLChamps.app.API_URL = this.TR_RU_REGION;
+		}
 		else {
 			LoLChamps.app.API_URL = this.OTHER_REGION;
 		}
-		
+
 		LoLChamps.app.REGION = newValue.getValue();
 	},
 	

@@ -20,12 +20,14 @@ Ext.define('LoLChamps.view.Settings', {
 		        		options: [
 		        		          {text: 'NA', value: 'na'},
 		        		          {text: 'BR', value: 'br'},
-		        		          {text: 'KR', value: 'kr'},
 		        		          {text: 'EUNE', value: 'eune'},
 		        		          {text: 'EUW', value: 'euw'},
+		        		          {text: 'KR', value: 'kr'},
 		        		          {text: 'LAN', value: 'lan'},
 		        		          {text: 'LAS', value: 'las'},
-		        		          {text: 'OCE', value: 'oce'}
+		        		          {text: 'OCE', value: 'oce'},
+		        		          {text: 'RU', value: 'ru'},
+		        		          {text: 'TR', value: 'tr'}
 		        		]
 		        	},
 		        	{
@@ -34,22 +36,22 @@ Ext.define('LoLChamps.view.Settings', {
 		        		itemId: 'localeselect',
 		        		options: [
 		        		          {text: 'English', value: 'en_US'},
-		        		          {text: 'Spanish', value: 'es_ES'},
+		        		          {text: 'Chinese (China)', value: 'zh_CN'},
+		        		          {text: 'Chinese (Taiwan)', value: 'zh_TW'},
 		        		          {text: 'French', value: 'fr_FR'},
 		        		          {text: 'German', value: 'de_DE'},
-		        		          {text: 'Italian', value: 'it_IT'},
-		        		          {text: 'Polish', value: 'pl_PL'},
-		        		          {text: 'Korean', value: 'ko_KR'},
-		        		          {text: 'Russian', value: 'ro_RO'},
 		        		          {text: 'Greek', value: 'el_GR'},
-		        		          {text: 'Romanian', value: 'ro_RO'},
-		        		          {text: 'Turkish', value: 'tr_TR'},
-		        		          {text: 'Thai', value: 'th_TH'},
-		        		          {text: 'Vietnamese', value: 'vn_VN'},
 		        		          {text: 'Indonesian', value: 'id_ID'},
-		        		          {text: 'Chinese (China)', value: 'zh_CN'},
-		        		          {text: 'Chinese (Taiwan)', value: 'zh_TW'},		        		          
-		        		          {text: 'Portugese', value: 'pt_BR'}
+		        		          {text: 'Italian', value: 'it_IT'},
+		        		          {text: 'Korean', value: 'ko_KR'},
+		        		          {text: 'Polish', value: 'pl_PL'},
+		        		          {text: 'Portugese', value: 'pt_BR'},
+		        		          {text: 'Romanian', value: 'ro_RO'},
+		        		          {text: 'Russian', value: 'ro_RO'},
+		        		          {text: 'Spanish', value: 'es_ES'},
+		        		          {text: 'Thai', value: 'th_TH'},
+		        		          {text: 'Turkish', value: 'tr_TR'},
+		        		          {text: 'Vietnamese', value: 'vn_VN'}
 		        		]
 		        	}
 		        ]

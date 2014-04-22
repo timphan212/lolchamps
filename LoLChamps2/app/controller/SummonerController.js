@@ -60,10 +60,6 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		if(Ext.getCmp('summonerstats')) {
 			Ext.getCmp('summonerstats').destroy();
 		}
-		this.getSummonerTabPanel().setMasked({
-			xtype: 'loadmask',
-			message: 'Loading'
-		});
 		if(Ext.getCmp('summonertextfield').getValue() != null && Ext.getCmp('summonertextfield').getValue().length > 0) {
 			LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
 			if(!Ext.getCmp('summonerstats')) {
@@ -76,7 +72,6 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				});
 			}
 		}
-		this.getSummonerTabPanel().setMasked(false);
 	},
 	
 	createSummoner: function() {
@@ -153,7 +148,6 @@ Ext.define('LoLChamps.controller.SummonerController', {
 		if(Ext.getStore('summonerrankedstore')) {
 			var summonerRanked = Ext.getStore('summonerrankedstore').getData();
 			var rankedStr = '';
-			console.log(summonerRanked);
 			var tpl = new Ext.XTemplate(
 					'{[LoLChamps.app.getController(\'SummonerController\').formatRankedTemplate(values)]}</div>'
 			);
@@ -165,9 +159,8 @@ Ext.define('LoLChamps.controller.SummonerController', {
 					itemtap: function(index, target, record, e, eOpts) {
 						var currItem = Ext.getStore('summonerrankedstore').getData().getAt(target).getData();
 						LoLChamps.app.MODE_TXT = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerOrTeamName);
-						LoLChamps.app.setUrl('summonertapview');
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerRanked(currItem);
-						Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);
+						Ext.Msg.alert(currItem.playerOrTeamName, htmlStr, Ext.emptyFn);
 					}
 				}
 			});
