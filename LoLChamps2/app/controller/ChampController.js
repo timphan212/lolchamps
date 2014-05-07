@@ -94,7 +94,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			this.getChampSpellsView().add(this.createSpellsPanel(champData));
 			// Lore - TODO create another panel with many more css styling
 			this.getChampLoreView().setHtml(champData.lore);
-			this.getChampLoreView().setStyle({'font-size': '70%'});
+			this.getChampLoreView().setStyle({'font-size': '100%'});
 		}
 	},
 	
@@ -125,12 +125,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				html: '<b><u>'+ passive.name +'</u></b> (Passive)',
 				style: {
-					'font-size': '80%'
+					'font-size': '100%'
 				}
 			}, {
 				html: passive.description,
 				style: {
-					'font-size': '60%'
+					'font-size': '80%'
 				}
 			}]
 		}]);
@@ -152,13 +152,13 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				html: '<b><u>'+ spell.name +'</u></b>',
 				style: {
-					'font-size': '80%'
+					'font-size': '100%'
 				}
 			}, {
 				width: columnWidth,
 				html: this.encodeToolTip(spell),
 				style: {
-					'font-size': '60%'
+					'font-size': '80%'
 				}
 			}]
 		}])
@@ -372,7 +372,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 				html += '</object>';
 				*/
 				html +=	'<img src="' + this.getImageSrcPath() + '/champion/' + champStoreData.getAt(i).get('key') + '.png" type="image/png" width="' + width + '" height="' + width + '" alt="' + champStoreData.getAt(i).get('id') +'" name="' + name_id + '"/>';
-				html += '<p style="text-align: center; font-size: 65%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
+				html += '<p style="text-align: center; font-size: 100%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
 			html += '</span>';
 			if (i % columns == columns-1 || i == count-1) {
 				html += '</div>';

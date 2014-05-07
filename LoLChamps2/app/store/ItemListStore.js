@@ -27,6 +27,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
+				store.sort('name', 'ASC');
 				Ext.getCmp('itemlistview').setMasked(false);
 			}
 		}

@@ -338,7 +338,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var html = '';
 		html += '<span style="display: inline-block; margin-left: ' + marginL + 'px; margin-right:  ' + marginR + 'px; vertical-align: top">';
 		html += '<img src="' + this.getImageSrcPath(bool) + id + '.png" width="' + width + '" height="' + width + '" alt="' + id + '" name="' + id + '"/>';
-		html += '<p style="text-align: center; font-size: 60%; overflow:hidden; text-overflow: ellipsis; width:' + width + 'px">' + name + '</p>';
+		html += '<p style="text-align: center; font-size: 80%; overflow:hidden; text-overflow: ellipsis; width:' + width + 'px">' + name + '</p>';
 		html += '</span>';
 		
 		return html;

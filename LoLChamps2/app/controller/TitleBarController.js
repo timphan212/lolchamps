@@ -194,6 +194,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		this.OLD_LOCALE = LoLChamps.app.LOCALE;
 		this.OLD_REGION = LoLChamps.app.REGION;
 		this.getSettingsView().setModal(true);
+		this.getSettingsView().setMinWidth('100%');
 		this.getSettingsView().setHideOnMaskTap(true);
 		this.getSettingsView().showBy(button);
 		
