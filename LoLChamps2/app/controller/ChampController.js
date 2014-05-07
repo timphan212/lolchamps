@@ -64,11 +64,11 @@ Ext.define('LoLChamps.controller.ChampController', {
 			LoLChamps.app.CHAMPION_SEL_TXT = strID.substring(0,tokenIndex);
 			LoLChamps.app.CHAMPION_ID = parseInt(strID.substring(tokenIndex+1));
 			LoLChamps.app.setUrl('champinfoview');
+			this.cleanChampInfo();
 			Ext.getStore('champinfostore').load({
 				callback: function(records, operation, success) {
 					if (success) {
 						LoLChamps.app.CHAMPION_DATA = records;
-						this.cleanChampInfo();
 						this.generateChampInfo(records);
 					}
 				}, scope: LoLChamps.app.getController('ChampController')
@@ -421,7 +421,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	addTapEvents: function() {
 		this.getChampListPanel().element.on({
-			tap: this.onChampPanelTap
+			tap: this.onChampPanelTap,
+			scope: this
 		})
 	}
 });

@@ -638,7 +638,36 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "LoLChamps.view.Main": []
+  "LoLChamps.controller.ChampController": [],
+  "LoLChamps.controller.ItemListController": [],
+  "LoLChamps.controller.NavigationController": [],
+  "LoLChamps.controller.SummonerController": [],
+  "LoLChamps.controller.TitleBarController": [],
+  "LoLChamps.model.ChampInfoModel": [],
+  "LoLChamps.model.ChampListModel": [],
+  "LoLChamps.model.ItemIDModel": [],
+  "LoLChamps.model.SummonerIDModel": [],
+  "LoLChamps.model.SummonerRankedModel": [],
+  "LoLChamps.model.SummonerSummaryModel": [],
+  "LoLChamps.store.ChampInfoStore": [],
+  "LoLChamps.store.ChampListStore": [],
+  "LoLChamps.store.ItemListStore": [],
+  "LoLChamps.store.SummonerIDStore": [],
+  "LoLChamps.store.SummonerRankedStore": [],
+  "LoLChamps.store.SummonerSummaryStore": [],
+  "LoLChamps.ux.reader.ChampReader": [],
+  "LoLChamps.ux.reader.ItemReader": [],
+  "LoLChamps.ux.reader.SummonerReader": [],
+  "LoLChamps.view.Main": [],
+  "LoLChamps.view.NavigationBar": [],
+  "LoLChamps.view.Settings": [],
+  "LoLChamps.view.TitleBar": [],
+  "LoLChamps.view.champ.ChampInfoView": [],
+  "LoLChamps.view.champ.ChampListView": [],
+  "LoLChamps.view.item.ItemInfoView": [],
+  "LoLChamps.view.item.ItemListView": [],
+  "LoLChamps.view.summoner.SummonerInfoView": [],
+  "LoLChamps.view.summoner.SummonerTapView": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1357,7 +1386,70 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
+  "LoLChamps.controller.ChampController": [
+    "widget.champcontroller"
+  ],
+  "LoLChamps.controller.ItemListController": [
+    "widget.itemlistcontroller"
+  ],
+  "LoLChamps.controller.NavigationController": [
+    "widget.navigationcontroller"
+  ],
+  "LoLChamps.controller.SummonerController": [
+    "widget.summonercontroller"
+  ],
+  "LoLChamps.controller.TitleBarController": [
+    "widget.titlebarcontroller"
+  ],
+  "LoLChamps.model.ChampInfoModel": [],
+  "LoLChamps.model.ChampListModel": [],
+  "LoLChamps.model.ItemIDModel": [],
+  "LoLChamps.model.SummonerIDModel": [],
+  "LoLChamps.model.SummonerRankedModel": [],
+  "LoLChamps.model.SummonerSummaryModel": [],
+  "LoLChamps.store.ChampInfoStore": [],
+  "LoLChamps.store.ChampListStore": [],
+  "LoLChamps.store.ItemListStore": [],
+  "LoLChamps.store.SummonerIDStore": [],
+  "LoLChamps.store.SummonerRankedStore": [],
+  "LoLChamps.store.SummonerSummaryStore": [],
+  "LoLChamps.ux.reader.ChampReader": [
+    "reader.champreader"
+  ],
+  "LoLChamps.ux.reader.ItemReader": [
+    "reader.itemreader"
+  ],
+  "LoLChamps.ux.reader.SummonerReader": [
+    "reader.summonerreader"
+  ],
   "LoLChamps.view.Main": [
     "widget.main"
+  ],
+  "LoLChamps.view.NavigationBar": [
+    "widget.navigationbar"
+  ],
+  "LoLChamps.view.Settings": [
+    "widget.settingsview"
+  ],
+  "LoLChamps.view.TitleBar": [
+    "widget.loltitlebar"
+  ],
+  "LoLChamps.view.champ.ChampInfoView": [
+    "widget.champinfoview"
+  ],
+  "LoLChamps.view.champ.ChampListView": [
+    "widget.champlistview"
+  ],
+  "LoLChamps.view.item.ItemInfoView": [
+    "widget.iteminfoview"
+  ],
+  "LoLChamps.view.item.ItemListView": [
+    "widget.itemlistview"
+  ],
+  "LoLChamps.view.summoner.SummonerInfoView": [
+    "widget.summonerinfoview"
+  ],
+  "LoLChamps.view.summoner.SummonerTapView": [
+    "widget.summonertapview"
   ]
 });
