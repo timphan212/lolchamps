@@ -174,7 +174,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				continue;
 			}	
 		
-			html += this.formatHtml(id, name, width, true, 1);
+			html += this.formatHtml(id, name, width, true, 4);
 		}
 
 		this.getItemListPanel().setHtml(html);
@@ -345,7 +345,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	
 	formatHtml: function(id, name, width, bool, margin) {
 		var html = '';
-		html += '<div style="display: inline-block; margin-left: ' + margin + '%; margin-right: ' + margin + '%; vertical-align: top">';
+		html += '<div style="display: inline-block; margin-left: ' + margin + 'px; margin-right: ' + margin + 'px; vertical-align: top">';
 		html += '<img src="' + this.getImageSrcPath(bool) + id + '.png" width="' + width + '" height="' + width + '" alt="' + id + '" name="' + id + '"/>';
 		html += '<p style="text-align: center; font-size: 80%; overflow:hidden; text-overflow: ellipsis; width:' + width + 'px">' + name + '</p>';
 		html += '</div>';
