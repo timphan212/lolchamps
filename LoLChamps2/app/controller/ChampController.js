@@ -362,15 +362,15 @@ Ext.define('LoLChamps.controller.ChampController', {
 		});
 		var champStoreData = Ext.getStore('champliststore').getData();
 		var count = Ext.getStore('champliststore').getCount();
-		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
+		var columns = Math.floor(Ext.Viewport.getWindowWidth() / (width+8));
 		var rows = Math.ceil(count / columns);
-		//var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
-		var html = '<div style="text-align:center">';
+		var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
+		var html = '';
 		var name_id = '';
 		for (var i = 0; i < count; i++) {
-			/*if (i % columns == 0) {
+			if (i % columns == 0) {
 				html += '<div style="padding-left:' + padding + 'px">'
-			}*/
+			}
 			name_id = champStoreData.getAt(i).get('name') + '_' + champStoreData.getAt(i).get('id');
 			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px; vertical-align: top">';
 				/*fuck dis shiitz
@@ -381,12 +381,10 @@ Ext.define('LoLChamps.controller.ChampController', {
 				html +=	'<img src="' + this.getImageSrcPath() + '/champion/' + champStoreData.getAt(i).get('key') + '.png" type="image/png" width="' + width + '" height="' + width + '" alt="' + champStoreData.getAt(i).get('id') +'" name="' + name_id + '"/>';
 				html += '<p style="text-align: center; font-size: 100%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
 			html += '</span>';
-			/*if (i % columns == columns-1 || i == count-1) {
+			if (i % columns == columns-1 || i == count-1) {
 				html += '</div>';
-			}*/
+			}
 		}
-		
-		html += '</div>';
 		this.getChampListPanel().setHtml(html);
 		this.getChampListPanel().setMasked(false);
 	},

@@ -118,7 +118,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			var currItem = LoLChamps.app.getController('ItemListController').retrieveItem(Ext.getStore('itemliststore').getData().all, id);
 			Ext.getStore('itemliststore').load({
 				callback: function(records, operation, success) {
-					if(success) {
+					if(success) { 
 						this.setupItemInfoView(currItem);
 					}
 				}, scope: LoLChamps.app.getController('ItemListController')
@@ -165,7 +165,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
 		var items = [];
 
-		var html = '<div style="text-align: center">';
+		var html = '';
 		for(var i = 0; i < count; i++) {
 			var name = itemData.getAt(i).getData().name;
 			var id = itemData.getAt(i).getData().id;
@@ -174,7 +174,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				continue;
 			}	
 		
-			html += this.formatHtml(id, name, width, true, 1);
+			html += this.formatHtml(id, name, width, true, 6, 6);
 		}
 
 		this.getItemListPanel().setHtml(html);
@@ -195,9 +195,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		for (var i = 0; i < count; i++) {
 			var id = currItem.into[i];
 			var name = (this.retrieveItem(Ext.getStore('itemliststore').getData().all, id)).name;
-			html += this.formatHtml(id, name, width, true, 0);
+			html += this.formatHtml(id, name, width, true, 6, 6);
 		}
-		html += '</div>';
+		
 		return html;
 	},
 	
@@ -224,34 +224,34 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			
 			while(currIndent <= indentArr[i] && i > 0) {
 				if(currIndent == indentArr[i]) {
-					html += this.formatHtml('angle', '', width, false, 0);
+					html += this.formatHtml('angle', '', width, false, 0, 0);
 				}
 				else if(indentArr[i] - indentArr[i+1] >  1) {
 					if(currIndent == indentArr[i+1]) {
-						html += this.formatHtml('line', '', width, false, 0);
+						html += this.formatHtml('line', '', width, false, 0, 0);
 					}
 					else {
-						html += this.formatHtml('blank', '', width, false, 0);
+						html += this.formatHtml('blank', '', width, false, 0, 0);
 					}
 				}
 				else if(blankBool == 0) {
-					html += this.formatHtml('blank', '', width, false, 0);
+					html += this.formatHtml('blank', '', width, false, 0, 0);
 				}
 				else if(blankBool > 0) {
 					if(blankBool == currIndent) {
-						html += this.formatHtml('line', '', width, false, 0);
+						html += this.formatHtml('line', '', width, false, 0, 0);
 					}
 					else {
-						html += this.formatHtml('blank', '', width, false, 0);
+						html += this.formatHtml('blank', '', width, false, 0, 0);
 					}
 				}
 				else {
-					html += this.formatHtml('line', '', width, false, 0);
+					html += this.formatHtml('line', '', width, false, 0, 0);
 				}
 				currIndent++;
 			}
 			
-			html += this.formatHtml(id, name, width, true, 0);
+			html += this.formatHtml(id, name, width, true, 0, 0);
 			html += '<BR>';
 		}
 		
@@ -326,7 +326,6 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	},
 	
 	setupItemInfoView: function(currItem) {
-		this.getItemInfoView().setMasked(true);
 		LoLChamps.app.ITEM_SEL_TXT = currItem.name;
 		LoLChamps.app.setUrl('iteminfoview');
 		var arr = [];
@@ -340,15 +339,14 @@ Ext.define('LoLChamps.controller.ItemListController', {
 		html += this.updateItemInfoPanel(currItem, this.ITEM_SQUARE_WIDTH);
 		
 		this.getItemInfoView().setHtml(html);
-		this.getItemInfoView().setMasked(false);
 	},
 	
-	formatHtml: function(id, name, width, bool, margin) {
+	formatHtml: function(id, name, width, bool, marginL, marginR) {
 		var html = '';
-		html += '<div style="display: inline-block; margin-left: ' + margin + '%; margin-right: ' + margin + '%; vertical-align: top">';
+		html += '<span style="display: inline-block; margin-left: ' + marginL + 'px; margin-right:  ' + marginR + 'px; vertical-align: top">';
 		html += '<img src="' + this.getImageSrcPath(bool) + id + '.png" width="' + width + '" height="' + width + '" alt="' + id + '" name="' + id + '"/>';
 		html += '<p style="text-align: center; font-size: 80%; overflow:hidden; text-overflow: ellipsis; width:' + width + 'px">' + name + '</p>';
-		html += '</div>';
+		html += '</span>';
 		
 		return html;
 	}
