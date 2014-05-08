@@ -6,7 +6,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	xtype: 'summonercontroller',
 	config: {
 		views: [
-			'TitleBar', 'summoner.SummonerInfoView'
+			'TitleBar', 'summoner.SummonerInfoView', 'NavigationBar'
 		],
 		refs: {
 			SummonerInfoView: '#summonerinfoview',
@@ -20,7 +20,8 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			SummonerTapView: '#summonertapview',
 			SummonerTapPanel: '#summonertapview #summonertappanel',
 			SummonerTextField: '#summonerinfoview #summonertextfield',
-			TitleBar: '#loltitlebar'
+			TitleBar: '#loltitlebar',
+			NavigationBar: '#navigationbar'
 		},
 		
 		control: {
@@ -28,7 +29,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				tap: 'onSummonerSubmitBtn'
 			},
 			SummonerTextField: {
-				action: 'onSummonerSubmitBtn'
+				action: 'onSummonerSubmitBtn',
+				focus: 'onSummonerTextFocus',
+				blur: 'onSummonerTextBlur',
 			}
 		}
 	},
@@ -72,6 +75,14 @@ Ext.define('LoLChamps.controller.SummonerController', {
 				});
 			}
 		}
+	},
+	
+	onSummonerTextFocus: function(e, eOpts) {
+		this.getNavigationBar().hide();
+	},
+	
+	onSummonerTextBlur: function(e, eOpts) {
+		this.getNavigationBar().show();
 	},
 	
 	createSummoner: function() {

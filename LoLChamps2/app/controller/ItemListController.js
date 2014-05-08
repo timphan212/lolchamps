@@ -13,7 +13,7 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	                        '3280', '3281', '3282', '3283', '3284'],
 	config: {
 		views: [
-			'TitleBar', 'item.ItemListView', 'item.ItemInfoView'
+			'TitleBar', 'item.ItemListView', 'item.ItemInfoView', 'NavigationBar'
 		],
 		refs: {
 			ItemListView: '#itemlistview',
@@ -21,7 +21,8 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			ItemInfoView: '#iteminfoview',
 			SearchField: '#itemlistview #itemlistsearch',
 			TagField: '#itemlistview #itemtagselect',
-			TitleBar: '#loltitlebar'
+			TitleBar: '#loltitlebar',
+			NavigationBar: '#navigationbar'
 		},
 		control: {
 			SearchField: {
@@ -43,6 +44,12 @@ Ext.define('LoLChamps.controller.ItemListController', {
 						this.getItemListPanel().setMasked(false);
 					}
 					
+				},
+				focus: function(e, eOpts) {
+					this.getNavigationBar().hide();
+				},
+				blur: function(e, eOpts) {
+					this.getNavigationBar().show();
 				}
 			},
 			TagField: {

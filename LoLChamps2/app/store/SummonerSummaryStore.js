@@ -30,6 +30,7 @@ Ext.define('LoLChamps.store.SummonerSummaryStore', {
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
+				store.sort('playerStatSummaryType', 'ASC');
 				Ext.getCmp('summonerinfoview').setMasked(false);
 			}
 		}

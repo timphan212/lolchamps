@@ -15,12 +15,12 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 				xtype: 'searchfield',
 				itemId: 'itemlistsearch',
 				placeHolder: 'Search',
-				flex: '4'
+				flex: '1'
 			}, {
 					xtype: 'selectfield',
 					itemId: 'itemtagselect',
-					flex: '1',
 					ui: 'action',
+					flex: '1',
 					options: [
 					     {text: 'All', value: 'all'},
 					     {text: 'Ability Power', value: 'SpellDamage'},

@@ -18,7 +18,7 @@ Ext.define('LoLChamps.store.SummonerRankedStore', {
 						Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">Ranked information is not available for ' + LoLChamps.app.REGION.toUpperCase() + ' server.</font>');
 					}
 					else {
-						Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">User has not played ranked games before.</font>');
+						Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('<font color="red">User has not played any ranked games or has been placed.</font>');
 					}
 				}
 			}
@@ -32,6 +32,7 @@ Ext.define('LoLChamps.store.SummonerRankedStore', {
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
+				store.sort('playerOrTeamName', 'ASC');
 				Ext.getCmp('summonerinfoview').setMasked(false);
 			}
 		}

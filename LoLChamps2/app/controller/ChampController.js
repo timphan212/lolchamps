@@ -9,7 +9,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	config: {
 		views: [
-			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView'
+			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'NavigationBar'
 		],
 		refs: {
 			ChampListView: '#champlistview',
@@ -21,7 +21,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 			ChampTabPanel: '#champinfoview #champtabpanel',
 			ChampStatsView: '#champinfoview #champtabpanel #champstats',
 			ChampSpellsView: '#champinfoview #champtabpanel #champspells',
-			ChampLoreView: '#champinfoview #champtabpanel #champlore'
+			ChampLoreView: '#champinfoview #champtabpanel #champlore',
+			NavigationBar: '#navigationbar'
 		},
 		control: {
 			SearchField: {
@@ -42,6 +43,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 						this.updateChampPanel(this.CHAMPION_SQUARE_WIDTH);
 						this.getChampListPanel().setMasked(false);
 					}
+				},
+				focus: function(e, eOpts) {
+					this.getNavigationBar().hide();
+				},
+				blur: function(e, eOpts) {
+					this.getNavigationBar().show();
 				}
 			}
 		}
