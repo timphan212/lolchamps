@@ -132,12 +132,12 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				html: '<b><u>'+ passive.name +'</u></b> (Passive)',
 				style: {
-					'font-size': '100%'
+					'font-size': '90%'
 				}
 			}, {
 				html: passive.description,
 				style: {
-					'font-size': '80%'
+					'font-size': '90%'
 				}
 			}]
 		}]);
@@ -159,13 +159,13 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				html: '<b><u>'+ spell.name +'</u></b>',
 				style: {
-					'font-size': '100%'
+					'font-size': '90%'
 				}
 			}, {
 				width: columnWidth,
 				html: this.encodeToolTip(spell),
 				style: {
-					'font-size': '80%'
+					'font-size': '90%'
 				}
 			}]
 		}])

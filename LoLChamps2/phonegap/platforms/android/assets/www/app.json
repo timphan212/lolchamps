@@ -1,0 +1,1 @@
+{"id":"6b9b7fc9-d164-41f5-b6ab-c01f94a3b554","js":[{"path":"phonegap.js","remote":true},{"path":"app.js","update":"delta"}],"css":[{"path":"touch/resources/css/mountainview.css","update":"delta","theme":"MountainView","platform":["chrome","android","desktop"]}]}
