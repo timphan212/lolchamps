@@ -45,8 +45,8 @@ Ext.define('LoLChamps.ux.reader.ItemReader', {
         	itemData[id].id = id;
         	
         	//Help differentiate between crystal scar/summoner rift items
-        	if(id == '3043' || id == '3048' || id == '3290') {
-        		itemData[id].name = itemData[id].name + ' (Crystal Scar)';
+        	if(id == '3043' || id == '3048' || id == '3290' || id == '3450') {
+        		itemData[id].name += ' (Dominion)';
         	}
         	//Format bonetooth stuff
         	if(id == '3166') {
@@ -66,6 +66,9 @@ Ext.define('LoLChamps.ux.reader.ItemReader', {
         	}
         	else if(id == '3417') {
         		itemData[id].into = ['3418', '3419', '3420', '3421', '3422'];
+        	}
+        	else if(id == '3450') {
+        		itemData[id].into = ['3451', '3452', '3453', '3454', '3455'];
         	}
         	//Format boots stuff
         	else if(id == '3006') {

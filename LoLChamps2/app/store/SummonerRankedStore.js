@@ -25,7 +25,7 @@ Ext.define('LoLChamps.store.SummonerRankedStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl(LoLChamps.app.API_URL + LoLChamps.app.REGION + '/v2.3/league/by-summoner/' + LoLChamps.app.SUMMONER_ID + '/entry?api_key=' + apiKey);
+				this.getProxy().setUrl(LoLChamps.app.API_URL + LoLChamps.app.REGION + '/v2.4/league/by-summoner/' + LoLChamps.app.SUMMONER_ID + '/entry?api_key=' + apiKey);
 				Ext.getCmp('summonerinfoview').setMasked({
 					xtype: 'loadmask',
 					message: 'Retrieving Summoner from ' + LoLChamps.app.REGION.toUpperCase()

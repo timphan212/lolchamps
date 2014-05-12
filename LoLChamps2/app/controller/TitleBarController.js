@@ -28,7 +28,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			SummonerTapView: '#summonertapview',
 			SummonerTextField: '#summonertextfield',
 			TitleBar: '#loltitlebar',
-			TitleBarBackBtn: '#titlebackbtn',
+			TitleBarBackBtn: '#titlebackbtn'
 		},
 		control: {
 			ChampListView: {
