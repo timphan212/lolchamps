@@ -32,7 +32,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 		},
 		control: {
 			ChampListView: {
-				show: 'onChampInfoHide',
+				show: 'onChampInfoHide'
 			},
 			ChampInfoView: {
 				show: 'onChampInfoShow',

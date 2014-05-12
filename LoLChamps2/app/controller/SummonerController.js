@@ -31,7 +31,7 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			SummonerTextField: {
 				action: 'onSummonerSubmitBtn',
 				focus: 'onSummonerTextFocus',
-				blur: 'onSummonerTextBlur',
+				blur: 'onSummonerTextBlur'
 			}
 		}
 	},

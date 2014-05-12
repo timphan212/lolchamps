@@ -1,10 +1,19 @@
 // The following two lines import the default Sencha Touch theme. If you are building
 // a new theme, remove them and the add your own CSS on top of the base CSS (which
 // is already included in your app.json file).
-@import 'sencha-touch/default';
-@import 'sencha-touch/default/all';
+@import 'sencha-touch/mountainview';
+@import 'sencha-touch/mountainview/all';
 
 // Custom code goes here..
+@include icon-font('IcoMoon', inline-font-files(
+  'icomoon/icomoon.woff', woff,
+  'icomoon/icomoon.ttf', truetype,
+  'icomoon/icomoon.svg', svg
+));
+
+@include icon('coin', '\e600', 'IcoMoon');
+@include icon('summoner', '\e601', 'IcoMoon');
+@include icon('champion', '\e602', 'IcoMoon');
 
 // Examples of using the icon mixin:
 // @include icon('user');

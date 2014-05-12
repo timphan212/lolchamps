@@ -75,15 +75,11 @@
      *      }
      */
     "css": [
-        /*{
-            "path": "resources/css/app.css",
-            "update": "delta"
-        },*/ 
         {
-        	"path": "touch/resources/css/mountainview.css",
-        	"platform": ["chrome", "android", "desktop"],
+            "path": "resources/css/app.css",
+            "platform": ["chrome", "android", "desktop"],
         	"theme": "MountainView",
-        	"update": "delta"
+            "update": "delta"
         }
     ],
 
