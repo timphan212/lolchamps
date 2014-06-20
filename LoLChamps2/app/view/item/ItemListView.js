@@ -21,6 +21,14 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 					itemId: 'itemtagselect',
 					ui: 'action',
 					flex: '1',
+					defaultPhonePickerConfig: {
+						listeners: {
+							delegate: 'button',
+							tap: function() {
+								Ext.getCmp('navigationbar').show();
+							},
+						}
+					},
 					options: [
 					     {text: 'All', value: 'all'},
 					     {text: 'Ability Power', value: 'SpellDamage'},

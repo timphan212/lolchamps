@@ -28,7 +28,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 			SummonerTapView: '#summonertapview',
 			SummonerTextField: '#summonertextfield',
 			TitleBar: '#loltitlebar',
-			TitleBarBackBtn: '#titlebackbtn'
+			TitleBarBackBtn: '#titlebackbtn',
+			NavigationBar: '#navigationbar'
 		},
 		control: {
 			ChampListView: {
@@ -188,9 +189,10 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onSettingsBtnTap: function(button, e, eOpts) {
 		if (!this.getSettingsView().isHidden()) {
 			this.getSettingsView().hide();
+			this.getNavigationBar().show();
 			return;
 		}
-		
+		this.getNavigationBar().hide();
 		this.OLD_LOCALE = LoLChamps.app.LOCALE;
 		this.OLD_REGION = LoLChamps.app.REGION;
 		this.getSettingsView().setModal(true);
@@ -209,6 +211,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onSettingsRefresh: function(eOpts) {
+		this.getNavigationBar().show();
 		if(this.OLD_LOCALE != LoLChamps.app.LOCALE || this.OLD_REGION != LoLChamps.app.REGION) {
 			this.onRefreshBtnTap();
 		}

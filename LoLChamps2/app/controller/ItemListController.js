@@ -54,6 +54,9 @@ Ext.define('LoLChamps.controller.ItemListController', {
 				}
 			},
 			TagField: {
+				focus: function(e, eOpts) {
+					this.getNavigationBar().hide();
+				},
 				change: function(field, newValue, oldValue, eOpts) {
 					if(Ext.getStore('itemliststore')) {
 						this.getItemListPanel().setMasked(true);
