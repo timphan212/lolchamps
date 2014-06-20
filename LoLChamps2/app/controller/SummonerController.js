@@ -60,8 +60,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	},
 	
 	onSummonerSubmitBtn: function() {
-		if(Ext.getCmp('summonerstats')) {
-			Ext.getCmp('summonerstats').destroy();
+		if(Ext.getCmp('summonerinfoview')) {
+			Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerstats').setHtml('');
+			Ext.getCmp('summonerinfoview').child('#summonertabpanel').child('#summonerranked').setHtml('');
 		}
 		if(Ext.getCmp('summonertextfield').getValue() != null && Ext.getCmp('summonertextfield').getValue().length > 0) {
 			LoLChamps.app.SUMMONER_NAME = Ext.getCmp('summonertextfield').getValue();
@@ -472,17 +473,18 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	
 	formatSummonerRanked: function(currItem) {
 		rankStr = '';
-		rankStr += 'League Name: ' + currItem.leagueName + '<BR>';
-		rankStr += 'Tier: ' + currItem.tier + ' '  + currItem.rank + '<BR>';
-		rankStr += 'League Points: ' + currItem.leaguePoints + ' LP<BR>';
-		rankStr += 'Wins: ' + currItem.wins + '<BR>';
+		rankStr += 'League Name: ' + currItem.name + '<BR>';
+		rankStr += 'Tier: ' + currItem.tier + ' '  + currItem.entries[0].division + '<BR>';
+		rankStr += 'League Points: ' + currItem.entries[0].leaguePoints + ' LP<BR>';
+		rankStr += 'Wins: ' + currItem.entries[0].wins + '<BR>';
 		
-		if(currItem.miniSeries != null) {
-			var wins = currItem.miniSeries.wins;
-			var losses = currItem.miniSeries.losses;
-			var target = currItem.miniSeries.target - wins;
+		if(currItem.entries[0].miniSeries != null) {
+			console.log('went in');
+			var wins = currItem.entries[0].miniSeries.wins;
+			var losses = currItem.entries[0].miniSeries.losses;
+			var target = currItem.entries[0].miniSeries.target - wins;
 			
-			rankStr += 'Promotional Series: ' + wins + ' wins/' + losses + ' losses (Needs ' + target + ' win(s) left!) <BR>';
+			rankStr += 'Promotional Series: ' + wins + ' wins/' + losses + ' losses <BR> (' + target + ' win(s) left!) <BR>';
 		}
 		
 		return rankStr;
@@ -490,9 +492,9 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	
 	formatRankedTemplate: function(values) {
 		tempStr = '';
-		tempStr += '<div style="display:inline-block;width:100%;"><img src="resources/images/ranked/' + values.tier + '_' + values.rank + '.png" class="list-image" width="64" height="64"  style="float:left;"/>'
-		tempStr += '<p>Mode: ' + this.formatQueueType(values.queueType);
-		tempStr += '<BR>Name/Team Name: ' + values.playerOrTeamName + '</p></div>';
+		tempStr += '<div style="display:inline-block;width:100%;"><img src="resources/images/ranked/' + values.tier + '_' + values.entries[0].division + '.png" class="list-image" width="64" height="64"  style="float:left;"/>'
+		tempStr += '<p>Mode: ' + this.formatQueueType(values.queue);
+		tempStr += '<BR>Name/Team Name: ' + values.entries[0].playerOrTeamName + '</p></div>';
 		
 		return tempStr;
 	}

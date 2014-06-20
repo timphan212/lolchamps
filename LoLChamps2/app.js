@@ -2,7 +2,8 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader', 'LoLChamps.ux.reader.ChampReader'
+        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader', 'LoLChamps.ux.reader.ChampReader',
+        'LoLChamps.ux.reader.SummonerRankedReader'
     ],
     controllers: [
         'ChampController', 'NavigationController', 'TitleBarController', 'ItemListController', 'SummonerController'
@@ -181,7 +182,7 @@ Ext.application({
 //	},
     
     // Global Application Variable Strings
-	API_URL: "https://prod.api.pvp.net/api/lol/",
+	API_URL: ".api.pvp.net/api/lol/",
 	CHAMPION_DATA: "",
     CHAMPION_ID: "",
     CHAMPION_SEL_TXT: "",

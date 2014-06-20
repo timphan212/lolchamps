@@ -205,16 +205,6 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onRegionChange: function(newValue, oldValue, eOpts) {
-		if(newValue.getValue() == 'kr') {
-			LoLChamps.app.API_URL = this.KR_REGION;
-		}
-		else if(newValue.getValue() == 'tr' || newValue.getValue() == 'ru') {
-			LoLChamps.app.API_URL = this.TR_RU_REGION;
-		}
-		else {
-			LoLChamps.app.API_URL = this.OTHER_REGION;
-		}
-
 		LoLChamps.app.REGION = newValue.getValue();
 	},
 	

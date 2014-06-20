@@ -2,7 +2,7 @@ Ext.define('LoLChamps.model.SummonerRankedModel', {
 	extend: 'Ext.data.Model',
 	config: {
 		fields: [			
-		    {
+		    /*{
 				name: 'isFreshBlood'
 			}, {
 				name: 'isHotStreak'
@@ -30,7 +30,16 @@ Ext.define('LoLChamps.model.SummonerRankedModel', {
 				name: 'tier'
 			}, {
 				name: 'wins'
-			}
+			}*/
+		    {
+		    	name: 'queue'
+		    }, {
+		    	name: 'name'
+		    }, {
+		    	name: 'entries'
+		    }, {
+		    	name: 'tier'
+		    }
 		]
 	}
 });
