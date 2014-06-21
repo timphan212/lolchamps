@@ -77,7 +77,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	onChampInfoShow: function() {
 		this.getTitleBarBackBtn().setText(LoLChamps.app.CHAMPIONS_TXT)
 		this.getTitleBarBackBtn().show();
-		this.getTitleBar().setTitle(LoLChamps.app.CHAMPION_SEL_TXT);
+//		this.getTitleBar().setTitle(LoLChamps.app.CHAMPION_SEL_TXT);
+		this.getTitleBar().setTitle('');
 	},
 	
 	onChampInfoHide: function() {

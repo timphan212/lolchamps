@@ -101,79 +101,77 @@ Ext.define('LoLChamps.controller.ChampController', {
 			this.getChampSpellsView().add(this.createSpellsPanel(champData));
 			// Lore - TODO create another panel with many more css styling
 			this.getChampLoreView().setHtml(champData.lore);
-			this.getChampLoreView().setStyle({'font-size': '100%'});
+			this.getChampLoreView().setStyle({'font-size': '100%', 'margin': '5px 10px 5px 10px'});
 		}
 	},
 	
 	createSpellsPanel: function(champData) {
-		var passivePanel = this.createPassivePanel(champData.passive);
+//		var passivePanel = this.createPassivePanel(champData.passive);
+		var passivePanel = this.createSpellPanel(champData.passive);
 		var spellPanel1 = this.createSpellPanel(champData.spells[0]);
 		var spellPanel2 = this.createSpellPanel(champData.spells[1]);
 		var spellPanel3 = this.createSpellPanel(champData.spells[2]);
 		var spellPanel4 = this.createSpellPanel(champData.spells[3]);
 		
-		return this.createVBoxContainer([passivePanel,spellPanel1,spellPanel2,spellPanel3,spellPanel4]);
-	},
-	
-	createPassivePanel: function(passive) {
-		return this.createHBoxContainer([{
-			xtype: 'image',
-//			src: 'resources/images/abilities/' + passive.image.full,
-			src: this.getImageSrcPath() + '/passive/' + passive.image.full,
-			height: 64,
-			width: 64,
-			style: {
-				'background-size': '95%'
-			}
-		}, {
+		return {
 			xtype: 'container',
 			layout: 'vbox',
-			flex: 1,
-			items: [{
-				html: '<b><u>'+ passive.name +'</u></b> (Passive)',
-				style: {
-					'font-size': '90%'
-				}
-			}, {
-				html: passive.description,
-				style: {
-					'font-size': '90%'
-				}
-			}]
-		}]);
+			items: [passivePanel,spellPanel1,spellPanel2,spellPanel3,spellPanel4]
+		};
 	},
 	
 	createSpellPanel: function(spell) {
-		var columnWidth = window.innerWidth - 64;
-		return this.createHBoxContainer([{
-			xtype: 'image',
-			src: this.getImageSrcPath() + '/spell/' + spell.image.full,
-			height: 64,
-			width: 64,
-			style: {
-				'background-size': '95%'
-			}
-		}, this.createVBoxContainer([{
+		var isPassive = spell.effect == null? '/passive/' : '/spell/';
+		var spellTitle = '<b style="float:left"><u>'+ spell.name +'</u></b>';
+		if (spell.cooldownBurn && spell.cooldownBurn != 0) {
+			spellTitle += '<span style="float: right; padding-right: 10px"> Cooldown: ' + spell.cooldownBurn + '</span>';
+		}
+		if (spell.rangeBurn) {
+			spellTitle += '<br style="clear: both"><b>Range: ' + spell.rangeBurn + '</b>'; 
+		}
+		return {
 			xtype: 'container',
-			layout: 'vbox',
+			layout: 'hbox',
 			items: [{
-				html: '<b><u>'+ spell.name +'</u></b>',
+				xtype: 'image',
+				src: this.getImageSrcPath() + isPassive + spell.image.full,
+//				height: 64,
+//				width: 64,
+				flex: 15,
 				style: {
-					'font-size': '90%'
+					'background-size': '95%',
+					'margin-right': '5px',
+					'margin-left': '5px'
 				}
 			}, {
-				width: columnWidth,
-				html: this.encodeToolTip(spell),
-				style: {
-					'font-size': '90%'
-				}
-			}]
-		}])
-		]);
+				xtype: 'container',
+				layout: 'vbox',
+				flex: 85,
+				items: [{
+					html: spellTitle,
+					style: {
+						'font-size': '90%'
+					}
+				}, {
+//					width: columnWidth,
+					html: this.encodeToolTip(spell),
+					style: {
+						'font-size': '90%',
+						'margin-right': '10px'
+					}
+				}]
+			}],
+			style: {
+				'border-bottom': '2px solid #DCDCDC'
+			}
+		};
 	},
 	
 	encodeToolTip: function(spell) {
-		var tooltip = spell.tooltip;
+		if (spell.effect == null) {
+			return spell.sanitizedDescription;
+		}
+		var tooltip = spell.sanitizedTooltip;
 		var indexA = tooltip.indexOf('{{');
 		var indexB = tooltip.indexOf('}}');
 		var count = 0;
@@ -234,16 +232,26 @@ Ext.define('LoLChamps.controller.ChampController', {
 		                  this.createStatPanel('attackspeedoffset', stats['attackspeedoffset'], stats['attackspeedperlevel']),
 		                  this.createStatPanel('armor', stats['armor'], stats['armorperlevel']),
 		                  this.createStatPanel('spellblock', stats['spellblock'], stats['spellblockperlevel'])];
-		var leftCol = this.createVBoxContainer(leftItems);
-		var rightCol = this.createVBoxContainer(rightItems);
+		var leftCol = {
+			xtype: 'container',
+			layout: 'vbox',
+			flex: 1,
+			items: leftItems
+		};
+		var rightCol = {
+			xtype: 'container',
+			layout: 'vbox',
+			flex: 1,
+			items: rightItems
+		}
 		var panel = {
 			xtype: 'container',
 			layout: 'hbox',
-			flex: 1,
-			items: [leftCol,rightCol]
-			
+			items: [leftCol,rightCol],
+			style: {
+				'margin': '5px 10px 5px 10px'
+			}
 		};
-//		return this.createHBoxContainer([leftCol,rightCol]);
 		return panel;
 	},
 	
@@ -253,28 +261,31 @@ Ext.define('LoLChamps.controller.ChampController', {
 			statValue = (1/(1.6*(1+parseFloat(statValue)))).toFixed(3);
 		}
 		var statperlevel = statGrowth != ""? ' (' + statGrowth + ') per level' : "";
-		return this.createHBoxContainer([{
-			xtype: 'image'
-//			src: this.getImageSrcPath() + '/spell/' + spell.image.full,
-//			height: 64,
-//			width: 64,
-//			style: {
-//				'background-size': '95%'
-//			}
-		}, this.createVBoxContainer([{
+		return {
 			xtype: 'container',
-			layout: 'vbox',
-			width: window.innerWidth/2,
+			layout: 'hbox',
 			items: [{
-				html: this.DictionaryMapStats(statLabel) +':'
+				xtype: 'image' // this is for stat icon
+//				src: this.getImageSrcPath() + '/spell/' + spell.image.full,
+//				height: 64,
+//				width: 64,
+//				style: {
+//					'background-size': '95%'
+//				}
 			}, {
-				html: statValue + statperlevel,
-				style: {
-					'font-size': '80%'
-				}
+				xtype: 'container',
+				layout: 'vbox',
+				items: [{
+					html: this.DictionaryMapStats(statLabel) +':'
+				}, {
+					html: statValue + statperlevel,
+					style: {
+						'font-size': '80%',
+						'padding-bottom': '10px'
+					}
+				}]
 			}]
-		}])
-		]);
+		};
 	},
 	
 	DictionaryMapStats: function(text) {
@@ -298,58 +309,39 @@ Ext.define('LoLChamps.controller.ChampController', {
 	},
 	
 	createLogoPanelForChamp: function(champData) {
-		var logoPanel = this.createHBoxContainer();
-		
-		logoPanel.items.push({
-			xtype: 'image',
-//			src: 'resources/images/champions/' + champData.id + '_Square_0.png',
-			src: this.getImageSrcPath() + '/champion/' + champData.key + '.png',
-			width: this.CHAMPION_SQUARE_WIDTH,
-			height: this.CHAMPION_SQUARE_WIDTH,
-			style: {
-				'background-size': '95%'
-			},
-			listeners: {
-				error: function(image, event) {
-					image.setSrc('resources/images/champions/Unknown_Square_0.png')
-				}
-			}
-		});
-		logoPanel.items.push({
-			xtype: 'container',
-			layout: 'vbox',
-			flex: 1,
-			items: [{
-				html: champData.name,
-				style: {
-					'font-size': '170%',
-					'text-align': 'center'
-				}
-			}, {
-				html: champData.title,
-				style: {
-					'font-size': '75%',
-					'text-align': 'center'
-				}
-			}]
-		});
-		return logoPanel;
-	},
-	
-	createHBoxContainer: function(items) {
 		return {
 			xtype: 'container',
 			layout: 'hbox',
-			items: items? items : []
-		}
-	},
-	
-	createVBoxContainer: function(items) {
-		return {
-			xtype: 'container',
-			layout: 'vbox',
-			items: items? items : []
-		}
+			items: [{
+				xtype: 'image',
+				src: this.getImageSrcPath() + '/champion/' + champData.key + '.png',
+//				width: this.CHAMPION_SQUARE_WIDTH,
+//				height: this.CHAMPION_SQUARE_WIDTH,
+				flex: 1,
+				listeners: {
+					error: function(image, event) {
+						image.setSrc('resources/images/champions/Unknown_Square_0.png')
+					}
+				}
+			}, {
+				xtype: 'container',
+				layout: 'vbox',
+				flex: 9,
+				items: [{
+					html: champData.name,
+					style: {
+						'font-size': '170%',
+						'text-align': 'center'
+					}
+				}, {
+					html: champData.title,
+					style: {
+						'font-size': '75%',
+						'text-align': 'center'
+					}
+				}]
+			}]
+		};
 	},
 	
 	updateChampPanel: function(width) {
@@ -362,15 +354,15 @@ Ext.define('LoLChamps.controller.ChampController', {
 		});
 		var champStoreData = Ext.getStore('champliststore').getData();
 		var count = Ext.getStore('champliststore').getCount();
-		var columns = Math.floor(Ext.Viewport.getWindowWidth() / width);
+		var columns = Math.floor(Ext.Viewport.getWindowWidth() / (width+8));
 		var rows = Math.ceil(count / columns);
-		//var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
-		var html = '<div style="text-align:center">';
+//		var padding = (Ext.Viewport.getWindowWidth() - (columns*(width+8))) / 2;
+		var html = '<div style="text-align: center">';
 		var name_id = '';
 		for (var i = 0; i < count; i++) {
-			/*if (i % columns == 0) {
-				html += '<div style="padding-left:' + padding + 'px">'
-			}*/
+//			if (i % columns == 0) {
+//				html += '<div style="padding-left:' + padding + 'px">'
+//			}
 			name_id = champStoreData.getAt(i).get('name') + '_' + champStoreData.getAt(i).get('id');
 			html += '<span style="display: inline-block; margin-left: 4px; margin-right: 4px; vertical-align: top">';
 				/*fuck dis shiitz
@@ -381,11 +373,10 @@ Ext.define('LoLChamps.controller.ChampController', {
 				html +=	'<img src="' + this.getImageSrcPath() + '/champion/' + champStoreData.getAt(i).get('key') + '.png" type="image/png" width="' + width + '" height="' + width + '" alt="' + champStoreData.getAt(i).get('id') +'" name="' + name_id + '"/>';
 				html += '<p style="text-align: center; font-size: 100%; overflow: true; width:' + width + 'px">' + champStoreData.getAt(i).get('name') + '</p>';
 			html += '</span>';
-			/*if (i % columns == columns-1 || i == count-1) {
-				html += '</div>';
-			}*/
+//			if (i % columns == columns-1 || i == count-1) {
+//				html += '</div>';
+//			}
 		}
-		
 		html += '</div>';
 		this.getChampListPanel().setHtml(html);
 		this.getChampListPanel().setMasked(false);
