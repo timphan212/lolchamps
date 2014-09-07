@@ -20,13 +20,13 @@ Ext.define('LoLChamps.controller.ItemListController', {
 			ItemListView: '#itemlistview',
 			ItemListPanel: '#itemlistview #itemlistpanel',
 			ItemInfoView: '#iteminfoview',
-			SearchField: '#itemlistview #itemlistsearch',
+			ItemListSearch: '#itemlistsearch',
 			TagField: '#itemlistview #itemtagselect',
 			TitleBar: '#loltitlebar',
 			NavigationBar: '#navigationbar'
 		},
 		control: {
-			SearchField: {
+			ItemListSearch: {
 				keyup: function(field, e, eOpts) {
 					if (Ext.getStore('itemliststore')) {
 						this.getItemListPanel().setMasked(true);
@@ -94,7 +94,16 @@ Ext.define('LoLChamps.controller.ItemListController', {
 	},
 	
 	launch: function() {
+		document.addEventListener("deviceready", this.onDeviceReady, false);
 		this.addTapEvents();
+	},
+	
+	onDeviceReady: function() {
+		document.addEventListener("hidekeyboard", LoLChamps.app.getController('ItemListController').onHide, false);
+	},
+	
+	onHide: function() {
+		Ext.getCmp('itemlistsearch').blur();
 	},
 	
 	addTapEvents: function() {

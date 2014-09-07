@@ -16,7 +16,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			ChampListPanel: '#champlistview #champlistpanel',
 			ChampInfoView: '#champinfoview',
 			TitleBar: '#loltitlebar',
-			SearchField: '#champlistview #champlistsearch',
+			ChampListSearch: '#champlistsearch',
 			ChampLogoPanel: '#champinfoview #champlogopanel',
 			ChampTabPanel: '#champinfoview #champtabpanel',
 			ChampStatsView: '#champinfoview #champtabpanel #champstats',
@@ -25,7 +25,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 			NavigationBar: '#navigationbar'
 		},
 		control: {
-			SearchField: {
+			ChampListSearch: {
 				keyup: function(field, e, eOpts) {
 					if (Ext.getStore('champliststore')) {
 						this.getChampListPanel().setMasked(true);
@@ -56,8 +56,17 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	// This is launched after app launch initialization
 	launch: function() {
+		document.addEventListener("deviceready", this.onDeviceReady, false);
 		this.addSwipeEvents();
 		this.addTapEvents();
+	},
+	
+	onDeviceReady: function() {
+		document.addEventListener("hidekeyboard", LoLChamps.app.getController('ChampController').onHide, false);
+	},
+	
+	onHide: function() {
+		Ext.getCmp('champlistsearch').blur();
 	},
 	
 	getImageSrcPath: function() {

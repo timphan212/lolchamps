@@ -13,7 +13,7 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 			height: '48px',
 			items: [{
 				xtype: 'searchfield',
-				itemId: 'itemlistsearch',
+				id: 'itemlistsearch',
 				placeHolder: 'Search',
 				flex: '1'
 			}, {
@@ -26,7 +26,7 @@ Ext.define('LoLChamps.view.item.ItemListView', {
 							delegate: 'button',
 							tap: function() {
 								Ext.getCmp('navigationbar').show();
-							},
+							}
 						}
 					},
 					options: [

@@ -6,9 +6,6 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	xtype: 'titlebarcontroller',
 	OLD_REGION: '',
 	OLD_LOCALE: '',
-	KR_REGION: 'http://asia.api.pvp.net/api/lol/',
-	TR_RU_REGION: 'http://eu.api.pvp.net/api/lol/',
-	OTHER_REGION: 'https://prod.api.pvp.net/api/lol/',
 	config: {
 		views: [
 			'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
@@ -50,7 +47,8 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 				tap: 'onRefreshBtnTap'
 			},
 			SettingsBtn: {
-				tap: 'onSettingsBtnTap'
+				tap: 'onSettingsBtnTap',
+				hidekeybaord: 'onShow'
 			},
 			SettingsLocaleSel: {
 				change: 'onLocaleChange'
@@ -102,6 +100,7 @@ Ext.define('LoLChamps.controller.TitleBarController', {
 	},
 	
 	onRefreshBtnTap: function() {
+		this.getNavigationBar().show();
 		if (LoLChamps.app.getCurrentView() == 'champlistview') {
 			Ext.getStore('champliststore').load({
 				callback: function(records, operation, success) {

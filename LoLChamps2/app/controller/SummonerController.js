@@ -37,7 +37,16 @@ Ext.define('LoLChamps.controller.SummonerController', {
 	},
 	
 	launch: function() {
+		document.addEventListener("deviceready", this.onDeviceReady, false);
 		this.addSwipeEvents();
+	},
+	
+	onDeviceReady: function() {
+		document.addEventListener("hidekeyboard", LoLChamps.app.getController('SummonerController').onHide, false);
+	},
+	
+	onHide: function() {
+		Ext.getCmp('summonertextfield').blur();
 	},
 	
 	addSwipeEvents: function() {
@@ -57,6 +66,10 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			},
 			scope: this
 		});
+	},
+	
+	onBackButton: function() {
+		LoLChamps.app.removeUrl();
 	},
 	
 	onSummonerSubmitBtn: function() {

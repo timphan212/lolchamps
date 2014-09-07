@@ -13,7 +13,7 @@ Ext.define('LoLChamps.view.champ.ChampListView', {
 			height: '48px',
 			items: [{
 				xtype: 'searchfield',
-				itemId: 'champlistsearch',
+				id: 'champlistsearch',
 				placeHolder: 'Search',
 				flex: 1
 			}]
