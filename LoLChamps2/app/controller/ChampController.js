@@ -144,11 +144,11 @@ Ext.define('LoLChamps.controller.ChampController', {
 			items: [{
 				xtype: 'image',
 				src: this.getImageSrcPath() + isPassive + spell.image.full,
-//				height: 64,
-//				width: 64,
-				flex: 15,
+				height: 64,
+				width: 64,
+				//flex: 15,
 				style: {
-					'background-size': '95%',
+					//'background-size': '95%',
 					'margin-right': '5px',
 					'margin-left': '5px'
 				}
@@ -184,21 +184,20 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var indexA = tooltip.indexOf('{{');
 		var indexB = tooltip.indexOf('}}');
 		var count = 0;
+		
 		while (indexA > 0 && indexB > 0) {
 			var effVar = tooltip.slice(indexA,indexB);
 			if (effVar.indexOf('e') > 0) {
 				var index = parseInt(effVar.slice(effVar.indexOf('e')+1,effVar.indexOf('e')+2));
-				tooltip = tooltip.slice(0,indexA) + spell.effectBurn[index-1] + tooltip.slice(indexB+2);
+				tooltip = tooltip.slice(0,indexA) + spell.effectBurn[index] + tooltip.slice(indexB+2);
 			} else if (effVar.indexOf('a') > 0) {
 				var index = parseInt(effVar.slice(effVar.indexOf('a')+1,effVar.indexOf('a')+2));
 				if (spell.vars) {
 					for (var i = 0; i < spell.vars.length; i++) {
 						if (spell.vars[i].key == 'a' + index) {
-							if (spell.vars[i].coeff.length) {
-								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
-							} else {
-								tooltip = tooltip.slice(0,indexA) + '<font color="green">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
-							}
+							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, indexA, indexB);
+						} else {
+							// figure out way to delete non-existent keys
 						}
 					}
 				} else {
@@ -210,11 +209,9 @@ Ext.define('LoLChamps.controller.ChampController', {
 				if (spell.vars) {
 					for (var i = 0; i < spell.vars.length; i++) {
 						if (spell.vars[i].key == 'f' + index) {
-							if (spell.vars[i].coeff.length) {
-								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + spell.vars[i].coeff[0] + '</font>' + tooltip.slice(indexB+2);
-							} else {
-								tooltip = tooltip.slice(0,indexA) + '<font color="orange">' + Math.round(spell.vars[i].coeff*100) + '%</font>' + tooltip.slice(indexB+2);
-							}
+							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, indexA, indexB);
+						} else {
+							// figure out way to delete non-existent keys
 						}
 					}
 				} else {
@@ -226,6 +223,44 @@ Ext.define('LoLChamps.controller.ChampController', {
 			count++;
 			if (count > 10) return tooltip;
 		}
+
+		return tooltip;
+	},
+	
+	convertArray: function(coeffArr) {
+		var percentArr = [];
+		for(var i = 0; i < coeffArr.length; i++) {
+			percentArr[i] = parseInt((coeffArr[i]*100), 10);
+		}
+		
+		return percentArr.join('/');
+	},
+	
+	tooltipCleanUp: function(key, tooltip, link, coeff, indexA, indexB) {
+		if(key == 'AuraofDespair') {
+			tooltip = tooltip.slice(0,indexA-3) + '% (<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 Ability Power</font>)' + tooltip.slice(indexB+4);
+		} else if(key == 'AsheSpiritOfTheHawk') {
+			tooltip = tooltip.slice(0, indexA-23)
+		} else if(key == 'EvelynnR') {
+			tooltip = tooltip.slice(0,indexA-3) + '% (<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 Ability Power</font>)' + tooltip.slice(indexB+4);
+		} else if(link == '@special.BraumWArmor' || link == '@special.BraumWMR') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		} else if(link == '@dynamic.attackdamage' && key == 'MissileBarrage') {
+			tooltip = tooltip.slice(0,indexA) + '(+<font color="#FF8C00">' + this.convertArray(coeff) + '% Attack Damage</font>)' + tooltip.slice(indexB+2);
+		} else if(link == '@special.dariusr3') {
+			tooltip = tooltip.slice(0,indexA) + '320/500/680 (+<font color="#FF8C00">150% Bonus Attack Damage</font>)' + tooltip.slice(indexB+2);
+		} else if(link == 'bonusattackdamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% Bonus Attack Damage</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'spelldamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">' + this.convertArray(coeff) + '% Ability Power</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'attackdamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% Attack Damage</font>' + tooltip.slice(indexB+2);
+		} else if(link == '@cooldownchampion') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="white">' + coeff.join('/') + '</font>' + tooltip.slice(indexB+2);
+		} else {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#CC3300">' + this.convertArray(coeff) + '</font>' + tooltip.slice(indexB+2);
+		}
+		
 		return tooltip;
 	},
 	
