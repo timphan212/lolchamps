@@ -184,20 +184,23 @@ Ext.define('LoLChamps.controller.ChampController', {
 		var indexA = tooltip.indexOf('{{');
 		var indexB = tooltip.indexOf('}}');
 		var count = 0;
+		var keyExist = false;
 		
 		while (indexA > 0 && indexB > 0) {
 			var effVar = tooltip.slice(indexA,indexB);
 			if (effVar.indexOf('e') > 0) {
-				var index = parseInt(effVar.slice(effVar.indexOf('e')+1,effVar.indexOf('e')+2));
+				// Changed to parse up to 2 digits (2 -> 3)
+				var index = parseInt(effVar.slice(effVar.indexOf('e')+1,effVar.indexOf('e')+3));
 				tooltip = tooltip.slice(0,indexA) + spell.effectBurn[index] + tooltip.slice(indexB+2);
+				keyExist = true;
 			} else if (effVar.indexOf('a') > 0) {
 				var index = parseInt(effVar.slice(effVar.indexOf('a')+1,effVar.indexOf('a')+2));
 				if (spell.vars) {
 					for (var i = 0; i < spell.vars.length; i++) {
 						if (spell.vars[i].key == 'a' + index) {
-							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, indexA, indexB);
-						} else {
-							// figure out way to delete non-existent keys
+							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, spell.vars[i].key, indexA, indexB);
+							keyExist = true;
+							break;
 						}
 					}
 				} else {
@@ -209,19 +212,25 @@ Ext.define('LoLChamps.controller.ChampController', {
 				if (spell.vars) {
 					for (var i = 0; i < spell.vars.length; i++) {
 						if (spell.vars[i].key == 'f' + index) {
-							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, indexA, indexB);
-						} else {
-							// figure out way to delete non-existent keys
+							tooltip = this.tooltipCleanUp(spell.key, tooltip, spell.vars[i].link, spell.vars[i].coeff, spell.vars[i].key, indexA, indexB);
+							keyExist = true;
+							break;
 						}
 					}
 				} else {
 					tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
 				}
 			}
+			if(!keyExist) {
+				var key = (effVar.slice(3)).trim();
+				tooltip = this.tooltipNonExistentKey(spell.key, key, tooltip, indexA, indexB);
+			}
+			
+			keyExist = false;
 			indexA = tooltip.indexOf('{{');
 			indexB = tooltip.indexOf('}}');
 			count++;
-			if (count > 10) return tooltip;
+			if (count > 15) return tooltip;
 		}
 
 		return tooltip;
@@ -236,29 +245,246 @@ Ext.define('LoLChamps.controller.ChampController', {
 		return percentArr.join('/');
 	},
 	
-	tooltipCleanUp: function(key, tooltip, link, coeff, indexA, indexB) {
-		if(key == 'AuraofDespair') {
-			tooltip = tooltip.slice(0,indexA-3) + '% (<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 Ability Power</font>)' + tooltip.slice(indexB+4);
-		} else if(key == 'AsheSpiritOfTheHawk') {
+	tooltipCleanUp: function(spellKey, tooltip, link, coeff, key, indexA, indexB) {
+		if(spellKey == 'AuraofDespair') {
+			tooltip = tooltip.slice(0,indexA-3) + '% (+<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 AP</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'AsheSpiritOfTheHawk') {
 			tooltip = tooltip.slice(0, indexA-23)
-		} else if(key == 'EvelynnR') {
-			tooltip = tooltip.slice(0,indexA-3) + '% (<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 Ability Power</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'EvelynnQ') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">50/55/60/65/70% Bonus AD</font>' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'EvelynnR') {
+			tooltip = tooltip.slice(0,indexA-3) + '% (+<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 AP</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'HeimerdingerQ') {
+			tooltip = tooltip.slice(0,indexA-2) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'KarmaSpiritBind' && key == 'a2') {
+			tooltip = tooltip.slice(0,indexA-4) + '% (+<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 AP</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'LucianQ' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-4) + '% (+<font color="#FF8C00">' + this.convertArray(coeff) + '% Bonus AD</font>)' + tooltip.slice(indexB+38);
+		} else if(spellKey == 'Landslide' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-4) + '% (+<font color="yellow">' + this.convertArray(coeff) + '% Armor</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'MordekaiserChildrenOfTheGrave' && key == 'a1') {
+			tooltip = tooltip.slice(0,indexA-3) + '% (+<font color="#99FF99">' + this.convertArray(coeff) + '% Per 100 AP</font>)' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'NasusQ' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="yellow">Total Stacks of Siphoning Strike</font>) ' + tooltip.slice(indexB+4);
+		} else if(spellKey == 'NautilusAnchorDrag' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'NautilusPiercingGaze' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + '(+' + tooltip.slice(indexB+5);
+		} else if(spellKey == 'DefensiveBallCurl' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="yellow">20% Armor</font>' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'RengarQ' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		} else if(spellKey == 'Overload' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'RunePrison' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'SpellFlux' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'SejuaniNorthernWinds' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'ShenVorpalStar' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		} else if(spellKey == 'ShenVorpalStar' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '2/3/5/6/7 (+0.5% Shen\'s Maximum Health)'+ tooltip.slice(indexB+2);
+		} else if(spellKey == 'Enrage' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-23) + '.' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'SonaE' && key == 'a2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">4% Per 100 AP</font>' + tooltip.slice(indexB+3);
+		} else if(spellKey == 'Imbue' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '7% Bonus Health)' + tooltip.slice(indexB+10);
+		} else if(spellKey == 'Shatter' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		} else if(spellKey == 'Shatter' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '20% armor' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'Shatter' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '5% Armor' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'VarusW' && key == 'a2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">2% Per 100 AP</font>' + tooltip.slice(indexB+3);
+		} else if(spellKey == 'VeigarBalefulStrike' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-23) + tooltip.slice(indexB+2);
+		} else if(spellKey == 'VladimirSanguinePool' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'VolibearW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+3);
+		} else if(spellKey == 'ZacW' && key == 'a1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">2% Per 100 AP</font>)' + tooltip.slice(indexB+4);
 		} else if(link == '@special.BraumWArmor' || link == '@special.BraumWMR') {
 			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
-		} else if(link == '@dynamic.attackdamage' && key == 'MissileBarrage') {
-			tooltip = tooltip.slice(0,indexA) + '(+<font color="#FF8C00">' + this.convertArray(coeff) + '% Attack Damage</font>)' + tooltip.slice(indexB+2);
+		} else if(link == '@dynamic.attackdamage' && spellKey == 'MissileBarrage') {
+			tooltip = tooltip.slice(0,indexA) + '(+<font color="#FF8C00">' + this.convertArray(coeff) + '% AD</font>)' + tooltip.slice(indexB+2);
 		} else if(link == '@special.dariusr3') {
-			tooltip = tooltip.slice(0,indexA) + '320/500/680 (+<font color="#FF8C00">150% Bonus Attack Damage</font>)' + tooltip.slice(indexB+2);
-		} else if(link == 'bonusattackdamage') {
-			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% Bonus Attack Damage</font>' + tooltip.slice(indexB+2);
-		} else if(link == 'spelldamage') {
-			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">' + this.convertArray(coeff) + '% Ability Power</font>' + tooltip.slice(indexB+2);
-		} else if(link == 'attackdamage') {
-			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% Attack Damage</font>' + tooltip.slice(indexB+2);
+			tooltip = tooltip.slice(0,indexA) + '320/500/680 (+<font color="#FF8C00">150% Bonus AD</font>)' + tooltip.slice(indexB+2);
 		} else if(link == '@cooldownchampion') {
-			tooltip = tooltip.slice(0,indexA) + '<font color="white">' + coeff.join('/') + '</font>' + tooltip.slice(indexB+2);
+			tooltip = tooltip.slice(0,indexA) + coeff.join('/') + tooltip.slice(indexB+2);
+		} else if(link == '@text') {
+			tooltip = tooltip.slice(0,indexA) + coeff.join(' / ') + tooltip.slice(indexB+2);
+		} else if(link == '@dynamic.abilitypower') {
+			tooltip = tooltip.slice(0,indexA) + '(+<font color="#99FF99">' + this.convertArray(coeff) + '% AP</font>)' + tooltip.slice(indexB+2);
+		} else if(link == '@special.jaxrarmor' || link == '@special.jaxrmr') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		} else if(link == '@special.viw') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">1% Per 35 Bonus AD</font>' + tooltip.slice(indexB+3);
+		} else if(link == 'bonusarmor') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="yellow">' + this.convertArray(coeff) + '% Bonus Armor</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'bonusspellblock') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="yellow">' + this.convertArray(coeff) + '% Bonus Magic Resist</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'bonusattackdamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% Bonus AD</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'spelldamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">' + this.convertArray(coeff) + '% AP</font>' + tooltip.slice(indexB+2);
+		} else if(link == 'attackdamage') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">' + this.convertArray(coeff) + '% AD</font>' + tooltip.slice(indexB+2);
 		} else {
 			tooltip = tooltip.slice(0,indexA) + '<font color="#CC3300">' + this.convertArray(coeff) + '</font>' + tooltip.slice(indexB+2);
+		}
+		
+		return tooltip;
+	},
+	
+	tooltipNonExistentKey: function(spellKey, key, tooltip, indexA, indexB) {
+		if(spellKey == 'AatroxW' && key == 'f5') {
+			tooltip = tooltip.slice(0,indexA) + '60/75/90/105/120 +<font color="#FF8C00">75% Bonus AD</font>' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AatroxW' && key == 'f4') {
+			tooltip = tooltip.slice(0,indexA) + '15/23.75/32.5/41.25/50 (+<font color="#FF8C00">25% Bonus AD</font>)' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AhriFoxFire') {
+			tooltip = tooltip.slice(0,indexA) + '64/104/144/184/224 (+<font color="#99FF99">64% AP</font>)' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AzirW' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + ' 50 / 55 / 60 / 65 / 70 /75 / 80 / 85 / 90 / 95 /100 / 110 / 120 / 130 / 140 /150 /160 / 170 ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AzirW' && key == 'maxammo') {
+			tooltip = tooltip.slice(0,indexA) + ' 2 ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AzirW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + ' 12/11/10/9/8 ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AzirW' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + ' 80 + (25 x Azir\'s level) ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'AzirE' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + '[+' + tooltip.slice(indexB+5);
+		}
+		else if(spellKey == 'PhosphorusBomb' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + '(+<font color="#FF8C00">50% Bonus AD</font>)(' + tooltip.slice(indexB+5);
+		}
+		else if(spellKey == 'EvelynnQ' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">35/40/45/50/55% AP</font>)(' + tooltip.slice(indexB+5);
+		}
+		else if(spellKey == 'Parley' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA-23);
+		}
+		else if(spellKey == 'GnarW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '30' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'GragasE' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '3' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'KarthusDefile' && key == 'cost') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RiftWalk' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#0099FF">2% of Max Mana</font>) ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RiftWalk' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#0099FF">2% of Max Mana</font>) ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RiftWalk' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#0099FF">1% of Max Mana</font>) ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'KhazixQ' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '91/123.5/156/188.5/221 (+<font color="#FF8C00">260% Bonus AD</font>) ' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'KhazixQ' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '10 x Kha\'Zix\'s Level' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'WujuStyle' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-1) + tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'MissFortuneRicochetShot' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">85% AD</font>)' + tooltip.slice(indexB+4);
+		}
+		else if(spellKey == 'MissFortuneRicochetShot' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">100% AD</font>)' + tooltip.slice(indexB+4);
+		}
+		else if(spellKey == 'NamiW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-1) + '-15% (+<font color="#99FF99">7.5% per 100 AP</font>)' + tooltip.slice(indexB+4);
+		}
+		else if(spellKey == 'RengarQ' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA-1) + tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'RengarQ' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '30-240' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RengarQ' && key == 'f4') {
+			tooltip = tooltip.slice(0,indexA) + '47 + (3 x Rengar\'s Level)' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RengarW' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '40-240' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RengarW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '8 + (4 x Rengar\'s Level)' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RengarW' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '50 + (25 x Rengar\'s Level)' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'RengarE' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '50-340' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'SonaQ' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '20/30/40/50/60' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'SonaW' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '35/55/75/95/115' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'SonaW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">2% Per 100 AP</font>' +tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'SonaE' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '13/14/15/16/17' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'SonaE' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '2% x Crescendo\'s Rank' +tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'SonaE' && key == 'f4') {
+			tooltip = tooltip.slice(0,indexA) + '10/11/12/13/14' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'SonaE' && key == 'f5') {
+			tooltip = tooltip.slice(0,indexA) + '2% x Crescendo\'s Rank' +tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'SorakaW' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">20% AP</font>' +tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'Imbue' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA-2) + '(+' + tooltip.slice(indexB+5);
+		}
+		else if(spellKey == 'ThreshE' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'ThreshE' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + tooltip.slice(indexB+3);
+		}
+		else if(spellKey == 'TwitchExpunge' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#FF8C00">25% Bonus AD</font>' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'ViktorPowerTransfer' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">20% AP</font>' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'ViktorPowerTransfer' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '20 / 25 / 30 / 35 / 40 / 45 / 50 / 55 / 60 / 70 / 80 / 90 / 110 / 130 / 150 / 170 / 190 / 210' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'XerathArcaneBarrage2' && key == 'f1') {
+			tooltip = tooltip.slice(0,indexA) + '90/135/180/225/270' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'XerathArcaneBarrage2' && key == 'f2') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">90% AP</font>' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'ZyraQFissure' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '23 + (6.5 x Zyra\'s Level)' + tooltip.slice(indexB+2);
+		}
+		else if(spellKey == 'ZyraGraspingRoots' && key == 'f3') {
+			tooltip = tooltip.slice(0,indexA) + '23 + (6.5 x Zyra\'s Level)' + tooltip.slice(indexB+2);
 		}
 		
 		return tooltip;
