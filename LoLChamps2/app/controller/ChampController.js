@@ -180,7 +180,7 @@ Ext.define('LoLChamps.controller.ChampController', {
 		if (spell.effect == null) {
 			return spell.sanitizedDescription;
 		}
-		var tooltip = spell.sanitizedTooltip;
+		var tooltip = spell.tooltip;
 		var indexA = tooltip.indexOf('{{');
 		var indexB = tooltip.indexOf('}}');
 		var count = 0;

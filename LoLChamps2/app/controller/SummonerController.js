@@ -17,8 +17,8 @@ Ext.define('LoLChamps.controller.SummonerController', {
 			SummonerRankedView: '#summonerinfoview #summonertabpanel #summonerranked',
 			SummonerSubmitBtn: '#summonersubmit',
 			SummonerTextField: '#summonertextfield',
-			SummonerTapView: '#summonertapview',
-			SummonerTapPanel: '#summonertapview #summonertappanel',
+			//SummonerTapView: '#summonertapview',
+			//SummonerTapPanel: '#summonertapview #summonertappanel',
 			SummonerTextField: '#summonerinfoview #summonertextfield',
 			TitleBar: '#loltitlebar',
 			NavigationBar: '#navigationbar'
@@ -142,9 +142,17 @@ Ext.define('LoLChamps.controller.SummonerController', {
 					itemtap: function(index, target, record, e, eOpts) {
 						var currItem = Ext.getStore('summonersummarystore').getData().getAt(target).getData();
 						LoLChamps.app.MODE_TXT = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerStatSummaryType);
-						LoLChamps.app.setUrl('summonertapview');
+						//LoLChamps.app.setUrl('summonertapview');
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerSummary(currItem);
-						Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);
+						//Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);
+						//Ext.Msg.alert(currItem.playerOrTeamName, htmlStr, Ext.emptyFn);
+						Ext.Msg.show({
+							message: htmlStr,
+							title: LoLChamps.app.MODE_TXT,
+							buttons: Ext.MessageBox.OK,
+							scrollable: 'vertical',
+							style: 'height:80%;width:80%'
+						});
 					}
 				}
 			});
