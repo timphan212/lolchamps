@@ -21,13 +21,14 @@
             text-align: center;
             width: 100%;
             height: 30px;
+            font-size: 1.5em;
             -webkit-animation-name: appLoadingIndicator;
             -webkit-animation-duration: 0.5s;
             -webkit-animation-iteration-count: infinite;
             -webkit-animation-direction: linear;
         }
 
-        #appLoadingIndicator > * {
+        #appLoadingIndicator > span {
             background-color: #FFFFFF;
             display: inline-block;
             height: 192px;
@@ -57,7 +58,9 @@
 </head>
 <body>
     <div id="appLoadingIndicator">
-        <div></div>
+        <span></span>
+        <div>Loading . . .</div>
     </div>
+    
 </body>
 </html>
