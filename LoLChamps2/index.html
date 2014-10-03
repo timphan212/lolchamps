@@ -16,7 +16,7 @@
 
         #appLoadingIndicator {
             position: absolute;
-            top: 50%;
+            top: 25%;
             margin-top: -15px;
             text-align: center;
             width: 100%;
@@ -30,11 +30,10 @@
         #appLoadingIndicator > * {
             background-color: #FFFFFF;
             display: inline-block;
-            height: 30px;
-            -webkit-border-radius: 15px;
-            margin: 0 5px;
-            width: 30px;
+            height: 192px;
+            width: 192px;
             opacity: 0.8;
+            background-image: url("resources\\startup\\loading.png");
         }
 
         @-webkit-keyframes appLoadingIndicator{
@@ -58,8 +57,6 @@
 </head>
 <body>
     <div id="appLoadingIndicator">
-        <div></div>
-        <div></div>
         <div></div>
     </div>
 </body>
