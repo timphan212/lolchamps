@@ -53,6 +53,26 @@ Ext.define('LoLChamps.view.Settings', {
 		        		          {text: 'Turkish', value: 'tr_TR'},
 		        		          {text: 'Vietnamese', value: 'vn_VN'}
 		        		]
+		        	},
+		        	{
+		        		xtype: 'button',
+		        		text: 'About',
+		        		itemID: 'aboutpage',
+		        		listeners: {
+		        			tap: function() {
+		        				Ext.Msg.show({
+									message: 'Created By: Timothy Phan and Tony Lei<BR>Contact: TnTMobileApp@gmail.com<BR>Version: 1.0<BR><BR>Credits: Riot Games',
+									title: 'About',
+									buttons: Ext.MessageBox.OK,
+									scrollable: 'vertical',
+					        		hideOnMaskTap: 'true',
+					        		minHeight: '50%',
+					        		minWidth: '50%',
+					        		height: '50%',
+					        		width: '75%'
+								});
+		        			}
+		        		}
 		        	}
 		        ]
 			}

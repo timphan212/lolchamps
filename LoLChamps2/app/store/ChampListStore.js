@@ -23,7 +23,7 @@ Ext.define('LoLChamps.store.ChampListStore', {
 				this.getProxy().setUrl('https://global.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1.2/champion?locale=' + LoLChamps.app.LOCALE + '&champData=info&api_key=' + apiKey);
 				Ext.getCmp('champlistview').setMasked({
 					xtype: 'loadmask',
-					message: 'Retrieving Champion List for ' + LoLChamps.app.REGION.toUpperCase()
+					//message: 'Retrieving Champion List for ' + LoLChamps.app.REGION.toUpperCase()
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {

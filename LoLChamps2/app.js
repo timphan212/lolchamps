@@ -16,7 +16,7 @@ Ext.application({
     ],
     views: [
         'NavigationBar', 'TitleBar', 'champ.ChampListView', 'champ.ChampInfoView', 'item.ItemListView', 'item.ItemInfoView',
-        'summoner.SummonerInfoView', 'summoner.SummonerTapView', 'Settings'
+        'summoner.SummonerInfoView', 'Settings'
     ],
     
     icon: {

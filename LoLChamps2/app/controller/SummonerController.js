@@ -145,13 +145,16 @@ Ext.define('LoLChamps.controller.SummonerController', {
 						//LoLChamps.app.setUrl('summonertapview');
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerSummary(currItem);
 						//Ext.getCmp('summonertapview').child('#summonertappanel').setHtml(htmlStr);
-						//Ext.Msg.alert(currItem.playerOrTeamName, htmlStr, Ext.emptyFn);
 						Ext.Msg.show({
 							message: htmlStr,
 							title: LoLChamps.app.MODE_TXT,
 							buttons: Ext.MessageBox.OK,
 							scrollable: 'vertical',
-							style: 'height:80%;width:80%'
+			        		hideOnMaskTap: 'true',
+			        		minHeight: '50%',
+			        		minWidth: '50%',
+			        		height: '50%',
+			        		width: '75%'
 						});
 					}
 				}
@@ -193,7 +196,17 @@ Ext.define('LoLChamps.controller.SummonerController', {
 						var currItem = Ext.getStore('summonerrankedstore').getData().getAt(target).getData();
 						LoLChamps.app.MODE_TXT = LoLChamps.app.getController('SummonerController').formatMode(currItem.playerOrTeamName);
 						var htmlStr = LoLChamps.app.getController('SummonerController').formatSummonerRanked(currItem);
-						Ext.Msg.alert(currItem.playerOrTeamName, htmlStr, Ext.emptyFn);
+						Ext.Msg.show({
+							message: htmlStr,
+							title: currItem.playerOrTeamName,
+							buttons: Ext.MessageBox.OK,
+							scrollable: 'vertical',
+			        		hideOnMaskTap: 'true',
+			        		minHeight: '50%',
+			        		minWidth: '50%',
+			        		height: '50%',
+			        		width: '75%'
+						});
 					}
 				}
 			});

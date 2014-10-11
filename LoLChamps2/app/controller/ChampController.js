@@ -116,11 +116,11 @@ Ext.define('LoLChamps.controller.ChampController', {
 	
 	createSpellsPanel: function(champData) {
 //		var passivePanel = this.createPassivePanel(champData.passive);
-		var passivePanel = this.createSpellPanel(champData.passive);
-		var spellPanel1 = this.createSpellPanel(champData.spells[0]);
-		var spellPanel2 = this.createSpellPanel(champData.spells[1]);
-		var spellPanel3 = this.createSpellPanel(champData.spells[2]);
-		var spellPanel4 = this.createSpellPanel(champData.spells[3]);
+		var passivePanel = this.createSpellPanel(champData.passive, 'Passive');
+		var spellPanel1 = this.createSpellPanel(champData.spells[0], 'Q');
+		var spellPanel2 = this.createSpellPanel(champData.spells[1], 'W');
+		var spellPanel3 = this.createSpellPanel(champData.spells[2], 'E');
+		var spellPanel4 = this.createSpellPanel(champData.spells[3], 'R');
 		
 		return {
 			xtype: 'container',
@@ -129,29 +129,42 @@ Ext.define('LoLChamps.controller.ChampController', {
 		};
 	},
 	
-	createSpellPanel: function(spell) {
+	createSpellPanel: function(spell, key) {
 		var isPassive = spell.effect == null? '/passive/' : '/spell/';
 		var spellTitle = '<b style="float:left"><u>'+ spell.name +'</u></b>';
+		
 		if (spell.cooldownBurn && spell.cooldownBurn != 0) {
 			spellTitle += '<span style="float: right; padding-right: 10px"> Cooldown: ' + spell.cooldownBurn + '</span>';
 		}
 		if (spell.rangeBurn) {
 			spellTitle += '<br style="clear: both"><b>Range: ' + spell.rangeBurn + '</b>'; 
 		}
+		if(spell.costBurn && spell.costBurn != 0 && spell.costType) {
+			spellTitle += '<span style="float: right; padding-right: 10px"> Cost: ' + spell.costBurn + ' ' + spell.costType + '</span>'; 
+		}
+		
 		return {
 			xtype: 'container',
 			layout: 'hbox',
 			items: [{
-				xtype: 'image',
-				src: this.getImageSrcPath() + isPassive + spell.image.full,
-				height: 64,
-				width: 64,
-				//flex: 15,
-				style: {
-					//'background-size': '95%',
-					'margin-right': '5px',
-					'margin-left': '5px'
-				}
+				xtype: 'container',
+				layout: 'vbox',
+				items: [{
+					xtype: 'image',
+					src: this.getImageSrcPath() + isPassive + spell.image.full,
+					height: 64,
+					width: 64,
+					//flex: 15,
+					style: {
+						//'background-size': '95%',
+						'margin-right': '5px',
+						'margin-left': '5px'
+					}
+				}, {
+					html: key,
+					style: 'text-align:center'
+				}]
+				
 			}, {
 				xtype: 'container',
 				layout: 'vbox',
@@ -298,6 +311,8 @@ Ext.define('LoLChamps.controller.ChampController', {
 			tooltip = tooltip.slice(0,indexA) + '20% armor' + tooltip.slice(indexB+2);
 		} else if(spellKey == 'Shatter' && key == 'f3') {
 			tooltip = tooltip.slice(0,indexA) + '5% Armor' + tooltip.slice(indexB+2);
+		} else if(spellKey == 'TrundlePain' && key == 'a1') {
+			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">2% Per 100 AP</font>)' + tooltip.slice(indexB+2);
 		} else if(spellKey == 'VarusW' && key == 'a2') {
 			tooltip = tooltip.slice(0,indexA) + '<font color="#99FF99">2% Per 100 AP</font>' + tooltip.slice(indexB+3);
 		} else if(spellKey == 'VeigarBalefulStrike' && key == 'f1') {

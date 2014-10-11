@@ -25,7 +25,7 @@ Ext.define('LoLChamps.store.SummonerIDStore', {
 				this.getProxy().setUrl('https://' + LoLChamps.app.REGION + LoLChamps.app.API_URL + LoLChamps.app.REGION + '/v1.4/summoner/by-name/' + LoLChamps.app.SUMMONER_NAME + '?api_key=' + apiKey);
 				Ext.getCmp('summonerinfoview').setMasked({
 					xtype: 'loadmask',
-					message: 'Retrieving Summoner from ' + LoLChamps.app.REGION.toUpperCase()
+					//message: 'Retrieving Summoner from ' + LoLChamps.app.REGION.toUpperCase()
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {

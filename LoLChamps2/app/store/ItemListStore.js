@@ -23,7 +23,7 @@ Ext.define('LoLChamps.store.ItemListStore', {
 				this.getProxy().setUrl('https://global.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1.2/item?locale=' + LoLChamps.app.LOCALE + '&itemListData=all&api_key=' + apiKey);
 				Ext.getCmp('itemlistview').setMasked({
 					xtype: 'loadmask',
-					message: 'Loading'
+					//message: 'Loading'
 				});
 			}, 
 			load: function(store, records, successful, operation, eOpts) {
