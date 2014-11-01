@@ -22,7 +22,7 @@ Ext.define('LoLChamps.store.ChampInfoStore', {
 		},
 		listeners: {
 			beforeload: function(store, response, eOpts) {
-				this.getProxy().setUrl('https://global.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1.2/champion/' + LoLChamps.app.CHAMPION_ID + '?locale=' + LoLChamps.app.LOCALE + '&champData=all&api_key=' + apiKey);
+				this.getProxy().setUrl('https://global.api.pvp.net/api/lol/static-data/' + LoLChamps.app.REGION + '/v1.2/champion/' + LoLChamps.app.CHAMPION_ID + '?locale=' + LoLChamps.app.LOCALE + '&champData=all&api_key=' + KeyObject.getApiKey());
 				Ext.getCmp('champinfoview').setMasked({
 					xtype: 'loadmask',
 					//message: 'Retrieving Champion Info for ' + LoLChamps.app.CHAMPION_SEL_TXT
