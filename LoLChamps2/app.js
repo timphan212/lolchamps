@@ -2,7 +2,7 @@ Ext.application({
     name: 'LoLChamps',
 
     requires: [
-        'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader', 'LoLChamps.ux.reader.ChampReader',
+        'LoLChamps.ux.Key', 'Ext.MessageBox', 'LoLChamps.ux.reader.ItemReader', 'LoLChamps.ux.reader.SummonerReader', 'LoLChamps.ux.reader.ChampReader',
         'LoLChamps.ux.reader.SummonerRankedReader'
     ],
     controllers: [
