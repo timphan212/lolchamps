@@ -2,7 +2,7 @@ Ext.define('LoLChamps.ux.Key', {
 	singleton: true,
 	alternateClassName: 'KeyObject',
 	
-	apiKey: "e5dc0d96-15eb-4b34-bb2b-c33dd248bed7",
+	apiKey: "26700744-69e8-499f-88ad-02d6f17bbdac",
 	
 	getApiKey: function() {
 		return this.apiKey;
